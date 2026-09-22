@@ -1,0 +1,6 @@
+src/api/generated.ts
+src/api/presets.generated.ts
+node_modules/
+dist/
+.npm-cache/
+test-results/

@@ -1,0 +1,54 @@
+cff-version: 1.2.0
+message: "If you use this software, cite the relevant papers below and record the software version, source commit and effective experiment configuration."
+title: "DEC-MAPF: A Simulation and Experimentation Framework for Decentralized Multi-Agent Path Finding"
+version: "0.1.0a1"
+license: "MIT"
+repository-code: "https://github.com/monurkeskin/DEC-MAPF"
+authors:
+  - family-names: "Keskin"
+    given-names: "Mehmet Onur"
+    orcid: "https://orcid.org/0000-0002-8025-4304"
+  - family-names: "Eran"
+    given-names: "Cihan"
+  - family-names: "Cantürk"
+    given-names: "Furkan"
+  - family-names: "Aydoğan"
+    given-names: "Reyhan"
+preferred-citation:
+  type: article
+  title: "Decentralized multi-agent path finding framework and strategies based on automated negotiation"
+  authors:
+    - family-names: "Keskin"
+      given-names: "M. Onur"
+    - family-names: "Cantürk"
+      given-names: "Furkan"
+    - family-names: "Eran"
+      given-names: "Cihan"
+    - family-names: "Aydoğan"
+      given-names: "Reyhan"
+  journal: "Autonomous Agents and Multi-Agent Systems"
+  volume: 38
+  issue: 1
+  start: 10
+  year: 2024
+  publisher: "Springer Nature"
+  doi: "10.1007/s10458-024-09639-8"
+  url: "https://doi.org/10.1007/s10458-024-09639-8"
+references:
+  - type: conference-paper
+    title: "A Decentralized Token-Based Negotiation Approach for Multi-Agent Path Finding"
+    authors:
+      - family-names: "Eran"
+        given-names: "Cihan"
+      - family-names: "Keskin"
+        given-names: "Mehmet Onur"
+      - family-names: "Cantürk"
+        given-names: "Furkan"
+      - family-names: "Aydoğan"
+        given-names: "Reyhan"
+    collection-title: "European Conference on Multi-Agent Systems (EUMAS 2021)"
+    year: 2021
+    doi: "10.1007/978-3-030-82254-5_16"
+    start: 264
+    end: 280
+    notes: "Winner of the Second Best Paper Award (Runner-up)"

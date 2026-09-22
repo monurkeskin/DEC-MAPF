@@ -1,0 +1,278 @@
+{
+  "scope": "English documentation distribution, including bundled dependencies and theme icon licenses",
+  "installed_versions": {
+    "mkdocs": "1.6.1",
+    "mkdocs-material": "9.7.7",
+    "mkdocs-material-extensions": "1.3.1",
+    "pymdown-extensions": "12.0.1",
+    "Pygments": "2.21.0"
+  },
+  "material_source_lock": "https://raw.githubusercontent.com/squidfunk/mkdocs-material/9.7.7/package-lock.json",
+  "material_source_lock_sha256": "496d8b0eb2d81d525d89b8e3190bb42181bdf422407c6b98c621b753d20c9782",
+  "material_assets": {
+    "assets/images/favicon.png": "023854c43fc4b25b795ee4951c8019e3de0593ffeb6f918b5d1f2a9b47a57cfe",
+    "assets/javascripts/bundle.d7400e89.min.js": "f288ab99e197c406766aea4581ba6e902d7d0e28c013bdd3cd3fab6cc77fb7c8",
+    "assets/javascripts/bundle.d7400e89.min.js.map": "dcfd5eb85b43e975773ecf102220197ef3f985f45abbbee4a5286e137f8097ba",
+    "assets/javascripts/workers/search.2c215733.min.js": "cfb35333fafd6d2eb148eba21452849fb7fbde32fdfbf986836573f963106188",
+    "assets/javascripts/workers/search.2c215733.min.js.map": "780dccece24891aa19da6285715e2c7d0cd884237a87a3a9be6684823584921f",
+    "assets/stylesheets/main.ec1eaa64.min.css": "ec1eaa640ab3790ea234d5a09da26015eb070222da8185a1e532d99cb022d68d",
+    "assets/stylesheets/main.ec1eaa64.min.css.map": "0202466a8ddb51487b325e6df1b6e3a704d7506cf5762617301e5d4bff3a0f54",
+    "assets/stylesheets/palette.ab4e12ef.min.css": "ab4e12ef511f9c36de818455892c5c57cc3f98a8c86c36fa609601a88a720da2",
+    "assets/stylesheets/palette.ab4e12ef.min.css.map": "bcf19de0132bed966de2c46b3b56b69f4bf720b2fe35e8dca22b568a017ee3f9"
+  },
+  "components": [
+    {
+      "name": "mkdocs",
+      "version": "1.6.1",
+      "source": "https://www.mkdocs.org/about/license/",
+      "notices": [
+        {
+          "file": "LICENSE",
+          "sha256": "26041bd625fc39411dc4b32748216236931c904adb90c2b3e0ba697090a5d54e"
+        }
+      ]
+    },
+    {
+      "name": "mkdocs-material",
+      "version": "9.7.7",
+      "source": "https://squidfunk.github.io/mkdocs-material/license/",
+      "notices": [
+        {
+          "file": "LICENSE",
+          "sha256": "e1150f26b4c0f872627b39fda49ae3bd850304f2f7f3171ae0531c1f8f4dd078"
+        }
+      ]
+    },
+    {
+      "name": "mkdocs-material-extensions",
+      "version": "1.3.1",
+      "source": "https://github.com/facelessuser/mkdocs-material-extensions",
+      "notices": [
+        {
+          "file": "LICENSE.md",
+          "sha256": "b3cc149031d83ec272ace499e62217c5066e0200a5560d818d90cdc7bc05403c"
+        }
+      ]
+    },
+    {
+      "name": "pymdown-extensions",
+      "version": "12.0.1",
+      "source": "https://github.com/facelessuser/pymdown-extensions",
+      "notices": [
+        {
+          "file": "LICENSE.md",
+          "sha256": "e6645f914fbae5bc557419fcafbeab9e375897e8274c54e2b177953e9354f93e"
+        }
+      ]
+    },
+    {
+      "name": "Pygments",
+      "version": "2.21.0",
+      "source": "https://github.com/pygments/pygments",
+      "notices": [
+        {
+          "file": "AUTHORS",
+          "sha256": "71a83872ad82f57be692cf827e048e2cd51d45169cfa1ea3f28706d97a872c0f"
+        },
+        {
+          "file": "LICENSE",
+          "sha256": "a9d66f1d526df02e29dce73436d34e56e8632f46c275bbdffc70569e882f9f17"
+        }
+      ]
+    },
+    {
+      "name": "material icons",
+      "source": "https://github.com/squidfunk/mkdocs-material/tree/9.7.7/material/templates/.icons/material",
+      "notices": [
+        {
+          "file": "LICENSE",
+          "sha256": "3bae6305bcaa6d10219b999f65c342034c2d40b1c0e8567fa08605e73ccba829"
+        }
+      ]
+    },
+    {
+      "name": "fontawesome icons",
+      "source": "https://github.com/squidfunk/mkdocs-material/tree/9.7.7/material/templates/.icons/fontawesome",
+      "notices": [
+        {
+          "file": "LICENSE.txt",
+          "sha256": "329f24fdba0c57714d7d202d30a74767feac6907685ee24f0abbf1bd47581a07"
+        }
+      ]
+    },
+    {
+      "name": "octicons icons",
+      "source": "https://github.com/squidfunk/mkdocs-material/tree/9.7.7/material/templates/.icons/octicons",
+      "notices": [
+        {
+          "file": "LICENSE",
+          "sha256": "3d8b9d9254e7aa7517ed5abc8df3a4bc230081a613e8e872fb6558e8759c9040"
+        }
+      ]
+    },
+    {
+      "name": "simple icons",
+      "source": "https://github.com/squidfunk/mkdocs-material/tree/9.7.7/material/templates/.icons/simple",
+      "notices": [
+        {
+          "file": "LICENSE.md",
+          "sha256": "9046848b63a5c92bff14e4accca80bd987e0623b74adf9226ce5198d312b79d5"
+        }
+      ]
+    },
+    {
+      "name": "clipboard",
+      "version": "2.0.11",
+      "license": "MIT",
+      "source": "https://registry.npmjs.org/clipboard/-/clipboard-2.0.11.tgz",
+      "integrity": "sha512-C+0bbOqkezLIsmWSvlsXS0Q0bmkugu7jcfMIACB+RDEntIzQIkdr148we28AfSloQLRdZlYL/QYyrq05j/3Faw==",
+      "notices": [
+        {
+          "file": "clipboard-LICENSE",
+          "sha256": "a798e7b5fa604117d52d607e05f1cbac3b2fa5da087837f412a1a3c866b4b748"
+        }
+      ]
+    },
+    {
+      "name": "delegate",
+      "version": "3.2.0",
+      "license": "MIT",
+      "source": "https://registry.npmjs.org/delegate/-/delegate-3.2.0.tgz",
+      "integrity": "sha512-IofjkYBZaZivn0V8nnsMJGBr4jVLxHDheKSW88PyxS5QC4Vo9ZbZVvhzlSxY87fVq3STR6r+4cGepyHkcWOQSw==",
+      "notices": [
+        {
+          "file": "delegate-LICENSE.txt",
+          "source": "https://registry.npmjs.org/delegate/-/delegate-3.2.0.tgz#readme.md-license",
+          "terms_source": "https://registry.npmjs.org/clipboard/-/clipboard-2.0.11.tgz#LICENSE",
+          "sha256": "b9f288a297c23f186437f3a9d7dfa24425a1761df6ed35fb9135b782722b7aee"
+        }
+      ]
+    },
+    {
+      "name": "escape-html",
+      "version": "1.0.3",
+      "license": "MIT",
+      "source": "https://registry.npmjs.org/escape-html/-/escape-html-1.0.3.tgz",
+      "integrity": "sha1-Aljq5NPQwJdN4cFpGI7wBR0dGYg=",
+      "notices": [
+        {
+          "file": "escape-html-LICENSE",
+          "sha256": "255aa557a1f55224ce522f311629c0bf20854740a67955cefd798fbd1d3d1ded"
+        }
+      ]
+    },
+    {
+      "name": "focus-visible",
+      "version": "5.2.1",
+      "license": "W3C",
+      "source": "https://registry.npmjs.org/focus-visible/-/focus-visible-5.2.1.tgz",
+      "integrity": "sha512-8Bx950VD1bWTQJEH/AM6SpEk+SU55aVnp4Ujhuuxy3eMEBCRwBnTBnVXr9YAPvZL3/CNjCa8u4IWfNmEO53whA==",
+      "notices": [
+        {
+          "file": "focus-visible-LICENSE.md",
+          "sha256": "7aeb3acf108717fd0f68ada2eebeaaec46dcdd239b4c5e7b4b8e6ea8861acfdd"
+        }
+      ]
+    },
+    {
+      "name": "good-listener",
+      "version": "1.2.2",
+      "license": "MIT",
+      "source": "https://registry.npmjs.org/good-listener/-/good-listener-1.2.2.tgz",
+      "integrity": "sha1-1TswzfkxPf+33JoNR3CWqm0UXFA=",
+      "notices": [
+        {
+          "file": "good-listener-LICENSE.txt",
+          "source": "https://registry.npmjs.org/good-listener/-/good-listener-1.2.2.tgz#readme.md-license",
+          "terms_source": "https://registry.npmjs.org/clipboard/-/clipboard-2.0.11.tgz#LICENSE",
+          "sha256": "b9f288a297c23f186437f3a9d7dfa24425a1761df6ed35fb9135b782722b7aee"
+        }
+      ]
+    },
+    {
+      "name": "lunr",
+      "version": "2.3.9",
+      "license": "MIT",
+      "source": "https://registry.npmjs.org/lunr/-/lunr-2.3.9.tgz",
+      "integrity": "sha512-zTU3DaZaF3Rt9rhN3uBMGQD3dD2/vFQqnvZCDv4dl5iOzq2IZQqTxu90r4E5J+nP70J3ilqVCrbho2eWaeW8Ow==",
+      "notices": [
+        {
+          "file": "lunr-LICENSE",
+          "sha256": "ae33f5a0d538cd93de1136a052ffa734b59d6b28e7cfc19e03de1d8b5d9f40ea"
+        }
+      ]
+    },
+    {
+      "name": "material-design-color",
+      "version": "2.3.2",
+      "license": "MIT",
+      "source": "https://registry.npmjs.org/material-design-color/-/material-design-color-2.3.2.tgz",
+      "integrity": "sha1-6K+VjYUqh0e/shHkjOEoK9qRiBU=",
+      "notices": [
+        {
+          "file": "material-design-color-LICENSE",
+          "sha256": "9363d160bf41d46d83901a5d24fc3fe2094c2afc17b4a2378914b273977ee2de"
+        }
+      ]
+    },
+    {
+      "name": "rxjs",
+      "version": "7.8.2",
+      "license": "Apache-2.0",
+      "source": "https://registry.npmjs.org/rxjs/-/rxjs-7.8.2.tgz",
+      "integrity": "sha512-dhKf903U/PQZY6boNNtAGdWbG85WAbjT/1xYoZIC7FAY0yWapOBQVsVrDl58W86//e1VpMNBtRV4MaXfdMySFA==",
+      "notices": [
+        {
+          "file": "rxjs-LICENSE.txt",
+          "sha256": "81c407ac717813b0e3795402960e04003c7bba8ba59b621624707028531c9ade"
+        }
+      ]
+    },
+    {
+      "name": "select",
+      "version": "1.1.2",
+      "license": "MIT",
+      "source": "https://registry.npmjs.org/select/-/select-1.1.2.tgz",
+      "integrity": "sha1-DnNQrN7ICxEIUoeG7B1EGNEbOW0=",
+      "notices": [
+        {
+          "file": "select-LICENSE.txt",
+          "source": "https://registry.npmjs.org/select/-/select-1.1.2.tgz#readme.md-license",
+          "terms_source": "https://registry.npmjs.org/clipboard/-/clipboard-2.0.11.tgz#LICENSE",
+          "sha256": "b9f288a297c23f186437f3a9d7dfa24425a1761df6ed35fb9135b782722b7aee"
+        }
+      ]
+    },
+    {
+      "name": "tiny-emitter",
+      "version": "2.1.0",
+      "license": "MIT",
+      "source": "https://registry.npmjs.org/tiny-emitter/-/tiny-emitter-2.1.0.tgz",
+      "integrity": "sha512-NB6Dk1A9xgQPMoGqC5CVXn123gWyte215ONT5Pp5a0yt4nlEoO1ZWeCwpncaekPHXO60i47ihFnZPiRPjRMq4Q==",
+      "notices": [
+        {
+          "file": "tiny-emitter-LICENSE",
+          "sha256": "aada4c7da6a5be46beadf9d4f40d7dba9e222e57180d46289b2bb9112e65daae"
+        }
+      ]
+    },
+    {
+      "name": "tslib",
+      "version": "2.7.0",
+      "license": "0BSD",
+      "source": "https://registry.npmjs.org/tslib/-/tslib-2.7.0.tgz",
+      "integrity": "sha512-gLXCKdN1/j47AiHiOkJN69hJmcbGTHI0ImLmbYLHykhgeN0jVGola9yVjFgzCUklsZQMW55o+dW7IXv3RCXDzA==",
+      "notices": [
+        {
+          "file": "tslib-CopyrightNotice.txt",
+          "sha256": "da16ddb65f8ca390998fb99223d0112498b56b45784d00afd77ff8ce1ac4de8b"
+        },
+        {
+          "file": "tslib-LICENSE.txt",
+          "sha256": "210b19e543130388c68654b7497e967119ce17145f66ab7d85688fbd70f08751"
+        }
+      ]
+    }
+  ],
+  "notices_sha256": "2f75b35e454ee754a69d3c36ae1226238c0cea61953a31e7dc8f0e59299fc590"
+}

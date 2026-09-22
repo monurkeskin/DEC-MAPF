@@ -1,0 +1,29 @@
+name: Reproducible bug
+description: Report a concrete failure in simulation, analysis, CLI or GUI.
+body:
+  - type: textarea
+    id: behavior
+    attributes:
+      label: Expected and observed behavior
+      description: State the trigger and the result. Distinguish an invalid path, an unsolved case and an execution failure.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Small reproduction
+      description: Include a command or minimal synthetic scenario, solver, setting, seed and effective inputs. Keep private datasets and credentials out of the report.
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: Version and environment
+      description: Include the commit/package version, OS, Python, relevant mapf doctor fields and browser if applicable. Remove personal filesystem paths before sharing.
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Evidence and scope
+      description: Include validation errors, timeout scope or a labeled screenshot. For metric differences, give the units, cohort and source/configuration identity.

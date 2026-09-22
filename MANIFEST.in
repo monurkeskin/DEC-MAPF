@@ -1,0 +1,33 @@
+include .gitattributes
+include LICENSE
+include THIRD_PARTY_NOTICES.md
+include README.md
+include CHANGELOG.md
+include CITATION.cff
+include reference.bib
+include codemeta.json
+include .zenodo.json
+include REPRODUCIBILITY.md
+include CONTRIBUTING.md
+include uv.lock
+recursive-include docs *.txt *.md *.json *.png *.gif *.webp *.svg *.html
+recursive-include examples *.md *.json *.py *.map *.scen
+recursive-include scripts *.py *.mjs
+recursive-include src/mapf *.md
+recursive-include tests *.py *.json
+recursive-include .github *.md *.yml
+include benchmarks/README.md
+include frontend/*.json frontend/*.ts frontend/*.html frontend/.prettierignore
+recursive-include frontend/src *.ts *.tsx *.css
+recursive-include frontend/tests *.ts
+
+include src/mapf/py.typed
+recursive-include src/mapf/gui/static *
+include mkdocs.yml
+recursive-include docs *.csv
+
+prune benchmarks/data
+prune benchmarks/results
+prune assets
+include PUBLICATION-MANIFEST.json
+include benchmarks/suites/regression_core.json benchmarks/run_profiling_suite.py

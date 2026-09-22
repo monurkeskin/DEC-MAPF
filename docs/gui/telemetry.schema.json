@@ -1,0 +1,1769 @@
+{
+  "$defs": {
+    "BidRecord": {
+      "additionalProperties": true,
+      "properties": {
+        "agent_id": {
+          "title": "Agent Id",
+          "type": "string"
+        },
+        "attempt_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Attempt Id"
+        },
+        "decision": {
+          "title": "Decision",
+          "type": "string"
+        },
+        "event_type": {
+          "const": "BID",
+          "title": "Event Type",
+          "type": "string"
+        },
+        "offered_utility": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Offered Utility"
+        },
+        "path_heat": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Path Heat"
+        },
+        "path_length": {
+          "title": "Path Length",
+          "type": "integer"
+        },
+        "phase": {
+          "enum": [
+            "pre_move",
+            "post_move"
+          ],
+          "title": "Phase",
+          "type": "string"
+        },
+        "reject_reason": {
+          "title": "Reject Reason",
+          "type": "string"
+        },
+        "repeated_offer": {
+          "title": "Repeated Offer",
+          "type": "boolean"
+        },
+        "round_idx": {
+          "title": "Round Idx",
+          "type": "integer"
+        },
+        "run_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Run Id"
+        },
+        "schema_version": {
+          "const": "telemetry-2",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "sequence": {
+          "minimum": 1,
+          "title": "Sequence",
+          "type": "integer"
+        },
+        "session_id": {
+          "title": "Session Id",
+          "type": "string"
+        },
+        "source_sha256": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Source Sha256"
+        },
+        "tick": {
+          "minimum": 0,
+          "title": "Tick",
+          "type": "integer"
+        },
+        "token_usage": {
+          "title": "Token Usage",
+          "type": "integer"
+        },
+        "utility_components": {
+          "additionalProperties": true,
+          "title": "Utility Components",
+          "type": "object"
+        }
+      },
+      "required": [
+        "schema_version",
+        "sequence",
+        "phase",
+        "tick",
+        "event_type",
+        "session_id",
+        "round_idx",
+        "agent_id",
+        "decision",
+        "path_length",
+        "path_heat",
+        "offered_utility",
+        "utility_components",
+        "token_usage",
+        "repeated_offer",
+        "reject_reason"
+      ],
+      "title": "BidRecord",
+      "type": "object"
+    },
+    "BroadcastRecord": {
+      "additionalProperties": true,
+      "properties": {
+        "agent_id": {
+          "title": "Agent Id",
+          "type": "string"
+        },
+        "attempt_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Attempt Id"
+        },
+        "cells_broadcasted": {
+          "title": "Cells Broadcasted",
+          "type": "integer"
+        },
+        "event_type": {
+          "const": "BROADCAST",
+          "title": "Event Type",
+          "type": "string"
+        },
+        "fov_size": {
+          "title": "Fov Size",
+          "type": "integer"
+        },
+        "phase": {
+          "enum": [
+            "pre_move",
+            "post_move"
+          ],
+          "title": "Phase",
+          "type": "string"
+        },
+        "run_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Run Id"
+        },
+        "schema_version": {
+          "const": "telemetry-2",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "sequence": {
+          "minimum": 1,
+          "title": "Sequence",
+          "type": "integer"
+        },
+        "source_sha256": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Source Sha256"
+        },
+        "tick": {
+          "minimum": 0,
+          "title": "Tick",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "schema_version",
+        "sequence",
+        "phase",
+        "tick",
+        "event_type",
+        "agent_id",
+        "cells_broadcasted",
+        "fov_size"
+      ],
+      "title": "BroadcastRecord",
+      "type": "object"
+    },
+    "DecisionHeatEventRecord": {
+      "additionalProperties": true,
+      "properties": {
+        "agent_id": {
+          "title": "Agent Id",
+          "type": "string"
+        },
+        "aggregate": {
+          "additionalProperties": {
+            "minimum": 0,
+            "type": "number"
+          },
+          "title": "Aggregate",
+          "type": "object"
+        },
+        "attempt_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Attempt Id"
+        },
+        "event_type": {
+          "const": "DECISION_HEAT",
+          "title": "Event Type",
+          "type": "string"
+        },
+        "fields": {
+          "items": {
+            "additionalProperties": {
+              "minimum": 0,
+              "type": "number"
+            },
+            "type": "object"
+          },
+          "title": "Fields",
+          "type": "array"
+        },
+        "fov_size": {
+          "title": "Fov Size",
+          "type": "integer"
+        },
+        "opponent_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Opponent Id"
+        },
+        "phase": {
+          "enum": [
+            "pre_move",
+            "post_move"
+          ],
+          "title": "Phase",
+          "type": "string"
+        },
+        "position": {
+          "items": {
+            "type": "integer"
+          },
+          "maxItems": 2,
+          "minItems": 2,
+          "title": "Position",
+          "type": "array"
+        },
+        "record_id": {
+          "title": "Record Id",
+          "type": "string"
+        },
+        "recorded_entries": {
+          "minimum": 0,
+          "title": "Recorded Entries",
+          "type": "integer"
+        },
+        "required_entries": {
+          "minimum": 0,
+          "title": "Required Entries",
+          "type": "integer"
+        },
+        "run_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Run Id"
+        },
+        "schema_version": {
+          "const": "telemetry-2",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "sequence": {
+          "minimum": 1,
+          "title": "Sequence",
+          "type": "integer"
+        },
+        "session_id": {
+          "title": "Session Id",
+          "type": "string"
+        },
+        "source": {
+          "const": "actual_strategy_weights",
+          "default": "actual_strategy_weights",
+          "title": "Source",
+          "type": "string"
+        },
+        "source_sha256": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Source Sha256"
+        },
+        "status": {
+          "enum": [
+            "recorded",
+            "budget_exhausted"
+          ],
+          "title": "Status",
+          "type": "string"
+        },
+        "tick": {
+          "minimum": 0,
+          "title": "Tick",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "record_id",
+        "agent_id",
+        "tick",
+        "session_id",
+        "opponent_id",
+        "position",
+        "fov_size",
+        "status",
+        "required_entries",
+        "recorded_entries",
+        "schema_version",
+        "sequence",
+        "phase",
+        "event_type"
+      ],
+      "title": "DecisionHeatEventRecord",
+      "type": "object"
+    },
+    "KeyframeRecord": {
+      "additionalProperties": true,
+      "properties": {
+        "agent_states": {
+          "additionalProperties": {
+            "additionalProperties": true,
+            "type": "object"
+          },
+          "title": "Agent States",
+          "type": "object"
+        },
+        "attempt_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Attempt Id"
+        },
+        "event_type": {
+          "const": "KEYFRAME",
+          "title": "Event Type",
+          "type": "string"
+        },
+        "phase": {
+          "enum": [
+            "pre_move",
+            "post_move"
+          ],
+          "title": "Phase",
+          "type": "string"
+        },
+        "run_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Run Id"
+        },
+        "schema_version": {
+          "const": "telemetry-2",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "sequence": {
+          "minimum": 1,
+          "title": "Sequence",
+          "type": "integer"
+        },
+        "source_sha256": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Source Sha256"
+        },
+        "tick": {
+          "minimum": 0,
+          "title": "Tick",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "schema_version",
+        "sequence",
+        "phase",
+        "tick",
+        "event_type",
+        "agent_states"
+      ],
+      "title": "KeyframeRecord",
+      "type": "object"
+    },
+    "ManifestRecord": {
+      "additionalProperties": true,
+      "properties": {
+        "agent_count": {
+          "title": "Agent Count",
+          "type": "integer"
+        },
+        "attempt_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Attempt Id"
+        },
+        "event_type": {
+          "const": "MANIFEST",
+          "title": "Event Type",
+          "type": "string"
+        },
+        "git_commit": {
+          "title": "Git Commit",
+          "type": "string"
+        },
+        "phase": {
+          "enum": [
+            "pre_move",
+            "post_move"
+          ],
+          "title": "Phase",
+          "type": "string"
+        },
+        "random_seed": {
+          "title": "Random Seed",
+          "type": "integer"
+        },
+        "run_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Run Id"
+        },
+        "schema_version": {
+          "const": "telemetry-2",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "sequence": {
+          "minimum": 1,
+          "title": "Sequence",
+          "type": "integer"
+        },
+        "source_sha256": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Source Sha256"
+        }
+      },
+      "required": [
+        "schema_version",
+        "sequence",
+        "phase",
+        "event_type",
+        "git_commit",
+        "random_seed",
+        "agent_count"
+      ],
+      "title": "ManifestRecord",
+      "type": "object"
+    },
+    "MessageRecord": {
+      "additionalProperties": true,
+      "properties": {
+        "acknowledgement": {
+          "title": "Acknowledgement",
+          "type": "integer"
+        },
+        "attempt_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Attempt Id"
+        },
+        "event_type": {
+          "const": "MESSAGE",
+          "title": "Event Type",
+          "type": "string"
+        },
+        "kind": {
+          "enum": [
+            "BROADCAST",
+            "OFFER"
+          ],
+          "title": "Kind",
+          "type": "string"
+        },
+        "payload_bytes": {
+          "title": "Payload Bytes",
+          "type": "integer"
+        },
+        "phase": {
+          "enum": [
+            "pre_move",
+            "post_move"
+          ],
+          "title": "Phase",
+          "type": "string"
+        },
+        "points": {
+          "items": {
+            "items": {
+              "type": "integer"
+            },
+            "type": "array"
+          },
+          "title": "Points",
+          "type": "array"
+        },
+        "recipient": {
+          "title": "Recipient",
+          "type": "string"
+        },
+        "run_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Run Id"
+        },
+        "schema_version": {
+          "const": "telemetry-2",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "sender": {
+          "title": "Sender",
+          "type": "string"
+        },
+        "sequence": {
+          "minimum": 1,
+          "title": "Sequence",
+          "type": "integer"
+        },
+        "session_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Session Id"
+        },
+        "source_sha256": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Source Sha256"
+        },
+        "tick": {
+          "minimum": 0,
+          "title": "Tick",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "schema_version",
+        "sequence",
+        "phase",
+        "tick",
+        "event_type",
+        "sender",
+        "recipient",
+        "points",
+        "payload_bytes",
+        "kind",
+        "session_id",
+        "acknowledgement"
+      ],
+      "title": "MessageRecord",
+      "type": "object"
+    },
+    "MoveRecord": {
+      "additionalProperties": true,
+      "properties": {
+        "agent_id": {
+          "title": "Agent Id",
+          "type": "string"
+        },
+        "attempt_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Attempt Id"
+        },
+        "event_type": {
+          "const": "MOVE",
+          "title": "Event Type",
+          "type": "string"
+        },
+        "is_waiting": {
+          "title": "Is Waiting",
+          "type": "boolean"
+        },
+        "phase": {
+          "enum": [
+            "pre_move",
+            "post_move"
+          ],
+          "title": "Phase",
+          "type": "string"
+        },
+        "remaining_dist": {
+          "title": "Remaining Dist",
+          "type": "integer"
+        },
+        "run_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Run Id"
+        },
+        "schema_version": {
+          "const": "telemetry-2",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "sequence": {
+          "minimum": 1,
+          "title": "Sequence",
+          "type": "integer"
+        },
+        "source_sha256": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Source Sha256"
+        },
+        "tick": {
+          "minimum": 0,
+          "title": "Tick",
+          "type": "integer"
+        },
+        "x": {
+          "title": "X",
+          "type": "integer"
+        },
+        "y": {
+          "title": "Y",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "schema_version",
+        "sequence",
+        "phase",
+        "tick",
+        "event_type",
+        "agent_id",
+        "x",
+        "y",
+        "is_waiting",
+        "remaining_dist"
+      ],
+      "title": "MoveRecord",
+      "type": "object"
+    },
+    "MovementRepairComponent": {
+      "properties": {
+        "agents": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Agents",
+          "type": "array"
+        },
+        "search_nodes": {
+          "minimum": 0,
+          "title": "Search Nodes",
+          "type": "integer"
+        },
+        "status": {
+          "enum": [
+            "repaired",
+            "budget_exhausted",
+            "immediate_infeasible",
+            "progress_unavailable"
+          ],
+          "title": "Status",
+          "type": "string"
+        }
+      },
+      "required": [
+        "agents",
+        "status",
+        "search_nodes"
+      ],
+      "title": "MovementRepairComponent",
+      "type": "object"
+    },
+    "MovementRepairRecord": {
+      "additionalProperties": true,
+      "properties": {
+        "attempt_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Attempt Id"
+        },
+        "cause": {
+          "default": "semantic",
+          "enum": [
+            "semantic",
+            "progress"
+          ],
+          "title": "Cause",
+          "type": "string"
+        },
+        "components": {
+          "items": {
+            "$ref": "#/$defs/MovementRepairComponent"
+          },
+          "title": "Components",
+          "type": "array"
+        },
+        "event_type": {
+          "const": "MOVEMENT_REPAIR",
+          "title": "Event Type",
+          "type": "string"
+        },
+        "node_limit": {
+          "minimum": 0,
+          "title": "Node Limit",
+          "type": "integer"
+        },
+        "phase": {
+          "enum": [
+            "pre_move",
+            "post_move"
+          ],
+          "title": "Phase",
+          "type": "string"
+        },
+        "remaining_blocked_agents": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Remaining Blocked Agents",
+          "type": "array"
+        },
+        "remaining_holds": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Remaining Holds",
+          "type": "array"
+        },
+        "run_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Run Id"
+        },
+        "schema_version": {
+          "const": "telemetry-2",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "search_nodes": {
+          "minimum": 0,
+          "title": "Search Nodes",
+          "type": "integer"
+        },
+        "sequence": {
+          "minimum": 1,
+          "title": "Sequence",
+          "type": "integer"
+        },
+        "source_sha256": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Source Sha256"
+        },
+        "tick": {
+          "minimum": 0,
+          "title": "Tick",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "schema_version",
+        "sequence",
+        "phase",
+        "tick",
+        "event_type",
+        "node_limit",
+        "search_nodes",
+        "components",
+        "remaining_holds"
+      ],
+      "title": "MovementRepairRecord",
+      "type": "object"
+    },
+    "NegotiationStopRecord": {
+      "additionalProperties": true,
+      "properties": {
+        "attempt_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Attempt Id"
+        },
+        "diagnostics": {
+          "additionalProperties": true,
+          "title": "Diagnostics",
+          "type": "object"
+        },
+        "event_type": {
+          "const": "NEGOTIATION_STOP",
+          "title": "Event Type",
+          "type": "string"
+        },
+        "phase": {
+          "enum": [
+            "pre_move",
+            "post_move"
+          ],
+          "title": "Phase",
+          "type": "string"
+        },
+        "reason": {
+          "title": "Reason",
+          "type": "string"
+        },
+        "run_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Run Id"
+        },
+        "schema_version": {
+          "const": "telemetry-2",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "scope": {
+          "title": "Scope",
+          "type": "string"
+        },
+        "sequence": {
+          "minimum": 1,
+          "title": "Sequence",
+          "type": "integer"
+        },
+        "source_sha256": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Source Sha256"
+        },
+        "tick": {
+          "minimum": 0,
+          "title": "Tick",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "schema_version",
+        "sequence",
+        "phase",
+        "tick",
+        "event_type",
+        "reason",
+        "scope",
+        "diagnostics"
+      ],
+      "title": "NegotiationStopRecord",
+      "type": "object"
+    },
+    "ObservationRecord": {
+      "additionalProperties": true,
+      "properties": {
+        "attempt_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Attempt Id"
+        },
+        "event_type": {
+          "const": "OBSERVATION",
+          "title": "Event Type",
+          "type": "string"
+        },
+        "phase": {
+          "enum": [
+            "pre_move",
+            "post_move"
+          ],
+          "title": "Phase",
+          "type": "string"
+        },
+        "run_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Run Id"
+        },
+        "schema_version": {
+          "const": "telemetry-2",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "sequence": {
+          "minimum": 1,
+          "title": "Sequence",
+          "type": "integer"
+        },
+        "source_sha256": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Source Sha256"
+        },
+        "tick": {
+          "minimum": 0,
+          "title": "Tick",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "schema_version",
+        "sequence",
+        "phase",
+        "tick",
+        "event_type"
+      ],
+      "title": "ObservationRecord",
+      "type": "object"
+    },
+    "ReachedStateRecord": {
+      "additionalProperties": true,
+      "properties": {
+        "attempt_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Attempt Id"
+        },
+        "component_builds": {
+          "minimum": 1,
+          "title": "Component Builds",
+          "type": "integer"
+        },
+        "disconnected_agents": {
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Disconnected Agents",
+          "type": "array"
+        },
+        "event_type": {
+          "const": "REACHED_STATE",
+          "title": "Event Type",
+          "type": "string"
+        },
+        "parked_cells": {
+          "items": {
+            "items": {
+              "type": "integer"
+            },
+            "type": "array"
+          },
+          "minItems": 1,
+          "title": "Parked Cells",
+          "type": "array"
+        },
+        "phase": {
+          "enum": [
+            "pre_move",
+            "post_move"
+          ],
+          "title": "Phase",
+          "type": "string"
+        },
+        "run_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Run Id"
+        },
+        "schema_version": {
+          "const": "telemetry-2",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "scope": {
+          "const": "reached_state_only",
+          "title": "Scope",
+          "type": "string"
+        },
+        "sequence": {
+          "minimum": 1,
+          "title": "Sequence",
+          "type": "integer"
+        },
+        "source_sha256": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Source Sha256"
+        },
+        "tick": {
+          "minimum": 0,
+          "title": "Tick",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "schema_version",
+        "sequence",
+        "phase",
+        "tick",
+        "event_type",
+        "scope",
+        "disconnected_agents",
+        "parked_cells",
+        "component_builds"
+      ],
+      "title": "ReachedStateRecord",
+      "type": "object"
+    },
+    "ReplanRecord": {
+      "additionalProperties": true,
+      "properties": {
+        "agent_id": {
+          "title": "Agent Id",
+          "type": "string"
+        },
+        "attempt_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Attempt Id"
+        },
+        "blocking_parked_cells": {
+          "minimum": 0,
+          "title": "Blocking Parked Cells",
+          "type": "integer"
+        },
+        "event_type": {
+          "const": "REPLAN",
+          "title": "Event Type",
+          "type": "string"
+        },
+        "expansions": {
+          "minimum": 0,
+          "title": "Expansions",
+          "type": "integer"
+        },
+        "phase": {
+          "enum": [
+            "pre_move",
+            "post_move"
+          ],
+          "title": "Phase",
+          "type": "string"
+        },
+        "run_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Run Id"
+        },
+        "schema_version": {
+          "const": "telemetry-2",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "search_status": {
+          "title": "Search Status",
+          "type": "string"
+        },
+        "sequence": {
+          "minimum": 1,
+          "title": "Sequence",
+          "type": "integer"
+        },
+        "source_sha256": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Source Sha256"
+        },
+        "static_reachable": {
+          "title": "Static Reachable",
+          "type": "boolean"
+        },
+        "terminal": {
+          "title": "Terminal",
+          "type": "boolean"
+        },
+        "tick": {
+          "minimum": 0,
+          "title": "Tick",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "schema_version",
+        "sequence",
+        "phase",
+        "tick",
+        "event_type",
+        "agent_id",
+        "search_status",
+        "expansions",
+        "static_reachable",
+        "blocking_parked_cells",
+        "terminal"
+      ],
+      "title": "ReplanRecord",
+      "type": "object"
+    },
+    "SafetyRecord": {
+      "additionalProperties": true,
+      "properties": {
+        "actual": {
+          "items": {
+            "type": "integer"
+          },
+          "title": "Actual",
+          "type": "array"
+        },
+        "agent_id": {
+          "title": "Agent Id",
+          "type": "string"
+        },
+        "attempt_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Attempt Id"
+        },
+        "desired": {
+          "items": {
+            "type": "integer"
+          },
+          "title": "Desired",
+          "type": "array"
+        },
+        "event_type": {
+          "const": "SAFETY",
+          "title": "Event Type",
+          "type": "string"
+        },
+        "phase": {
+          "enum": [
+            "pre_move",
+            "post_move"
+          ],
+          "title": "Phase",
+          "type": "string"
+        },
+        "reason": {
+          "title": "Reason",
+          "type": "string"
+        },
+        "run_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Run Id"
+        },
+        "schema_version": {
+          "const": "telemetry-2",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "semantic_violation": {
+          "title": "Semantic Violation",
+          "type": "boolean"
+        },
+        "sequence": {
+          "minimum": 1,
+          "title": "Sequence",
+          "type": "integer"
+        },
+        "source_sha256": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Source Sha256"
+        },
+        "tick": {
+          "minimum": 0,
+          "title": "Tick",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "schema_version",
+        "sequence",
+        "phase",
+        "tick",
+        "event_type",
+        "agent_id",
+        "reason",
+        "desired",
+        "actual",
+        "semantic_violation"
+      ],
+      "title": "SafetyRecord",
+      "type": "object"
+    },
+    "SessionRecord": {
+      "additionalProperties": true,
+      "properties": {
+        "attempt_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Attempt Id"
+        },
+        "event_type": {
+          "const": "NEGO_SESSION",
+          "title": "Event Type",
+          "type": "string"
+        },
+        "initiator_id": {
+          "title": "Initiator Id",
+          "type": "string"
+        },
+        "opponent_id": {
+          "title": "Opponent Id",
+          "type": "string"
+        },
+        "outcome": {
+          "enum": [
+            "AGREED",
+            "FAILED"
+          ],
+          "title": "Outcome",
+          "type": "string"
+        },
+        "phase": {
+          "enum": [
+            "pre_move",
+            "post_move"
+          ],
+          "title": "Phase",
+          "type": "string"
+        },
+        "reject_reason": {
+          "title": "Reject Reason",
+          "type": "string"
+        },
+        "run_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Run Id"
+        },
+        "schema_version": {
+          "const": "telemetry-2",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "sequence": {
+          "minimum": 1,
+          "title": "Sequence",
+          "type": "integer"
+        },
+        "session_id": {
+          "title": "Session Id",
+          "type": "string"
+        },
+        "source_sha256": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Source Sha256"
+        },
+        "tick": {
+          "minimum": 0,
+          "title": "Tick",
+          "type": "integer"
+        },
+        "tokens_transferred": {
+          "title": "Tokens Transferred",
+          "type": "integer"
+        },
+        "total_rounds": {
+          "title": "Total Rounds",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "schema_version",
+        "sequence",
+        "phase",
+        "tick",
+        "event_type",
+        "session_id",
+        "initiator_id",
+        "opponent_id",
+        "total_rounds",
+        "outcome",
+        "tokens_transferred",
+        "reject_reason"
+      ],
+      "title": "SessionRecord",
+      "type": "object"
+    },
+    "TransferRecord": {
+      "additionalProperties": true,
+      "properties": {
+        "amount": {
+          "minimum": 0,
+          "title": "Amount",
+          "type": "integer"
+        },
+        "attempt_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Attempt Id"
+        },
+        "balances_after": {
+          "additionalProperties": {
+            "type": "integer"
+          },
+          "title": "Balances After",
+          "type": "object"
+        },
+        "balances_before": {
+          "additionalProperties": {
+            "type": "integer"
+          },
+          "title": "Balances Before",
+          "type": "object"
+        },
+        "event_type": {
+          "const": "TOKEN_TRANSFER",
+          "title": "Event Type",
+          "type": "string"
+        },
+        "payee": {
+          "title": "Payee",
+          "type": "string"
+        },
+        "payer": {
+          "title": "Payer",
+          "type": "string"
+        },
+        "phase": {
+          "enum": [
+            "pre_move",
+            "post_move"
+          ],
+          "title": "Phase",
+          "type": "string"
+        },
+        "run_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Run Id"
+        },
+        "schema_version": {
+          "const": "telemetry-2",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "sequence": {
+          "minimum": 1,
+          "title": "Sequence",
+          "type": "integer"
+        },
+        "source_sha256": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Source Sha256"
+        },
+        "tick": {
+          "minimum": 0,
+          "title": "Tick",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "schema_version",
+        "sequence",
+        "phase",
+        "tick",
+        "event_type",
+        "payer",
+        "payee",
+        "amount",
+        "balances_before",
+        "balances_after"
+      ],
+      "title": "TransferRecord",
+      "type": "object"
+    }
+  },
+  "discriminator": {
+    "mapping": {
+      "BID": "#/$defs/BidRecord",
+      "BROADCAST": "#/$defs/BroadcastRecord",
+      "DECISION_HEAT": "#/$defs/DecisionHeatEventRecord",
+      "KEYFRAME": "#/$defs/KeyframeRecord",
+      "MANIFEST": "#/$defs/ManifestRecord",
+      "MESSAGE": "#/$defs/MessageRecord",
+      "MOVE": "#/$defs/MoveRecord",
+      "MOVEMENT_REPAIR": "#/$defs/MovementRepairRecord",
+      "NEGOTIATION_STOP": "#/$defs/NegotiationStopRecord",
+      "NEGO_SESSION": "#/$defs/SessionRecord",
+      "OBSERVATION": "#/$defs/ObservationRecord",
+      "REACHED_STATE": "#/$defs/ReachedStateRecord",
+      "REPLAN": "#/$defs/ReplanRecord",
+      "SAFETY": "#/$defs/SafetyRecord",
+      "TOKEN_TRANSFER": "#/$defs/TransferRecord"
+    },
+    "propertyName": "event_type"
+  },
+  "oneOf": [
+    {
+      "$ref": "#/$defs/ManifestRecord"
+    },
+    {
+      "$ref": "#/$defs/MoveRecord"
+    },
+    {
+      "$ref": "#/$defs/KeyframeRecord"
+    },
+    {
+      "$ref": "#/$defs/BidRecord"
+    },
+    {
+      "$ref": "#/$defs/SessionRecord"
+    },
+    {
+      "$ref": "#/$defs/BroadcastRecord"
+    },
+    {
+      "$ref": "#/$defs/MessageRecord"
+    },
+    {
+      "$ref": "#/$defs/TransferRecord"
+    },
+    {
+      "$ref": "#/$defs/SafetyRecord"
+    },
+    {
+      "$ref": "#/$defs/ObservationRecord"
+    },
+    {
+      "$ref": "#/$defs/MovementRepairRecord"
+    },
+    {
+      "$ref": "#/$defs/ReplanRecord"
+    },
+    {
+      "$ref": "#/$defs/ReachedStateRecord"
+    },
+    {
+      "$ref": "#/$defs/NegotiationStopRecord"
+    },
+    {
+      "$ref": "#/$defs/DecisionHeatEventRecord"
+    }
+  ]
+}

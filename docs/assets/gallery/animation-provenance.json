@@ -1,0 +1,142 @@
+{
+  "schema": "recorded-replay-animation-1",
+  "run_id": "run-82892e2fe62b41b6bd5d90a5c88a6cf6",
+  "artifact_sha256": "7a36bcc809cb3ad60a40cc821cbccdb7fc0f00347eaae7aa8532938b4d23cb15",
+  "simulation_source_sha256": "d5ee4cf9091946ea0eec8c91d613e24fcdf994e5772b2a2a161207aed488524a",
+  "selected_agent": {
+    "agent_id": "agent_001",
+    "display_label": 2,
+    "arrival_tick": 47,
+    "moves": 46,
+    "wait_actions": 1,
+    "negotiation_sessions": 5,
+    "changed_plan_ticks": 5,
+    "plan_change_ticks": [
+      3,
+      19,
+      22,
+      23,
+      24
+    ],
+    "negotiation_ticks": [
+      2,
+      18,
+      21,
+      22,
+      23
+    ],
+    "start": [
+      2,
+      0
+    ],
+    "goal": [
+      19,
+      25
+    ]
+  },
+  "grid": [
+    32,
+    32
+  ],
+  "agents": 80,
+  "obstacles": 205,
+  "validation": "valid_solution",
+  "ticks": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    29,
+    30,
+    31,
+    32,
+    33,
+    34,
+    35,
+    36,
+    37,
+    38,
+    39,
+    40,
+    41,
+    42,
+    43,
+    44,
+    45,
+    46,
+    47,
+    48,
+    49,
+    50
+  ],
+  "makespan": 50,
+  "sum_of_costs": 1778,
+  "negotiations": 103,
+  "layers": {
+    "Executed paths": true,
+    "Hindsight heat": true,
+    "Recorded local heat": false,
+    "FoV geometry": true,
+    "Recorded local view": false,
+    "Recorded reservations": true
+  },
+  "semantics": "Selected agent in global replay context. Executed paths and heat are hindsight, not contemporaneous agent knowledge. Setting 4 removes agents after their arrival tick.",
+  "selection_rule": "Maximize observed plan-change ticks, then duration of the agent's trajectory, then negotiation participation. Also provide the longest-route alternative.",
+  "plan_change_definition": "Compare each post-move remaining plan with the preceding plan after consuming its first action. Counts changed ticks, not every intermediate replan or spatial turn.",
+  "rendering": "Actual GUI Canvas 2D at DPR 2; no interpolated positions. GIF durations adjusted without changing image bytes.",
+  "verification": "All 51 master frames compared with GUI captures; saved run/chunks unchanged; browser playback checked.",
+  "assets": [
+    {
+      "file": "negotiation-agent-2.gif",
+      "sha256": "1666e1b8fa0815b3b7fb1351031229ebe1116b9096a2447c544f23086ea3d76d",
+      "bytes": 2367068,
+      "width": 1024,
+      "height": 1024,
+      "frames": 51,
+      "duration_ms": 30600
+    },
+    {
+      "file": "negotiation-agent-2-2048.gif",
+      "sha256": "4de1e78d7757995394de91057aa3e12508ebb44cdb54505e0e7aa84cd8ff805f",
+      "bytes": 3818009,
+      "width": 2048,
+      "height": 2048,
+      "frames": 51,
+      "duration_ms": 30600
+    },
+    {
+      "file": "negotiation-agent-2-poster.png",
+      "sha256": "e5b9b7b35f7d55de31e735fd2bcfcdcbd60cfbe7900e7855e71463c88cc8c61c",
+      "bytes": 258721,
+      "width": 2048,
+      "height": 2048,
+      "frames": 1,
+      "duration_ms": null
+    }
+  ]
+}

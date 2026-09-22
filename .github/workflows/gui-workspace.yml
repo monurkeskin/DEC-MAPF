@@ -1,0 +1,114 @@
+name: GUI workspace acceptance
+on:
+  push:
+    branches: [main, gui/research-workspace-v1, engineering/**]
+  pull_request:
+    branches: [gui-development, main]
+  workflow_dispatch:
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+env:
+  UV_CACHE_DIR: ${{ github.workspace }}/.cache/uv
+permissions:
+  contents: read
+jobs:
+  locked-acceptance:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '25.8.2'
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+      - name: Restore locked dependency downloads
+        uses: actions/cache@v4
+        with:
+          path: ${{ env.UV_CACHE_DIR }}
+          key: uv-0.11.18-${{ runner.os }}-3.12-${{ hashFiles('uv.lock') }}
+      - name: Install locked environments
+        run: |
+          python -m pip install uv==0.11.18
+          uv sync --locked --extra gui --extra analysis --extra dev --extra docs
+          npm --prefix frontend ci
+      - name: Validate clean source export
+        run: |
+          .venv/bin/python scripts/public_export.py "$RUNNER_TEMP/decmapf-public-source"
+          cd "$RUNNER_TEMP/decmapf-public-source"
+          "$GITHUB_WORKSPACE/.venv/bin/python" scripts/check_documentation.py
+      - name: Python checks
+        run: |
+          .venv/bin/python -m ruff check src tests
+          .venv/bin/python -m mypy src
+          .venv/bin/python -m pytest --junitxml=python-results.xml
+      - name: Build the local documentation
+        run: |
+          .venv/bin/python scripts/build_docs.py
+      - name: Contract generation and frontend build
+        run: |
+          .venv/bin/python scripts/export_gui_schema.py
+          npm --prefix frontend run schema
+          git diff --exit-code -- docs/gui/openapi.json docs/gui/telemetry.schema.json frontend/src/api/generated.ts frontend/src/api/presets.generated.ts
+          npm --prefix frontend run format:check
+          npm --prefix frontend run lint
+          node --test scripts/frontend_licenses.test.mjs
+          npm --prefix frontend run build
+      - name: Real browser acceptance
+        working-directory: frontend
+        run: |
+          npx playwright install --with-deps chromium
+          npm test
+      - name: Reject skipped or flaky required checks
+        run: .venv/bin/python scripts/check_acceptance.py python-results.xml --browser-json frontend/test-results/results.json
+      - name: Build source distribution and qualify the wheel built from it
+        run: |
+          .venv/bin/python scripts/package_gui.py
+          uv build
+          .venv/bin/python scripts/check_distributions.py dist > distribution-check.json
+      - name: Verify core-only wheel without GUI dependencies
+        run: |
+          uv export --locked --no-emit-project --no-hashes -o "$RUNNER_TEMP/core-requirements.txt"
+          uv venv "$RUNNER_TEMP/core-wheel-test"
+          uv pip install --python "$RUNNER_TEMP/core-wheel-test/bin/python" -r "$RUNNER_TEMP/core-requirements.txt" dist/*.whl
+          cd "$RUNNER_TEMP"
+          "$RUNNER_TEMP/core-wheel-test/bin/python" "$GITHUB_WORKSPACE/scripts/smoke_headless_wheel.py" > "$GITHUB_WORKSPACE/core-wheel-smoke.json"
+          "$RUNNER_TEMP/core-wheel-test/bin/python" "$GITHUB_WORKSPACE/scripts/smoke_adoption_wheel.py" > "$GITHUB_WORKSPACE/adoption-wheel-smoke.json"
+      - name: Verify optional resource admission without GUI dependencies
+        run: |
+          uv export --locked --extra resources --no-emit-project --no-hashes -o "$RUNNER_TEMP/resource-requirements.txt"
+          uv venv "$RUNNER_TEMP/resource-wheel-test"
+          uv pip install --python "$RUNNER_TEMP/resource-wheel-test/bin/python" -r "$RUNNER_TEMP/resource-requirements.txt" dist/*.whl
+          cd "$RUNNER_TEMP"
+          "$RUNNER_TEMP/resource-wheel-test/bin/python" "$GITHUB_WORKSPACE/scripts/smoke_headless_wheel.py" --resources > "$GITHUB_WORKSPACE/resource-wheel-smoke.json"
+      - name: Verify installed wheel outside checkout
+        run: |
+          uv export --locked --extra gui --extra analysis --extra dev --no-emit-project --no-hashes -o "$RUNNER_TEMP/wheel-requirements.txt"
+          uv venv "$RUNNER_TEMP/wheel-test"
+          uv pip install --python "$RUNNER_TEMP/wheel-test/bin/python" -r "$RUNNER_TEMP/wheel-requirements.txt" dist/*.whl
+          cd "$RUNNER_TEMP"
+          "$RUNNER_TEMP/wheel-test/bin/python" "$GITHUB_WORKSPACE/scripts/smoke_installed_wheel.py" > "$GITHUB_WORKSPACE/wheel-smoke.json"
+      - name: Preserve required acceptance receipts in job logs
+        if: always()
+        run: python scripts/ci_evidence.py python-results.xml frontend/test-results/results.json core-wheel-smoke.json resource-wheel-smoke.json wheel-smoke.json adoption-wheel-smoke.json distribution-check.json
+      - name: Publish downloadable acceptance archive
+        uses: actions/upload-artifact@v4
+        if: always()
+        continue-on-error: true
+        with:
+          name: gui-acceptance-evidence
+          retention-days: 7
+          path: |
+            wheel-smoke.json
+            core-wheel-smoke.json
+            resource-wheel-smoke.json
+            python-results.xml
+            frontend/test-results/
+            adoption-wheel-smoke.json
+            distribution-check.json
+            dist/*.tar.gz
+            dist/*.whl

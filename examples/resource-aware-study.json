@@ -1,0 +1,47 @@
+{
+  "name": "Resource-aware local teaching study",
+  "scenarios": [
+    {
+      "scenario_id": "crossing-2a"
+    },
+    {
+      "scenario_id": "grid-8x8-4a"
+    }
+  ],
+  "defaults": {
+    "setting": "SETTING_4",
+    "timeout_sec": 15,
+    "max_steps": 60,
+    "fov_size": 5,
+    "initial_tokens": 5,
+    "recording_level": "metrics-only"
+  },
+  "matrix": {
+    "solver_id": [
+      "Prioritized",
+      "Decentralized-HeatMap"
+    ]
+  },
+  "budget": {
+    "workers": 2,
+    "wall_seconds": 120,
+    "max_trials": 4,
+    "disk_mb": 128,
+    "resources": {
+      "centralized_slots": 2,
+      "decentralized_slots": 4,
+      "max_cpu_percent": 90,
+      "free_memory_mb": 1024,
+      "max_owned_memory_mb": 18432,
+      "optimal_reserve_mb": 10240,
+      "bounded_reserve_mb": 2048,
+      "decentralized_reserve_mb": 256,
+      "idle_timeout_sec": 300
+    }
+  },
+  "sampling": {
+    "population": "Two teaching fixtures",
+    "independent_unit": "scenario",
+    "generalization": "none"
+  }
+}

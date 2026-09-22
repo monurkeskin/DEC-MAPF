@@ -1,0 +1,67 @@
+site_name: DEC-MAPF
+site_url: https://monurkeskin.github.io/DEC-MAPF/
+copyright: Copyright &copy; 2024–2026 Mehmet Onur Keskin · MIT · See Licenses and attribution
+site_description: Python simulation and experimentation for decentralized MAPF, centralized solver comparisons, reproducible studies and visual inspection.
+repo_url: https://github.com/monurkeskin/DEC-MAPF
+repo_name: monurkeskin/DEC-MAPF
+docs_dir: .docs-build/content
+site_dir: .docs-build/site
+use_directory_urls: false
+theme:
+  name: material
+  font: false
+  features:
+    - navigation.sections
+    - navigation.indexes
+    - navigation.top
+    - search.highlight
+    - search.suggest
+    - content.code.copy
+plugins:
+  - search:
+      lang: en
+markdown_extensions:
+  - admonition
+  - tables
+  - fenced_code
+  - toc:
+      permalink: true
+nav:
+  - Start: index.md
+  - Alpha status: docs/ALPHA-STATUS.md
+  - Choose a workflow: docs/README.md
+  - Tutorials:
+      - Install: docs/INSTALLATION.md
+      - First headless study: docs/HEADLESS.md
+      - First GUI session: docs/GUI-GUIDE.md
+      - A recorded negotiation: docs/NEGOTIATION-WALKTHROUGH.md
+      - Reusable experiment capsules: examples/capsules/README.md
+  - Task guides:
+      - Create a study: docs/NEW-STUDY.md
+      - Import scenarios: docs/SCENARIOS.md
+      - Bound local resources: docs/RESOURCE-ADMISSION.md
+      - Diagnose a problem: docs/TROUBLESHOOTING.md
+      - Add a solver or protocol: docs/EXTENDING.md
+  - Reference:
+      - Public Python API: docs/PUBLIC-API.md
+      - Parameters: docs/PARAMETERS.md
+      - Metrics: docs/METRICS.md
+      - Solvers: docs/SOLVERS.md
+      - Experiment records: docs/EXPERIMENTS.md
+      - Compatibility: docs/COMPATIBILITY.md
+      - Glossary and visual legend: docs/GLOSSARY.md
+  - Explanation:
+      - Scientific interpretation: docs/SCIENCE.md
+      - Reproducibility: REPRODUCIBILITY.md
+      - Architecture: docs/ARCHITECTURE.md
+      - TAOP semantics: docs/TAOP-CONFORMANCE.md
+      - Centralized semantics: docs/CENTRALIZED-CONFORMANCE.md
+      - Gallery: docs/GALLERY.md
+  - Contribute and maintain:
+      - Contribution guide: CONTRIBUTING.md
+      - Scoped starting tasks: docs/CONTRIBUTOR-TASKS.md
+      - Licenses and attribution: docs/LICENSING.md
+      - Maintenance and support: docs/MAINTENANCE.md
+      - Build qualification: docs/RELEASE-CHECKS.md
+      - Build these docs: docs/DOCUMENTATION-SITE.md
+      - Build identity: docs/SITE-VERSION.md
