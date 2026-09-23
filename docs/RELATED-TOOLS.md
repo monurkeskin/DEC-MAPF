@@ -1,0 +1,21 @@
+# Related tools and engineering references
+
+[Documentation index](README.md) · [Project map](PROJECT-MAP.md)
+
+These projects informed the usability, interface and experiment-recording choices below. They are engineering references; their implementations and benchmark results are separate from DEC-MAPF.
+
+| Primary source | Useful pattern | Where it appears here |
+| --- | --- | --- |
+| [SMART project and demo](https://smart-mapf.github.io/smart/) · [documentation](https://jingtianyan.github.io/smart-docs/) | Discoverable examples with map dimensions/agent counts; detailed visualization controls | [Gallery](GALLERY.md), [GUI walkthrough](GUI-GUIDE.md) and saved-run library. |
+| [PRIMAL GRID](https://primalgrid.netlify.app/home) · [PRIMAL code](https://github.com/gsartoretti/PRIMAL) | A direct path from explanation to an interactive example | Independent GUI/headless entry points, scenario editing and a small validated first run. |
+| [POGEMA benchmark](https://github.com/Cognitive-AI-Systems/pogema-benchmark) · [environment](https://github.com/Cognitive-AI-Systems/pogema) | Explicit configuration, seeds, benchmark families and linked evaluation evidence | Versioned presets, immutable plans and separation of tutorial, current-run and historical evidence |
+| [PettingZoo environment tests](https://pettingzoo.farama.org/content/environment_tests/) | Conformance tests and versioned behavior beyond a single happy-path example | Cross-interface preset tests, lifecycle failure tests and concrete trajectory witnesses |
+| [PBS](https://github.com/Jiaoyang-Li/PBS), [EECBS](https://github.com/Jiaoyang-Li/EECBS), [CBSH2-RTC](https://github.com/Jiaoyang-Li/CBSH2-RTC) | Explicit map/scenario/agent/cutoff commands; native-build checks; distinction between current and paper code | [Solver identities](SOLVERS.md), [native profiles](NATIVE-BASELINES.md), platform CI and [article boundaries](../REPRODUCIBILITY.md) |
+| [MovingAI MAPF benchmarks](https://movingai.com/benchmarks/mapf.html) · [MAPF definitions](https://ojs.aaai.org/index.php/SOCS/article/view/18510) | Make collision rules, objectives and target behavior explicit | Problem-assumptions card, [scientific semantics](SCIENCE.md) and independent validation |
+| [SILLM](https://diligentpanda.github.io/SILLM/) · [implementation](https://github.com/DiligentPanda/Scalable-Imitation-Learning-for-LMAPF) | Tell readers which code/configuration belongs to which experiment | Algorithm/configuration provenance and historical-result qualifications. |
+| [ITA-CBS2](https://github.com/TachikakaMin/ITA-CBS2) and [MAPF-LRR2023](https://github.com/DiligentPanda/MAPF-LRR2023) | Runnable experiment recipes, solver flags and visualization guidance | Bounded examples, generated parameter reference and explicit resource policies |
+| [AMLGym](https://github.com/LamannaLeonardo/AMLGym), [MAcq](https://github.com/AI-Planning/macq), [libMultiRobotPlanning](https://github.com/whoenig/libMultiRobotPlanning) | Clear method/adapter boundaries and testable interfaces | [Architecture](ARCHITECTURE.md), [extension contracts](EXTENDING.md) and small independent acceptance cases |
+| [MAPFAST](https://github.com/USC-ACTLab/MAPFAST) | Visible correction notices tied to affected results | Explicit method identity, bounded scientific claims and preserved experiment evidence |
+| [League of Robot Runners](https://leagueofrobotrunners.org/) and [MAPF-Mechanism](https://github.com/lunjohnzhang/MAPF-Mechanism) | Separate problem setup, evaluation and configuration from presentation | [Science](SCIENCE.md), [metrics](METRICS.md) and [reproducibility](../REPRODUCIBILITY.md) |
+
+SMART's official documentation cites RA-L 2026. POGEMA's [ICLR 2025 paper](https://openreview.net/forum?id=6VgwE2tCRm) and PettingZoo's [NeurIPS 2021 paper](https://proceedings.neurips.cc/paper_files/paper/2021/hash/803f7c4c3ff61b71be53a0c803bfb57f-Abstract.html) support their publication context. The linked publications provide context for the software practices above; benchmark comparisons still require matching problem definitions and evaluation settings.

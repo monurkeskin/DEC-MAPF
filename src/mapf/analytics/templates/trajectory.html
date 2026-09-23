@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>DEC-MAPF - Trajectory Replay Viewer</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: #0f172a;
+      color: #f8fafc;
+      margin: 0;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .container {
+      max-width: 900px;
+      width: 100%;
+      background: #1e293b;
+      border-radius: 12px;
+      padding: 24px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+    }
+    h1 {
+      margin-top: 0;
+      font-size: 20px;
+      font-weight: 600;
+      color: #38bdf8;
+      display: flex;
+      justify-content: space-between;
+    }
+    .stats-bar {
+      display: flex;
+      gap: 16px;
+      margin-bottom: 16px;
+      font-size: 13px;
+      color: #94a3b8;
+    }
+    .stats-bar span strong {
+      color: #f8fafc;
+    }
+    canvas {
+      background: #090d16;
+      border: 1px solid #334155;
+      border-radius: 8px;
+      display: block;
+      margin: 0 auto 16px auto;
+    }
+    .controls {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      justify-content: center;
+      margin-top: 8px;
+    }
+    button {
+      background: #38bdf8;
+      color: #0f172a;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 6px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    button:hover {
+      background: #0284c7;
+    }
+    input[type=range] {
+      flex-grow: 1;
+      max-width: 400px;
+    }
+    .step-display {
+      font-family: monospace;
+      font-size: 15px;
+      min-width: 100px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>
+      <span>MAPF Trajectory Replay Viewer</span>
+      <span>${solver_name}</span>
+    </h1>
+    <div class="stats-bar">
+      <span>Agents: <strong>${agent_count}</strong></span>
+      <span>Makespan: <strong>${makespan}</strong></span>
+      <span>Sum of Costs: <strong>${sum_of_costs}</strong></span>
+      <span>Runtime: <strong>${runtime_ms} ms</strong></span>
+      <span>Status: <strong style="color: ${status_color}">${status_text}</strong></span>
+    </div>
+
+    <canvas id="simCanvas" width="640" height="640"></canvas>
+
+    <div class="controls">
+      <button id="playBtn">Play</button>
+      <button id="prevBtn">Prev</button>
+      <input type="range" id="timeSlider" min="0" max="${makespan}" value="0">
+      <button id="nextBtn">Next</button>
+      <span class="step-display">Tick: <strong id="tickLabel">0</strong> / ${makespan}</span>
+    </div>
+  </div>
+
+  <script>
+    const gridW = ${grid_width};
+    const gridH = ${grid_height};
+    const obstacles = ${obstacles};
+    const paths = ${paths};
+    const makespan = ${makespan};
+
+    const canvas = document.getElementById('simCanvas');
+    const ctx = canvas.getContext('2d');
+    const slider = document.getElementById('timeSlider');
+    const tickLabel = document.getElementById('tickLabel');
+    const playBtn = document.getElementById('playBtn');
+
+    const cellW = canvas.width / gridW;
+    const cellH = canvas.height / gridH;
+
+    const colors = [
+      "#38bdf8", "#f43f5e", "#10b981", "#fbbf24", "#a855f7",
+      "#06b6d4", "#f97316", "#84cc16", "#ec4899", "#6366f1"
+    ];
+
+    let currentTick = 0;
+    let isPlaying = false;
+    let playInterval = null;
+
+    function render() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      // Draw Grid Lines
+      ctx.strokeStyle = '#1e293b';
+      ctx.lineWidth = 1;
+      for (let x = 0; x <= gridW; x++) {
+        ctx.beginPath();
+        ctx.moveTo(x * cellW, 0);
+        ctx.lineTo(x * cellW, canvas.height);
+        ctx.stroke();
+      }
+      for (let y = 0; y <= gridH; y++) {
+        ctx.beginPath();
+        ctx.moveTo(0, y * cellH);
+        ctx.lineTo(canvas.width, y * cellH);
+        ctx.stroke();
+      }
+
+      // Draw Obstacles
+      ctx.fillStyle = '#334155';
+      obstacles.forEach(([ox, oy]) => {
+        ctx.fillRect(ox * cellW, oy * cellH, cellW, cellH);
+      });
+
+      // Draw Agent Trails and Positions
+      let cIdx = 0;
+      for (const [aid, pList] of Object.entries(paths)) {
+        const color = colors[cIdx % colors.length];
+        cIdx++;
+
+        // Trail up to currentTick
+        ctx.strokeStyle = color;
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        const maxIdx = Math.min(currentTick, pList.length - 1);
+        for (let i = 0; i <= maxIdx; i++) {
+          const [px, py] = pList[i];
+          const cx = px * cellW + cellW / 2;
+          const cy = py * cellH + cellH / 2;
+          if (i === 0) ctx.moveTo(cx, cy);
+          else ctx.lineTo(cx, cy);
+        }
+        ctx.stroke();
+
+        // Current Position Circle
+        if (pList.length > 0) {
+          const currPt = currentTick < pList.length ? pList[currentTick] : pList[pList.length - 1];
+          const cx = currPt[0] * cellW + cellW / 2;
+          const cy = currPt[1] * cellH + cellH / 2;
+
+          ctx.fillStyle = color;
+          ctx.beginPath();
+          ctx.arc(cx, cy, Math.min(cellW, cellH) * 0.35, 0, Math.PI * 2);
+          ctx.fill();
+
+          ctx.fillStyle = '#0f172a';
+          ctx.font = '10px sans-serif';
+          ctx.textAlign = 'center';
+          ctx.textBaseline = 'middle';
+          ctx.fillText(aid.replace('agent_', ''), cx, cy);
+        }
+      }
+
+      tickLabel.innerText = currentTick;
+      slider.value = currentTick;
+    }
+
+    function setTick(t) {
+      currentTick = Math.max(0, Math.min(makespan, t));
+      render();
+    }
+
+    slider.addEventListener('input', (e) => {
+      setTick(parseInt(e.target.value));
+    });
+
+    document.getElementById('prevBtn').addEventListener('click', () => {
+      setTick(currentTick - 1);
+    });
+
+    document.getElementById('nextBtn').addEventListener('click', () => {
+      setTick(currentTick + 1);
+    });
+
+    playBtn.addEventListener('click', () => {
+      isPlaying = !isPlaying;
+      playBtn.innerText = isPlaying ? 'Pause' : 'Play';
+      if (isPlaying) {
+        playInterval = setInterval(() => {
+          if (currentTick >= makespan) {
+            setTick(0);
+          } else {
+            setTick(currentTick + 1);
+          }
+        }, 300);
+      } else {
+        clearInterval(playInterval);
+      }
+    });
+
+    render();
+  </script>
+</body>
+</html>

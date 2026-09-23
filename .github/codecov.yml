@@ -1,0 +1,58 @@
+# Coverage describes Python test execution, independently of solver performance.
+coverage:
+  status:
+    project:
+      default:
+        target: 95
+        threshold: 0
+        flags: [python]
+        informational: false
+    patch:
+      default:
+        informational: true
+comment: false
+flags:
+  python:
+    paths:
+      - src/mapf/
+    carryforward: false
+
+# Components describe ownership boundaries within the same Python report.
+# Frontend browser acceptance is separate from Python coverage.
+component_management:
+  individual_components:
+    - component_id: core
+      name: Grid, search and physical validation
+      paths:
+        - src/mapf/core/**
+    - component_id: coordination
+      name: Agents, negotiation and simulation engine
+      paths:
+        - src/mapf/agents/**
+        - src/mapf/negotiation/**
+        - src/mapf/engine/**
+    - component_id: solvers
+      name: Centralized solvers and adapters
+      paths:
+        - src/mapf/solvers/**
+    - component_id: application
+      name: Experiment, job and run services
+      paths:
+        - src/mapf/application/**
+    - component_id: gui_api
+      name: GUI backend and HTTP API
+      paths:
+        - src/mapf/gui/**
+    - component_id: analytics
+      name: Metrics, reports and analysis
+      paths:
+        - src/mapf/analytics/**
+        - src/mapf/metrics/**
+    - component_id: telemetry
+      name: Event recording and replay
+      paths:
+        - src/mapf/telemetry/**
+    - component_id: entrypoints
+      name: Public API and command line
+      paths:
+        - ^src/mapf/[^/]+\.py$

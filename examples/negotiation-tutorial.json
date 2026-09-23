@@ -1,0 +1,31 @@
+{
+  "name": "First negotiation study",
+  "scenarios": [
+    {"scenario_id": "crossing-2a"},
+    {"scenario_id": "grid-8x8-4a"}
+  ],
+  "defaults": {
+    "setting": "SETTING_4",
+    "fov_size": 5,
+    "commitment_type": "SC",
+    "initial_tokens": 5,
+    "max_steps": 40,
+    "timeout_sec": 15,
+    "negotiation_deadline_sec": 60,
+    "recording_level": "full-trace",
+    "random_seed": 42
+  },
+  "matrix": {"solver_id": ["Decentralized-HeatMap", "Decentralized-PathAware"]},
+  "budget": {
+    "workers": 1,
+    "wall_seconds": 120,
+    "max_trials": 4,
+    "disk_mb": 256,
+    "threads_per_worker": 1
+  },
+  "sampling": {
+    "population": "Two teaching fixtures",
+    "independent_unit": "scenario geometry and roster",
+    "generalization": "none; tutorial only"
+  }
+}

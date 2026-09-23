@@ -1,0 +1,1431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DEC-MAPF | MAPF Simulation Studio</title>
+    <meta name="description" content="Decentralized Multi-Agent Path Finding simulation and experimentation: compare decentralized methods and centralized solvers, validate trajectories and inspect recorded runs.">
+    <style>
+        :root {
+            --bg-primary: #0a0c14;
+            --bg-card: rgba(18, 22, 36, 0.88);
+            --bg-glass: rgba(25, 32, 54, 0.75);
+            --border-glass: rgba(255, 255, 255, 0.09);
+            --border-glow: rgba(0, 240, 255, 0.25);
+            --accent-cyan: #00f0ff;
+            --accent-purple: #8a2be2;
+            --accent-green: #00ff88;
+            --accent-rose: #ff2d55;
+            --accent-yellow: #ffd60a;
+            --accent-gray: #6e7687;
+            --text-main: #f0f4fc;
+            --text-muted: #8a96b4;
+            --font-main: 'Outfit', sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-primary);
+            background-image:
+                radial-gradient(circle at 10% 20%, rgba(0, 240, 255, 0.05) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(138, 43, 226, 0.06) 0%, transparent 40%);
+            color: var(--text-main);
+            font-family: var(--font-main);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.85rem 2rem;
+            background: var(--bg-glass);
+            backdrop-filter: blur(16px);
+            border-bottom: 1px solid var(--border-glass);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .brand-badge {
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple));
+            color: #000;
+            font-size: 0.75rem;
+            font-weight: 700;
+            padding: 0.25rem 0.6rem;
+            border-radius: 6px;
+            letter-spacing: 0.05em;
+        }
+
+        .brand h1 {
+            font-size: 1.15rem;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+        }
+
+        .nav-tabs {
+            display: flex;
+            gap: 0.5rem;
+            background: rgba(10, 14, 26, 0.6);
+            padding: 0.3rem;
+            border-radius: 8px;
+            border: 1px solid var(--border-glass);
+        }
+
+        .nav-tab-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            padding: 0.4rem 0.9rem;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .nav-tab-btn.active {
+            background: var(--bg-glass);
+            color: var(--accent-cyan);
+            box-shadow: 0 0 10px rgba(0, 240, 255, 0.2);
+        }
+
+        .header-meta {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .provenance-info {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            background: rgba(10, 14, 26, 0.5);
+            padding: 0.3rem 0.6rem;
+            border-radius: 6px;
+            border: 1px solid var(--border-glass);
+        }
+
+        .status-badge {
+            padding: 0.3rem 0.7rem;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            font-family: var(--font-mono);
+        }
+
+        .badge-ready { background: rgba(138, 150, 180, 0.15); color: var(--text-muted); }
+        .badge-running { background: rgba(0, 240, 255, 0.2); color: var(--accent-cyan); }
+        .badge-solved { background: rgba(0, 255, 136, 0.2); color: var(--accent-green); }
+        .badge-failed { background: rgba(255, 45, 85, 0.2); color: var(--accent-rose); }
+        .badge-truncated { background: rgba(255, 214, 10, 0.2); color: var(--accent-yellow); }
+        .badge-invalid { background: rgba(255, 45, 85, 0.35); color: #fff; border: 1px solid var(--accent-rose); }
+
+        .container {
+            display: grid;
+            grid-template-columns: 380px 1fr;
+            gap: 1.5rem;
+            padding: 1.5rem 2rem;
+            flex: 1;
+        }
+
+        .panel {
+            background: var(--bg-card);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--border-glass);
+            border-radius: 14px;
+            padding: 1.25rem;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .panel-title {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--accent-cyan);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid var(--border-glass);
+            padding-bottom: 0.6rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.35rem;
+        }
+
+        label {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        select, input {
+            background: rgba(10, 14, 26, 0.7);
+            border: 1px solid var(--border-glass);
+            color: var(--text-main);
+            padding: 0.55rem 0.75rem;
+            border-radius: 8px;
+            font-family: var(--font-main);
+            font-size: 0.85rem;
+            transition: all 0.2s ease;
+        }
+
+        select:focus, input:focus {
+            outline: none;
+            border-color: var(--accent-cyan);
+            box-shadow: 0 0 12px var(--border-glow);
+        }
+
+        .layer-controls {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.5rem;
+            background: rgba(10, 14, 26, 0.5);
+            padding: 0.75rem;
+            border-radius: 8px;
+            border: 1px solid var(--border-glass);
+        }
+
+        .layer-item {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            font-size: 0.78rem;
+            color: var(--text-main);
+            cursor: pointer;
+        }
+
+        .layer-item input[type="checkbox"] {
+            accent-color: var(--accent-cyan);
+            cursor: pointer;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple));
+            color: #fff;
+            border: none;
+            padding: 0.75rem 1.25rem;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 0.5rem;
+            box-shadow: 0 4px 16px rgba(0, 240, 255, 0.25);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 24px rgba(0, 240, 255, 0.4);
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .main-view {
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
+        }
+
+        .tab-content {
+            display: none;
+            flex-direction: column;
+            gap: 1.25rem;
+        }
+
+        .tab-content.active {
+            display: flex;
+        }
+
+        .metrics-bar {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 0.75rem;
+        }
+
+        .metric-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-glass);
+            border-radius: 10px;
+            padding: 0.75rem 1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.2rem;
+        }
+
+        .metric-label {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .metric-value {
+            font-size: 1.3rem;
+            font-weight: 700;
+            font-family: var(--font-mono);
+            color: var(--accent-cyan);
+        }
+
+        .canvas-container {
+            background: var(--bg-card);
+            border: 1px solid var(--border-glass);
+            border-radius: 14px;
+            padding: 1.25rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.85rem;
+            position: relative;
+        }
+
+        canvas {
+            background: #070910;
+            border: 1px solid var(--border-glass);
+            border-radius: 10px;
+            box-shadow: inset 0 0 20px rgba(0,0,0,0.8);
+            max-width: 100%;
+            height: auto;
+        }
+
+        .controls-row {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            width: 100%;
+            max-width: 650px;
+            padding: 0.5rem 1rem;
+            background: rgba(10, 14, 26, 0.6);
+            border-radius: 10px;
+            border: 1px solid var(--border-glass);
+        }
+
+        .btn-sm {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid var(--border-glass);
+            color: var(--text-main);
+            padding: 0.35rem 0.75rem;
+            border-radius: 6px;
+            font-size: 0.82rem;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .btn-sm:hover {
+            background: rgba(0, 240, 255, 0.2);
+        }
+
+        .slider {
+            flex: 1;
+            accent-color: var(--accent-cyan);
+        }
+
+        .step-label {
+            font-family: var(--font-mono);
+            font-size: 0.82rem;
+            color: var(--accent-cyan);
+            min-width: 90px;
+            text-align: right;
+        }
+
+        .inspector-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            width: 100%;
+        }
+
+        .table-view {
+            width: 100%;
+            border-collapse: collapse;
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+        }
+
+        .table-view th, .table-view td {
+            padding: 0.5rem 0.75rem;
+            border: 1px solid var(--border-glass);
+            text-align: left;
+        }
+
+        .table-view th {
+            background: rgba(25, 32, 54, 0.8);
+            color: var(--accent-cyan);
+        }
+
+        .progress-bar-wrap {
+            width: 100%;
+            height: 12px;
+            background: rgba(10, 14, 26, 0.8);
+            border-radius: 6px;
+            overflow: hidden;
+            border: 1px solid var(--border-glass);
+            position: relative;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent-cyan), var(--accent-purple));
+            width: 0%;
+            transition: width 0.2s ease;
+        }
+
+        .log-box {
+            font-family: var(--font-mono);
+            font-size: 0.78rem;
+            background: rgba(5, 7, 12, 0.8);
+            border: 1px solid var(--border-glass);
+            border-radius: 8px;
+            padding: 0.75rem;
+            max-height: 220px;
+            overflow-y: auto;
+            line-height: 1.4;
+            color: var(--text-muted);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="brand">
+            <span class="brand-badge">Alpha · compatibility viewer</span>
+            <h1>DEC-MAPF Simulation Studio</h1>
+        </div>
+        <div class="nav-tabs">
+            <button class="nav-tab-btn active" onclick="switchTab('replay')">Simulation Replay</button>
+            <button class="nav-tab-btn" onclick="switchTab('compare')">Comparison View</button>
+            <button class="nav-tab-btn" onclick="switchTab('benchmark')">Legacy batch status</button>
+            <button class="nav-tab-btn" onclick="switchTab('archive')">LaTeX & Data Archive</button>
+        </div>
+        <div class="header-meta">
+            <div id="provenance-label" class="provenance-info">Hash: - | Run: -</div>
+            <div id="simulation-status" class="status-badge badge-ready">READY</div>
+        </div>
+    </header>
+
+    <p style="margin: 1rem 2rem; color: var(--text-muted);">Compatibility viewer. Build the React frontend for the full workspace. New batches use <code>mapf batch</code>; the legacy launch endpoint is retired. Supplied archive tables require their own configuration and validation records.</p>
+
+    <div class="container">
+        <!-- Sidebar Configuration -->
+        <div class="panel">
+            <div class="panel-title">
+                <span>Scenario Configuration</span>
+            </div>
+
+            <div class="form-group">
+                <label for="cfg-preset">Synthetic scenario preset</label>
+                <select id="cfg-preset">
+                    <option value="">-- Custom Manual Configuration --</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="cfg-strategy">Primary Solver</label>
+                <select id="cfg-strategy">
+                    <optgroup label="Decentralized negotiation">
+                        <option value="PathAware" selected>PathAware (Adaptive Concession)</option>
+                        <option value="HeatMap">HeatMap (Spatial FoV Awareness)</option>
+                        <option value="Greedy">Greedy (Rejects Voluntary Concessions)</option>
+                        <option value="Conceder">Conceder (Concedes When Feasible)</option>
+                    </optgroup>
+                    <optgroup label="Centralized solvers">
+                        <option value="EECBS-1.1">Simplified focal CBS (w=1.1)</option>
+                        <option value="EECBS-1.0">Simplified focal CBS (w=1.0)</option>
+                        <option value="CBS">CBS (Conflict-Based Search)</option>
+                        <option value="Prioritized">Prioritized Planning (Sequential)</option>
+                    </optgroup>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="cfg-commitment">Commitment Protocol</label>
+                <select id="cfg-commitment">
+                    <option value="SC" selected>Standard Commitment (SC - Agreed Allocation)</option>
+                    <option value="DC">Dynamic Commitment (DC - Through Conflict Tick)</option>
+                    <option value="ZC">Zero Commitment (ZC - Agreement Tick)</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="cfg-compare-strategy">Compare Solver (Optional)</label>
+                <select id="cfg-compare-strategy">
+                    <option value="">-- None (Single Solver Replay) --</option>
+                    <option value="PathAware">PathAware</option>
+                    <option value="HeatMap">HeatMap</option>
+                    <option value="Greedy">Greedy</option>
+                    <option value="EECBS-1.1">Simplified focal CBS (w=1.1)</option>
+                    <option value="CBS">CBS</option>
+                    <option value="Prioritized">Prioritized</option>
+                </select>
+            </div>
+
+            <div class="form-group" id="group-compare-comm" style="display: none;">
+                <label for="cfg-compare-commitment">Compare Commitment</label>
+                <select id="cfg-compare-commitment">
+                    <option value="SC">Standard Commitment (SC)</option>
+                    <option value="DC">Dynamic Commitment (DC)</option>
+                    <option value="ZC" selected>Zero Commitment (ZC)</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="cfg-agents">Agent count</label>
+                <select id="cfg-agents">
+                    <option value="2">2 Agents</option>
+                    <option value="4">4 Agents</option>
+                    <option value="10" selected>10 Agents (Interactive)</option>
+                    <option value="20">20 Agents</option>
+                    <option value="40">40 Agents</option>
+                    <option value="80">80 Agents</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="cfg-grid">Grid Map Size</label>
+                <select id="cfg-grid">
+                    <option value="8">8 x 8</option>
+                    <option value="16" selected>16 x 16</option>
+                    <option value="24">24 x 24</option>
+                    <option value="32">32 x 32</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="cfg-fov">Field of View (FoV Size)</label>
+                <select id="cfg-fov">
+                    <option value="3">FoV 3 (3×3 cells)</option>
+                    <option value="5" selected>FoV 5 (5×5 cells)</option>
+                    <option value="7">FoV 7 (7×7 cells)</option>
+                    <option value="9">FoV 9 (9×9 cells)</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="cfg-setting">MAPF Problem Setting</label>
+                <select id="cfg-setting">
+                    <option value="4" selected>Setting 4: DaT=True, Wait=True</option>
+                    <option value="3">Setting 3: DaT=True, Wait=False</option>
+                    <option value="2">Setting 2: DaT=False, Wait=True</option>
+                    <option value="1">Setting 1: DaT=False, Wait=False</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="cfg-obstacles">Obstacle Density</label>
+                <select id="cfg-obstacles">
+                    <option value="0.0" selected>0% Obstacles (Empty Grid)</option>
+                    <option value="0.10">10% Random Obstacles</option>
+                    <option value="0.20">20% Random Obstacles</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Visual Layer Controls</label>
+                <div class="layer-controls">
+                    <label class="layer-item">
+                        <input type="checkbox" id="layer-executed" checked> Executed Paths
+                    </label>
+                    <label class="layer-item">
+                        <input type="checkbox" id="layer-planned"> Future executed paths (hindsight)
+                    </label>
+                    <label class="layer-item">
+                        <input type="checkbox" id="layer-fov" checked> FoV geometry
+                    </label>
+                    <label class="layer-item">
+                        <input type="checkbox" id="layer-heat"> Hindsight occupancy
+                    </label>
+                    <label class="layer-item" style="grid-column: span 2;">
+                        <input type="checkbox" id="layer-lifecycle" checked> Agent Lifecycle (Parked/DaT)
+                    </label>
+                </div>
+            </div>
+
+            <button id="btn-run-simulation" class="btn">
+                <span>Run Simulation</span>
+            </button>
+        </div>
+
+        <!-- Main Workspace -->
+        <div class="main-view">
+            <!-- TAB 1: SIMULATION REPLAY -->
+            <div id="tab-replay" class="tab-content active">
+                <div class="metrics-bar">
+                    <div class="metric-card">
+                        <span class="metric-label">Status</span>
+                        <span id="metric-status" class="metric-value" style="font-size: 1.1rem;">READY</span>
+                    </div>
+                    <div class="metric-card">
+                        <span class="metric-label">Agents at goal</span>
+                        <span id="metric-solution-rate" class="metric-value">-%</span>
+                    </div>
+                    <div class="metric-card">
+                        <span class="metric-label">Makespan</span>
+                        <span id="metric-makespan" class="metric-value">- steps</span>
+                    </div>
+                    <div class="metric-card">
+                        <span class="metric-label">Runtime</span>
+                        <span id="metric-runtime" class="metric-value">- ms</span>
+                    </div>
+                    <div class="metric-card">
+                        <span class="metric-label">Negotiations</span>
+                        <span id="metric-negotiations" class="metric-value">- / -</span>
+                    </div>
+                    <div class="metric-card">
+                        <span class="metric-label">Legacy sharing proxy</span>
+                        <span id="metric-is-rate" class="metric-value">-%</span>
+                    </div>
+                </div>
+
+                <div class="canvas-container">
+                    <canvas id="mapf-canvas" width="560" height="560"></canvas>
+
+                    <div class="controls-row">
+                        <button id="btn-step-start" class="btn-sm" title="First Step (T=0)">|&laquo;</button>
+                        <button id="btn-step-prev" class="btn-sm" title="Previous Step">&laquo;</button>
+                        <button id="btn-play-pause" class="btn-sm">Play</button>
+                        <button id="btn-step-next" class="btn-sm" title="Next Step">&raquo;</button>
+                        <button id="btn-step-end" class="btn-sm" title="Final Step">&raquo;|</button>
+                        <input id="playback-slider" type="range" min="0" max="0" value="0" class="slider">
+                        <span id="step-counter" class="step-label">T: 0 / 0</span>
+                        <select id="playback-speed" class="btn-sm" style="padding: 0.3rem 0.5rem; background: rgba(10, 14, 26, 0.8);">
+                            <option value="400">0.5x</option>
+                            <option value="200" selected>1.0x</option>
+                            <option value="100">2.0x</option>
+                            <option value="50">4.0x</option>
+                        </select>
+                    </div>
+
+                    <div class="inspector-grid">
+                        <div class="metric-card">
+                            <span class="metric-label" style="color: var(--accent-cyan); font-weight: 600;">Agent Inspector (Click Agent on Grid)</span>
+                            <div id="inspector-content" style="font-family: var(--font-mono); font-size: 0.8rem; color: var(--text-muted); margin-top: 0.4rem; line-height: 1.5;">
+                                Select scenario parameters and click Run Simulation to begin.
+                            </div>
+                        </div>
+                        <div class="metric-card">
+                            <span class="metric-label" style="color: var(--accent-purple); font-weight: 600;">Active Tick Conflicts & Contracts</span>
+                            <div id="event-log-content" style="font-family: var(--font-mono); font-size: 0.8rem; color: var(--text-muted); margin-top: 0.4rem; max-height: 90px; overflow-y: auto; line-height: 1.4;">
+                                No active conflicts.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 2: COMPARISON VIEW -->
+            <div id="tab-compare" class="tab-content">
+                <div class="panel">
+                    <div class="panel-title">
+                        <span>Side-by-Side Strategy & Protocol Comparison</span>
+                    </div>
+                    <div id="compare-summary-content" style="font-family: var(--font-mono); font-size: 0.85rem; color: var(--text-muted); line-height: 1.6;">
+                        Select a Comparison Solver in the sidebar configuration and run simulation to inspect paired metrics.
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 3: BATCH BENCHMARK & SSE -->
+            <div id="tab-benchmark" class="tab-content">
+                <div class="panel">
+                    <div class="panel-title">
+                        <span>Legacy batch interface</span>
+                        <button id="btn-cancel-benchmark" class="btn-sm" style="display: none; background: rgba(255,45,85,0.2); color: var(--accent-rose);">Cancel Task</button>
+                    </div>
+                    <div style="display: flex; gap: 1rem; align-items: center;">
+                        <div class="form-group" style="flex: 1;">
+                            <label for="benchmark-suite-select">Benchmark Suite Registry</label>
+                            <select id="benchmark-suite-select">
+                                <option value="quick_test">quick_test (4 runs: 16x16, k=20, Setting 4, HeatMap vs PathAware)</option>
+                                <option value="commitment_types">commitment_types (72 runs: Section 5.4 SC vs DC vs ZC)</option>
+                                <option value="appendix_32x32">appendix_32x32 (144 runs: 32x32 Maps, k=80, Settings 1-4)</option>
+                                <option value="main_matrix">main_matrix (128 runs: 16x16, k=20-80, Settings 1-4)</option>
+                            </select>
+                        </div>
+                        <button id="btn-start-benchmark" class="btn" style="height: 38px; margin-top: 18px;">
+                            <span>Start Execution</span>
+                        </button>
+                    </div>
+
+                    <div style="margin-top: 1rem;">
+                        <div style="display: flex; justify-content: space-between; font-family: var(--font-mono); font-size: 0.8rem; margin-bottom: 0.3rem;">
+                            <span id="batch-progress-text">Progress: 0 / 0 runs (0.0%)</span>
+                            <span id="batch-elapsed-text">Elapsed: 0.0s</span>
+                        </div>
+                        <div class="progress-bar-wrap">
+                            <div id="batch-progress-bar" class="progress-bar-fill"></div>
+                        </div>
+                        <div id="batch-current-info" style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--accent-cyan); margin-top: 0.4rem;">
+                            Ready.
+                        </div>
+                    </div>
+
+                    <div class="form-group" style="margin-top: 1rem;">
+                        <label>Live SSE Stream Log</label>
+                        <div id="batch-stream-log" class="log-box">Waiting for task launch...</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 4: LATEX & DATA ARCHIVE -->
+            <div id="tab-archive" class="tab-content">
+                <div class="panel">
+                    <div class="panel-title">
+                        <span>Supplied tables and LaTeX export</span>
+                    </div>
+                    <div style="display: flex; gap: 1rem; align-items: center;">
+                        <div class="form-group" style="flex: 1;">
+                            <label for="archive-suite-select">Dataset</label>
+                            <select id="archive-suite-select">
+                                <option value="regression_core">regression_core (Synthetic regression fixtures)</option>
+                                <option value="commitment_types">commitment_types (Supplied commitment table)</option>
+                                <option value="appendix_32x32">appendix_32x32 (Supplied appendix table)</option>
+                                <option value="main_matrix">main_matrix (Supplied main-study table)</option>
+                            </select>
+                        </div>
+                        <button id="btn-load-archive" class="btn" style="height: 38px; margin-top: 18px;">
+                            <span>Load Dataset</span>
+                        </button>
+                    </div>
+
+                    <div id="archive-results-wrap" style="margin-top: 1rem; max-height: 250px; overflow-y: auto;">
+                        <div style="font-family: var(--font-mono); font-size: 0.8rem; color: var(--text-muted);">
+                            Select a dataset to browse records.
+                        </div>
+                    </div>
+
+                    <div class="form-group" style="margin-top: 1rem;">
+                        <label>LaTeX table code</label>
+                        <pre id="latex-code-box" class="log-box" style="white-space: pre; color: var(--accent-green); max-height: 180px;">% LaTeX output will appear here.</pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('mapf-canvas');
+        const ctx = canvas.getContext('2d');
+        const slider = document.getElementById('playback-slider');
+        const stepCounter = document.getElementById('step-counter');
+        const btnPlay = document.getElementById('btn-play-pause');
+        const btnPrev = document.getElementById('btn-step-prev');
+        const btnNext = document.getElementById('btn-step-next');
+        const btnStart = document.getElementById('btn-step-start');
+        const btnEnd = document.getElementById('btn-step-end');
+        const speedSelect = document.getElementById('playback-speed');
+        const btnRun = document.getElementById('btn-run-simulation');
+        const statusBadge = document.getElementById('simulation-status');
+        const inspectorContent = document.getElementById('inspector-content');
+        const eventLogContent = document.getElementById('event-log-content');
+        const provenanceLabel = document.getElementById('provenance-label');
+        const presetSelect = document.getElementById('cfg-preset');
+        const compareStrategySelect = document.getElementById('cfg-compare-strategy');
+        const compareCommGroup = document.getElementById('group-compare-comm');
+
+        // Layers
+        const layerExecuted = document.getElementById('layer-executed');
+        const layerPlanned = document.getElementById('layer-planned');
+        const layerFov = document.getElementById('layer-fov');
+        const layerHeat = document.getElementById('layer-heat');
+        const layerLifecycle = document.getElementById('layer-lifecycle');
+
+        let simData = null;
+        let currentStep = 0;
+        let isPlaying = false;
+        let playInterval = null;
+        let selectedAgentId = null;
+        let currentSseSource = null;
+        let activeBenchmarkTaskId = null;
+
+        const agentColors = [
+            '#00f0ff', '#8a2be2', '#00ff88', '#ff2d55', '#ff9500',
+            '#ffd60a', '#30b0c7', '#af52de', '#5856d6', '#34c759'
+        ];
+
+        // Tab Switching
+        function switchTab(tabId) {
+            document.querySelectorAll('.nav-tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(tc => tc.classList.remove('active'));
+
+            const btn = Array.from(document.querySelectorAll('.nav-tab-btn')).find(b => b.getAttribute('onclick').includes(tabId));
+            if (btn) btn.classList.add('active');
+
+            const target = document.getElementById(`tab-${tabId}`);
+            if (target) target.classList.add('active');
+        }
+
+        compareStrategySelect.addEventListener('change', () => {
+            compareCommGroup.style.display = compareStrategySelect.value ? 'flex' : 'none';
+        });
+
+        // Fetch presets on load
+        async function loadPresets() {
+            try {
+                const res = await fetch('/api/presets');
+                const presets = await res.json();
+                presets.forEach(p => {
+                    const opt = document.createElement('option');
+                    opt.value = p.id;
+                    opt.innerText = p.name;
+                    opt.dataset.config = JSON.stringify(p);
+                    presetSelect.appendChild(opt);
+                });
+            } catch (err) {
+                console.error('Failed to load presets', err);
+            }
+        }
+        loadPresets();
+
+        presetSelect.addEventListener('change', () => {
+            const opt = presetSelect.selectedOptions[0];
+            if (!opt || !opt.dataset.config) return;
+            const cfg = JSON.parse(opt.dataset.config);
+            document.getElementById('cfg-grid').value = cfg.grid_width;
+            document.getElementById('cfg-agents').value = cfg.agent_count;
+            document.getElementById('cfg-strategy').value = cfg.solver;
+            document.getElementById('cfg-commitment').value = cfg.commitment_type;
+            document.getElementById('cfg-fov').value = cfg.fov_size;
+            document.getElementById('cfg-setting').value = cfg.setting;
+            document.getElementById('cfg-obstacles').value = cfg.obstacle_density.toFixed(2) === '0.10' ? '0.10' : '0.0';
+            if (cfg.compare_solver) {
+                compareStrategySelect.value = cfg.compare_solver;
+                compareCommGroup.style.display = 'flex';
+                if (cfg.compare_commitment_type) {
+                    document.getElementById('cfg-compare-commitment').value = cfg.compare_commitment_type;
+                }
+            } else {
+                compareStrategySelect.value = '';
+                compareCommGroup.style.display = 'none';
+            }
+        });
+
+        // Layer changes redraw
+        [layerExecuted, layerPlanned, layerFov, layerHeat, layerLifecycle].forEach(cb => {
+            cb.addEventListener('change', () => renderFrame(currentStep));
+        });
+
+        async function triggerSimulation() {
+            statusBadge.className = 'status-badge badge-running';
+            statusBadge.innerText = 'SIMULATING...';
+            btnRun.disabled = true;
+
+            const payload = {
+                grid_width: parseInt(document.getElementById('cfg-grid').value),
+                grid_height: parseInt(document.getElementById('cfg-grid').value),
+                agent_count: parseInt(document.getElementById('cfg-agents').value),
+                solver: document.getElementById('cfg-strategy').value,
+                compare_solver: compareStrategySelect.value || null,
+                commitment_type: document.getElementById('cfg-commitment').value,
+                compare_commitment_type: compareStrategySelect.value ? document.getElementById('cfg-compare-commitment').value : null,
+                fov_size: parseInt(document.getElementById('cfg-fov').value),
+                obstacle_density: parseFloat(document.getElementById('cfg-obstacles').value),
+                setting: parseInt(document.getElementById('cfg-setting').value),
+                initial_tokens: 5,
+                max_steps: 150,
+                random_seed: 42,
+            };
+
+            try {
+                const res = await fetch('/api/simulate', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                if (!res.ok) {
+                    const errDetail = await res.json();
+                    throw new Error(errDetail.detail || 'Simulation failed');
+                }
+                simData = await res.json();
+
+                // Provenance Header
+                provenanceLabel.innerText = `Hash: ${simData.instance_hash.substring(0, 10)} | Run: ${simData.run_id} | Seed: ${simData.random_seed}`;
+
+                // Status Classification
+                const statusMap = {
+                    'solved': { text: 'SOLVED', cls: 'badge-solved' },
+                    'failed': { text: 'FAILED', cls: 'badge-failed' },
+                    'truncated': { text: 'TRUNCATED', cls: 'badge-truncated' },
+                    'invalid': { text: 'INVALID', cls: 'badge-invalid' }
+                };
+                const st = statusMap[simData.status] || { text: simData.status.toUpperCase(), cls: 'badge-ready' };
+                statusBadge.className = `status-badge ${st.cls}`;
+                statusBadge.innerText = st.text;
+
+                document.getElementById('metric-status').innerText = st.text;
+                document.getElementById('metric-solution-rate').innerText = `${Math.round((simData.solved_count / simData.total_agents) * 100)}%`;
+                document.getElementById('metric-makespan').innerText = `${simData.makespan} steps`;
+                document.getElementById('metric-runtime').innerText = `${simData.runtime_ms} ms`;
+                document.getElementById('metric-negotiations').innerText = `${simData.successful_negotiations} / ${simData.negotiation_count}`;
+                document.getElementById('metric-is-rate').innerText = `${(simData.information_sharing_rate * 100).toFixed(1)}%`;
+
+                // Update comparison tab
+                renderComparisonSummary();
+
+                slider.max = simData.total_steps;
+                slider.value = 0;
+                currentStep = 0;
+                selectedAgentId = Object.keys(simData.paths)[0] || null;
+                renderFrame(currentStep);
+                updateInspector();
+            } catch (err) {
+                console.error(err);
+                statusBadge.className = 'status-badge badge-failed';
+                statusBadge.innerText = 'ERROR';
+                alert('Simulation error: ' + err.message);
+            } finally {
+                btnRun.disabled = false;
+            }
+        }
+
+        function renderComparisonSummary() {
+            const compWrap = document.getElementById('compare-summary-content');
+            if (!simData || !simData.comparison) {
+                compWrap.innerHTML = `
+                    <p style="color: var(--text-muted);">No comparison solver executed. Select a comparison solver in the sidebar and rerun to see side-by-side analysis.</p>
+                `;
+                return;
+            }
+            const p = simData.primary;
+            const c = simData.comparison;
+            const deltaMs = c.makespan - p.makespan;
+            const deltaRun = c.runtime_ms - p.runtime_ms;
+
+            compWrap.innerHTML = `
+                <table class="table-view" style="margin-top: 0.5rem;">
+                    <thead>
+                        <tr>
+                            <th>Metric</th>
+                            <th>Primary: ${p.solver} (${document.getElementById('cfg-commitment').value})</th>
+                            <th>Comparison: ${c.solver} (${document.getElementById('cfg-compare-commitment').value})</th>
+                            <th>Delta (Comp - Prim)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Solution Status</td>
+                            <td style="color:${p.status === 'solved' ? 'var(--accent-green)' : 'var(--accent-rose)'};">${p.status.toUpperCase()}</td>
+                            <td style="color:${c.status === 'solved' ? 'var(--accent-green)' : 'var(--accent-rose)'};">${c.status.toUpperCase()}</td>
+                            <td>${p.status === c.status ? 'Identical' : 'Divergent'}</td>
+                        </tr>
+                        <tr>
+                            <td>Solved Agents</td>
+                            <td>${p.solved_count} / ${p.total_agents}</td>
+                            <td>${c.solved_count} / ${c.total_agents}</td>
+                            <td>${c.solved_count - p.solved_count}</td>
+                        </tr>
+                        <tr>
+                            <td>Makespan</td>
+                            <td>${p.makespan} steps</td>
+                            <td>${c.makespan} steps</td>
+                            <td>${deltaMs > 0 ? '+' + deltaMs : deltaMs} steps</td>
+                        </tr>
+                        <tr>
+                            <td>Runtime</td>
+                            <td>${p.runtime_ms} ms</td>
+                            <td>${c.runtime_ms} ms</td>
+                            <td>${deltaRun > 0 ? '+' + deltaRun.toFixed(1) : deltaRun.toFixed(1)} ms</td>
+                        </tr>
+                        <tr>
+                            <td>Negotiations</td>
+                            <td>${p.successful_negotiations} / ${p.negotiation_count}</td>
+                            <td>${c.successful_negotiations} / ${c.negotiation_count}</td>
+                            <td>${c.negotiation_count - p.negotiation_count}</td>
+                        </tr>
+                        <tr>
+                            <td>Legacy sharing proxy (IS)</td>
+                            <td>${(p.information_sharing_rate * 100).toFixed(1)}%</td>
+                            <td>${(c.information_sharing_rate * 100).toFixed(1)}%</td>
+                            <td>${((c.information_sharing_rate - p.information_sharing_rate) * 100).toFixed(1)}%</td>
+                        </tr>
+                    </tbody>
+                </table>
+            `;
+        }
+
+        function updateInspector() {
+            if (!simData || !selectedAgentId || !simData.paths[selectedAgentId]) {
+                inspectorContent.innerHTML = 'Select an agent on the grid to inspect state and tokens.';
+                return;
+            }
+            const path = simData.paths[selectedAgentId];
+            const currentPos = path[Math.min(currentStep, path.length - 1)];
+            const goalPos = simData.goals[parseInt(selectedAgentId.replace('Agent_', '')) - 1] || path[path.length - 1];
+
+            // Goal reached check against actual goal coordinates
+            const isAtGoal = (currentPos.x === goalPos.x && currentPos.y === goalPos.y);
+
+            let statusText = 'IN TRANSIT';
+            let statusColor = 'var(--accent-cyan)';
+            if (simData.frames && currentStep < simData.frames.length) {
+                const fr = simData.frames[currentStep];
+                const agentSt = fr.statuses ? fr.statuses[selectedAgentId] : null;
+                if (agentSt === 'parked') {
+                    statusText = 'PARKED AT GOAL';
+                    statusColor = 'var(--accent-gray)';
+                } else if (agentSt === 'disappeared') {
+                    statusText = 'DISAPPEARED (DaT)';
+                    statusColor = 'var(--accent-green)';
+                } else if (agentSt === 'reached') {
+                    statusText = 'GOAL REACHED';
+                    statusColor = 'var(--accent-green)';
+                } else if (agentSt === 'collided' || agentSt === 'deadlocked') {
+                    statusText = agentSt.toUpperCase();
+                    statusColor = 'var(--accent-rose)';
+                }
+            } else if (isAtGoal) {
+                statusText = 'GOAL REACHED';
+                statusColor = 'var(--accent-green)';
+            }
+
+            const currentTokens = (simData.frames && currentStep < simData.frames.length)
+                ? (simData.frames[currentStep].tokens[selectedAgentId] ?? 5)
+                : 5;
+
+            inspectorContent.innerHTML = `
+                <div style="display:flex; justify-content:space-between; margin-bottom: 0.2rem;">
+                    <span><b>ID:</b> ${selectedAgentId}</span>
+                    <span style="color:${statusColor}; font-weight:700;">${statusText}</span>
+                </div>
+                <div><b>Current:</b> (${currentPos.x}, ${currentPos.y}) | <b>Goal:</b> (${goalPos.x}, ${goalPos.y})</div>
+                <div><b>Path Progress:</b> ${Math.min(currentStep, path.length - 1)} / ${path.length - 1} | <b>Tokens:</b> ${currentTokens}</div>
+            `;
+        }
+
+        function updateEventLog() {
+            if (!simData || !simData.frames || currentStep >= simData.frames.length) {
+                eventLogContent.innerText = 'No events at current step.';
+                return;
+            }
+            const frame = simData.frames[currentStep];
+            if (!frame) return;
+
+            let logHtml = '';
+            if (frame.conflicts && frame.conflicts.length > 0) {
+                frame.conflicts.forEach(c => {
+                    logHtml += `<div style="color: var(--accent-rose);">&#9656; Conflict: ${c.a} & ${c.b} [${c.type}] at tick ${c.time}</div>`;
+                });
+            }
+            if (frame.contracts && frame.contracts.length > 0) {
+                frame.contracts.forEach(sc => {
+                    const loc = sc.location ? `(${sc.location[0]}, ${sc.location[1]})` : 'rendezvous';
+                    logHtml += `<div style="color: var(--accent-green);">&#9656; Contract: ${sc.agent_a} & ${sc.agent_b} at ${loc}</div>`;
+                });
+            }
+            if (!logHtml) {
+                logHtml = `<div style="color: var(--text-muted);">&#8226; Normal step. No active conflict.</div>`;
+            }
+            eventLogContent.innerHTML = logHtml;
+        }
+
+        function renderFrame(step) {
+            if (!simData) return;
+            const N = simData.grid_width;
+            const cellSize = canvas.width / N;
+
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Draw Grid Lines
+            ctx.strokeStyle = 'rgba(255, 255, 255, 0.05)';
+            ctx.lineWidth = 1;
+            for (let i = 0; i <= N; i++) {
+                ctx.beginPath();
+                ctx.moveTo(i * cellSize, 0);
+                ctx.lineTo(i * cellSize, canvas.height);
+                ctx.stroke();
+
+                ctx.beginPath();
+                ctx.moveTo(0, i * cellSize);
+                ctx.lineTo(canvas.width, i * cellSize);
+                ctx.stroke();
+            }
+
+            // Draw Obstacles
+            ctx.fillStyle = '#181f30';
+            simData.obstacles.forEach(obs => {
+                ctx.fillRect(obs.x * cellSize + 1, obs.y * cellSize + 1, cellSize - 2, cellSize - 2);
+            });
+
+            // Draw Goals
+            simData.goals.forEach((gl, idx) => {
+                ctx.strokeStyle = agentColors[idx % agentColors.length];
+                ctx.lineWidth = 2;
+                ctx.strokeRect(gl.x * cellSize + 3, gl.y * cellSize + 3, cellSize - 6, cellSize - 6);
+            });
+
+            // Spatial Heat Map Layer
+            if (layerHeat.checked && simData.frames && step < simData.frames.length) {
+                const heat = simData.frames[step].heat_grid || {};
+                Object.entries(heat).forEach(([key, val]) => {
+                    const [hx, hy] = key.split('-').map(Number);
+                    const alpha = Math.min(0.6, val * 0.15);
+                    ctx.fillStyle = `rgba(255, 45, 85, ${alpha})`;
+                    ctx.fillRect(hx * cellSize, hy * cellSize, cellSize, cellSize);
+                });
+            }
+
+            // FoV Box Layer
+            const fovSize = parseInt(document.getElementById('cfg-fov').value) || 5;
+            const fovRadius = Math.floor(fovSize / 2);
+
+            if (layerFov.checked && selectedAgentId && simData.paths[selectedAgentId]) {
+                const sPath = simData.paths[selectedAgentId];
+                const sPos = sPath[Math.min(step, sPath.length - 1)];
+                const fovX = Math.max(0, sPos.x - fovRadius);
+                const fovY = Math.max(0, sPos.y - fovRadius);
+                const fovW = Math.min(N - fovX, (sPos.x + fovRadius) - fovX + 1);
+                const fovH = Math.min(N - fovY, (sPos.y + fovRadius) - fovY + 1);
+
+                ctx.fillStyle = 'rgba(0, 240, 255, 0.08)';
+                ctx.fillRect(fovX * cellSize, fovY * cellSize, fovW * cellSize, fovH * cellSize);
+                ctx.strokeStyle = 'rgba(0, 240, 255, 0.35)';
+                ctx.lineWidth = 1.5;
+                ctx.setLineDash([4, 4]);
+                ctx.strokeRect(fovX * cellSize, fovY * cellSize, fovW * cellSize, fovH * cellSize);
+                ctx.setLineDash([]);
+            }
+
+            // Draw Agents & Trajectories
+            const frameObj = (simData.frames && step < simData.frames.length) ? simData.frames[step] : null;
+
+            Object.keys(simData.paths).forEach((aId, idx) => {
+                const path = simData.paths[aId];
+                const color = agentColors[idx % agentColors.length];
+                const isSelected = (aId === selectedAgentId);
+                const agentStatus = frameObj && frameObj.statuses ? frameObj.statuses[aId] : 'active';
+
+                // Disappeared agent under DaT: skip drawing
+                if (layerLifecycle.checked && agentStatus === 'disappeared') {
+                    return;
+                }
+
+                // Executed Path Layer
+                if (layerExecuted.checked) {
+                    ctx.strokeStyle = color;
+                    ctx.lineWidth = isSelected ? 3 : 1.5;
+                    ctx.globalAlpha = isSelected ? 0.65 : 0.25;
+                    ctx.beginPath();
+                    for (let t = 0; t <= Math.min(step, path.length - 1); t++) {
+                        const pt = path[t];
+                        const cx = pt.x * cellSize + cellSize / 2;
+                        const cy = pt.y * cellSize + cellSize / 2;
+                        if (t === 0) ctx.moveTo(cx, cy);
+                        else ctx.lineTo(cx, cy);
+                    }
+                    ctx.stroke();
+                    ctx.globalAlpha = 1.0;
+                }
+
+                // Remaining recorded trajectory; not the agent's plan at this tick.
+                if (layerPlanned.checked && isSelected) {
+                    ctx.strokeStyle = '#ffffff';
+                    ctx.lineWidth = 2;
+                    ctx.setLineDash([3, 3]);
+                    ctx.beginPath();
+                    for (let t = Math.min(step, path.length - 1); t < path.length; t++) {
+                        const pt = path[t];
+                        const cx = pt.x * cellSize + cellSize / 2;
+                        const cy = pt.y * cellSize + cellSize / 2;
+                        if (t === Math.min(step, path.length - 1)) ctx.moveTo(cx, cy);
+                        else ctx.lineTo(cx, cy);
+                    }
+                    ctx.stroke();
+                    ctx.setLineDash([]);
+                }
+
+                // Current Position
+                const pos = path[Math.min(step, path.length - 1)];
+                const cx = pos.x * cellSize + cellSize / 2;
+                const cy = pos.y * cellSize + cellSize / 2;
+
+                // Agent Lifecycle Visuals
+                if (layerLifecycle.checked && agentStatus === 'parked') {
+                    // Parked agent (gray square with checkmark border)
+                    ctx.fillStyle = '#4a5568';
+                    ctx.fillRect(cx - cellSize * 0.35, cy - cellSize * 0.35, cellSize * 0.7, cellSize * 0.7);
+                    ctx.strokeStyle = '#a0aec0';
+                    ctx.lineWidth = 1.5;
+                    ctx.strokeRect(cx - cellSize * 0.35, cy - cellSize * 0.35, cellSize * 0.7, cellSize * 0.7);
+                } else {
+                    // Active agent
+                    ctx.fillStyle = color;
+                    ctx.beginPath();
+                    ctx.arc(cx, cy, cellSize * (isSelected ? 0.42 : 0.32), 0, Math.PI * 2);
+                    ctx.fill();
+
+                    if (isSelected) {
+                        ctx.strokeStyle = '#ffffff';
+                        ctx.lineWidth = 2;
+                        ctx.beginPath();
+                        ctx.arc(cx, cy, cellSize * 0.48, 0, Math.PI * 2);
+                        ctx.stroke();
+                    }
+
+                    if (agentStatus === 'collided' || agentStatus === 'deadlocked') {
+                        ctx.strokeStyle = 'var(--accent-rose)';
+                        ctx.lineWidth = 3;
+                        ctx.beginPath();
+                        ctx.arc(cx, cy, cellSize * 0.52, 0, Math.PI * 2);
+                        ctx.stroke();
+                    }
+                }
+
+                // Label
+                if (N <= 24) {
+                    ctx.fillStyle = '#ffffff';
+                    ctx.font = '10px JetBrains Mono';
+                    ctx.textAlign = 'center';
+                    ctx.fillText(aId.replace('Agent_', 'A'), cx, cy - cellSize * 0.45);
+                }
+            });
+
+            stepCounter.innerText = `T: ${step} / ${simData.total_steps}`;
+            updateInspector();
+            updateEventLog();
+        }
+
+        // Canvas selection
+        canvas.addEventListener('click', (e) => {
+            if (!simData) return;
+            const rect = canvas.getBoundingClientRect();
+            const clickX = e.clientX - rect.left;
+            const clickY = e.clientY - rect.top;
+            const N = simData.grid_width;
+            const cellSize = canvas.width / N;
+            const gridX = Math.floor(clickX / cellSize);
+            const gridY = Math.floor(clickY / cellSize);
+
+            let clickedAgent = null;
+            Object.keys(simData.paths).forEach(aId => {
+                const path = simData.paths[aId];
+                const pos = path[Math.min(currentStep, path.length - 1)];
+                if (pos.x === gridX && pos.y === gridY) {
+                    clickedAgent = aId;
+                }
+            });
+
+            if (clickedAgent) {
+                selectedAgentId = clickedAgent;
+                renderFrame(currentStep);
+            }
+        });
+
+        btnRun.addEventListener('click', triggerSimulation);
+        slider.addEventListener('input', (e) => {
+            currentStep = parseInt(e.target.value);
+            renderFrame(currentStep);
+        });
+
+        btnPrev.addEventListener('click', () => {
+            if (currentStep > 0) {
+                currentStep--;
+                slider.value = currentStep;
+                renderFrame(currentStep);
+            }
+        });
+
+        btnNext.addEventListener('click', () => {
+            if (simData && currentStep < simData.total_steps) {
+                currentStep++;
+                slider.value = currentStep;
+                renderFrame(currentStep);
+            }
+        });
+
+        btnStart.addEventListener('click', () => {
+            currentStep = 0;
+            slider.value = currentStep;
+            renderFrame(currentStep);
+        });
+
+        btnEnd.addEventListener('click', () => {
+            if (simData) {
+                currentStep = simData.total_steps;
+                slider.value = currentStep;
+                renderFrame(currentStep);
+            }
+        });
+
+        function resetPlaybackInterval() {
+            if (isPlaying) {
+                clearInterval(playInterval);
+                const delay = parseInt(speedSelect.value) || 200;
+                playInterval = setInterval(() => {
+                    if (currentStep < simData.total_steps) {
+                        currentStep++;
+                        slider.value = currentStep;
+                        renderFrame(currentStep);
+                    } else {
+                        clearInterval(playInterval);
+                        isPlaying = false;
+                        btnPlay.innerText = 'Play';
+                    }
+                }, delay);
+            }
+        }
+
+        speedSelect.addEventListener('change', resetPlaybackInterval);
+        btnPlay.addEventListener('click', () => {
+            if (!simData) return;
+            isPlaying = !isPlaying;
+            btnPlay.innerText = isPlaying ? 'Pause' : 'Play';
+            if (isPlaying) resetPlaybackInterval();
+            else clearInterval(playInterval);
+        });
+
+        // BATCH BENCHMARK & SSE
+        const btnStartBatch = document.getElementById('btn-start-benchmark');
+        const btnCancelBatch = document.getElementById('btn-cancel-benchmark');
+        const batchProgressBar = document.getElementById('batch-progress-bar');
+        const batchProgressText = document.getElementById('batch-progress-text');
+        const batchElapsedText = document.getElementById('batch-elapsed-text');
+        const batchCurrentInfo = document.getElementById('batch-current-info');
+        const batchStreamLog = document.getElementById('batch-stream-log');
+
+        btnStartBatch.addEventListener('click', async () => {
+            const suiteName = document.getElementById('benchmark-suite-select').value;
+            btnStartBatch.disabled = true;
+            btnCancelBatch.style.display = 'inline-block';
+            batchStreamLog.innerText = `Initiating benchmark task: ${suiteName}...\n`;
+
+            try {
+                const res = await fetch('/api/benchmark/start', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ suite_name: suiteName })
+                });
+                const task = await res.json();
+                activeBenchmarkTaskId = task.task_id;
+                batchCurrentInfo.innerText = `Task launched: ${task.task_id} (${task.total_runs} runs queued)`;
+
+                // Connect to SSE stream
+                if (currentSseSource) currentSseSource.close();
+                currentSseSource = new EventSource(`/api/benchmark/stream/${task.task_id}`);
+
+                currentSseSource.addEventListener('run_completed', (e) => {
+                    const data = JSON.parse(e.data);
+                    const pct = data.progress_pct;
+                    batchProgressBar.style.width = `${pct}%`;
+                    batchProgressText.innerText = `Progress: ${data.completed_runs} / ${data.total_runs} runs (${pct}%)`;
+                    batchElapsedText.innerText = `Elapsed: ${data.elapsed_sec}s`;
+                    const r = data.current_run;
+                    batchCurrentInfo.innerText = `Completed run ${data.completed_runs}: ${r.strategy} | ${r.setting_name} | k=${r.k} | sol=${r.success ? 'YES' : 'NO'}`;
+                    batchStreamLog.innerText += `[ID: ${e.lastEventId}] ${r.map_name} | ${r.strategy} | k=${r.k} -> ${r.success ? 'SUCCESS' : 'FAIL'} (${r.runtime_ms}ms)\n`;
+                    batchStreamLog.scrollTop = batchStreamLog.scrollHeight;
+                });
+
+                currentSseSource.addEventListener('suite_finished', (e) => {
+                    const data = JSON.parse(e.data);
+                    batchProgressBar.style.width = '100%';
+                    batchCurrentInfo.innerText = `Suite Finished! Success Rate: ${data.summary.success_rate}% across ${data.total_runs} runs.`;
+                    batchStreamLog.innerText += `>>> [SUITE FINISHED] Total: ${data.total_runs}, Success Rate: ${data.summary.success_rate}%\n`;
+                    btnStartBatch.disabled = false;
+                    btnCancelBatch.style.display = 'none';
+                    currentSseSource.close();
+                });
+
+                currentSseSource.addEventListener('task_cancelled', (e) => {
+                    batchCurrentInfo.innerText = `Task cancelled by user request.`;
+                    batchStreamLog.innerText += `>>> [TASK CANCELLED]\n`;
+                    btnStartBatch.disabled = false;
+                    btnCancelBatch.style.display = 'none';
+                    currentSseSource.close();
+                });
+
+                currentSseSource.addEventListener('error', (e) => {
+                    console.error('SSE Error', e);
+                    btnStartBatch.disabled = false;
+                    btnCancelBatch.style.display = 'none';
+                    if (currentSseSource) currentSseSource.close();
+                });
+            } catch (err) {
+                console.error(err);
+                batchCurrentInfo.innerText = 'Failed to start benchmark task.';
+                btnStartBatch.disabled = false;
+                btnCancelBatch.style.display = 'none';
+            }
+        });
+
+        btnCancelBatch.addEventListener('click', async () => {
+            if (!activeBenchmarkTaskId) return;
+            try {
+                await fetch(`/api/benchmark/cancel/${activeBenchmarkTaskId}`, { method: 'POST' });
+            } catch (err) {
+                console.error('Cancel failed', err);
+            }
+        });
+
+        // LATEX & ARCHIVE BROWSER
+        const btnLoadArchive = document.getElementById('btn-load-archive');
+        const archiveResultsWrap = document.getElementById('archive-results-wrap');
+        const latexCodeBox = document.getElementById('latex-code-box');
+
+        btnLoadArchive.addEventListener('click', async () => {
+            const suite = document.getElementById('archive-suite-select').value;
+            archiveResultsWrap.innerHTML = 'Loading dataset...';
+            latexCodeBox.innerText = '% Loading LaTeX code...';
+
+            try {
+                const [dataRes, latexRes] = await Promise.all([
+                    fetch(`/api/results/${suite}`),
+                    fetch(`/api/export/latex/${suite}`)
+                ]);
+                const data = await dataRes.json();
+                const latex = await latexRes.json();
+
+                latexCodeBox.innerText = latex.latex || '% No LaTeX template';
+
+                if (data.records && data.records.length > 0) {
+                    const sample = data.records.slice(0, 15);
+                    const cols = Object.keys(sample[0]);
+                    let html = `<table class="table-view"><thead><tr>`;
+                    cols.forEach(c => { html += `<th>${c}</th>`; });
+                    html += `</tr></thead><tbody>`;
+                    sample.forEach(row => {
+                        html += `<tr>`;
+                        cols.forEach(c => {
+                            html += `<td>${row[c] !== null ? row[c] : ''}</td>`;
+                        });
+                        html += `</tr>`;
+                    });
+                    html += `</tbody></table>`;
+                    archiveResultsWrap.innerHTML = html;
+                } else {
+                    archiveResultsWrap.innerHTML = '<p>No records found in dataset.</p>';
+                }
+            } catch (err) {
+                archiveResultsWrap.innerHTML = `<p style="color:var(--accent-rose);">Error loading dataset: ${err.message}</p>`;
+                latexCodeBox.innerText = '% Failed to load LaTeX';
+            }
+        });
+    </script>
+</body>
+</html>

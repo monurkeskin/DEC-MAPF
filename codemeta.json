@@ -1,0 +1,37 @@
+{
+  "@context": "https://doi.org/10.5063/schema/codemeta-2.0",
+  "@type": "SoftwareSourceCode",
+  "identifier": "DEC-MAPF",
+  "name": "DEC-MAPF",
+  "version": "0.1.0a2",
+  "description": "Python simulation and experimentation framework for Decentralized Multi-Agent Path Finding: shared scenarios, decentralized and centralized solver comparisons, independent trajectory validation, reproducible studies and an optional visual workspace. Current decentralized methods use negotiation; additional methods integrate through documented solver contracts. Alpha software.",
+  "license": "https://spdx.org/licenses/MIT",
+  "codeRepository": "https://github.com/monurkeskin/DEC-MAPF",
+  "programmingLanguage": "Python",
+  "runtimePlatform": "Python 3.12+",
+  "authors": [
+    {
+      "@type": "Person",
+      "givenName": "Mehmet Onur",
+      "familyName": "Keskin",
+      "@id": "https://orcid.org/0000-0002-8025-4304"
+    },
+    {
+      "@type": "Person",
+      "givenName": "Furkan",
+      "familyName": "Cantürk"
+    },
+    {
+      "@type": "Person",
+      "givenName": "Cihan",
+      "familyName": "Eran"
+    },
+    {
+      "@type": "Person",
+      "givenName": "Reyhan",
+      "familyName": "Aydoğan"
+    }
+  ],
+  "referencePublication": "https://doi.org/10.1007/s10458-024-09639-8",
+  "developmentStatus": "alpha"
+}

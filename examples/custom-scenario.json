@@ -1,0 +1,9 @@
+{
+  "name": "Crossing with a clear bypass",
+  "grid_width": 8,
+  "grid_height": 8,
+  "obstacles": [[3, 1], [3, 2], [3, 5], [3, 6]],
+  "starts": {"agent_0": [0, 3], "agent_1": [7, 4]},
+  "goals": {"agent_0": [7, 3], "agent_1": [0, 4]},
+  "setting": "SETTING_4"
+}

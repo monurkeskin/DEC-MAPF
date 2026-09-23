@@ -1,0 +1,94 @@
+name: Core qualification
+on:
+  push:
+    branches: [main, engineering/**]
+  pull_request:
+    branches: [main, gui-development]
+  workflow_dispatch:
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+env:
+  UV_CACHE_DIR: ${{ github.workspace }}/.cache/uv
+permissions:
+  contents: read
+jobs:
+  test:
+    permissions:
+      contents: read
+      id-token: write
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+        python: ['3.12', '3.13']
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+      - name: Restore locked dependency downloads
+        uses: actions/cache@v4
+        with:
+          path: ${{ env.UV_CACHE_DIR }}
+          key: uv-0.11.18-${{ runner.os }}-${{ matrix.python }}-${{ hashFiles('uv.lock') }}
+      - run: python -m pip install uv==0.11.18
+      - run: uv sync --locked --extra gui --extra analysis --extra dev
+      - name: Validate clean source export
+        run: |
+          .venv/bin/python scripts/public_export.py "$RUNNER_TEMP/decmapf-public-source"
+          cd "$RUNNER_TEMP/decmapf-public-source"
+          "$GITHUB_WORKSPACE/.venv/bin/python" scripts/check_documentation.py
+      - name: Check researcher documentation and examples
+        run: |
+          .venv/bin/python scripts/documentation_reference.py --check
+          .venv/bin/python scripts/check_documentation.py
+          .venv/bin/python scripts/check_licenses.py
+          .venv/bin/python -m ruff check examples scripts/documentation_examples.py scripts/documentation_reference.py scripts/check_documentation.py
+      - run: .venv/bin/python -m ruff check src tests scripts/qualify_performance.py scripts/profile_engineering.py scripts/confirm_engineering.py scripts/smoke_headless_wheel.py scripts/ci_evidence.py scripts/check_distributions.py scripts/build_docs.py scripts/smoke_adoption_wheel.py
+      - run: .venv/bin/python -m mypy src
+      - name: Test the exported source without historical data
+        working-directory: ${{ runner.temp }}/decmapf-public-source
+        env:
+          COLLECT_COVERAGE: ${{ matrix.os == 'ubuntu-latest' && matrix.python == '3.12' }}
+        run: |
+          coverage_args=()
+          if [ "$COLLECT_COVERAGE" = "true" ]; then
+            coverage_args=(--cov --cov-config=pyproject.toml --cov-report=term:skip-covered --cov-report="xml:$GITHUB_WORKSPACE/coverage.xml")
+          fi
+          PYTHONPATH="$PWD/src" "$GITHUB_WORKSPACE/.venv/bin/python" -m pytest -n 2 --dist loadfile --max-worker-restart=0 "${coverage_args[@]}" --junitxml="$GITHUB_WORKSPACE/python-results.xml" -o junit_family=legacy
+      - run: .venv/bin/python scripts/check_acceptance.py python-results.xml
+      - name: Upload Python coverage to Codecov
+        if: ${{ !cancelled() && matrix.os == 'ubuntu-latest' && matrix.python == '3.12' && hashFiles('coverage.xml') != '' && (github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository) }}
+        uses: codecov/codecov-action@303a32d7a59b442fa8d48b6a1cc6825c09c847a5 # v7.1.1
+        with:
+          use_oidc: true
+          files: coverage.xml
+          disable_search: true
+          flags: python
+          name: python-3.12-linux
+          fail_ci_if_error: true
+      - name: Upload Python test analytics to Codecov
+        if: ${{ !cancelled() && matrix.os == 'ubuntu-latest' && matrix.python == '3.12' && hashFiles('python-results.xml') != '' && (github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository) }}
+        uses: codecov/codecov-action@303a32d7a59b442fa8d48b6a1cc6825c09c847a5 # v7.1.1
+        with:
+          use_oidc: true
+          report_type: test_results
+          files: python-results.xml
+          disable_search: true
+          flags: python
+          name: python-3.12-linux-tests
+          fail_ci_if_error: true
+      - name: Preserve required acceptance receipts in job logs
+        if: always()
+        run: python scripts/ci_evidence.py python-results.xml
+      - name: Publish downloadable acceptance archive
+        uses: actions/upload-artifact@v4
+        if: always()
+        continue-on-error: true
+        with:
+          name: core-${{ matrix.os }}-${{ matrix.python }}
+          path: python-results.xml
+          retention-days: 7

@@ -1,0 +1,38 @@
+{
+  "description": "Hand-crafted independent GUI test fixtures (GUI-006)",
+  "scenarios": [
+    {
+      "id": "gui_swap_2x2",
+      "grid_width": 4,
+      "grid_height": 4,
+      "starts": {"A": [0, 0], "B": [3, 3]},
+      "goals": {"A": [3, 3], "B": [0, 0]},
+      "obstacles": [],
+      "setting": "SETTING_4",
+      "expected_status": "solved"
+    },
+    {
+      "id": "gui_corridor_bottleneck",
+      "grid_width": 7,
+      "grid_height": 3,
+      "starts": {"A": [0, 1], "B": [6, 1]},
+      "goals": {"A": [6, 1], "B": [0, 1]},
+      "obstacles": [
+        [0, 0], [1, 0], [2, 0], [3, 0], [4, 0], [5, 0], [6, 0],
+        [0, 2], [1, 2], [2, 2], [3, 2], [4, 2], [5, 2], [6, 2]
+      ],
+      "setting": "SETTING_4",
+      "expected_status": "solvable_with_wait"
+    },
+    {
+      "id": "gui_out_of_bounds_invalid",
+      "grid_width": 5,
+      "grid_height": 5,
+      "starts": {"A": [5, 5]},
+      "goals": {"A": [0, 0]},
+      "obstacles": [],
+      "setting": "SETTING_4",
+      "expected_status": "error_out_of_bounds"
+    }
+  ]
+}

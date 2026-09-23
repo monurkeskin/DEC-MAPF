@@ -1,0 +1,98 @@
+{
+  "kind": "actual execution of synthetic teaching fixtures",
+  "article_data": false,
+  "selection": "First recorded agreed session in the first declared qualifying capsule run; all four trial outcomes retained in receipt",
+  "run_id": "run-306e4f3de639433ea579bb1bd60462f0",
+  "instance_hash": "inst-e5c56f59783dcba1",
+  "effective_config": {
+    "agent_order": [
+      "agent_0",
+      "agent_1"
+    ],
+    "broadcast_horizon": 5,
+    "commitment_type": "SC",
+    "fov_size": 5,
+    "heat_recording_limit": 250000,
+    "initial_tokens": 5,
+    "max_astar_expansions": 1500,
+    "max_steps": 40,
+    "negotiation_deadline_sec": 60,
+    "negotiation_horizon": 5,
+    "negotiation_protocol": "taop-v2",
+    "negotiation_round_limit": 30,
+    "random_seed": 42,
+    "recording_level": "full-trace",
+    "setting": "SETTING_4",
+    "solver_id": "Decentralized-HeatMap",
+    "suboptimality": 1.1,
+    "timeout_sec": 15,
+    "verification_pass_limit": 5
+  },
+  "source": {
+    "dependencies": {
+      "fastapi": "0.141.1",
+      "numpy": "2.5.3",
+      "polars": "1.44.2",
+      "psutil": "7.2.2",
+      "pydantic": "2.13.5"
+    },
+    "lock_sha256": "5e18f3d8aa68de3fc9c213b7801f47599775d93e8cdd1c284c15a01b073de2bc",
+    "logical_cpu_count": 10,
+    "machine": "arm64",
+    "metric_version": "delivered-metrics-v2",
+    "platform": "macOS-15.7.8-arm64-arm-64bit",
+    "python": "3.12.13 (main, Mar  3 2026, 12:39:30) [Clang 17.0.0 (clang-1700.6.4.2)]",
+    "source_origin": "source-tree",
+    "source_sha256": "f6149085a58c9969b3c321f55a3b75e2c6d8b20a517c9b0c741f32857e9f6944",
+    "thread_limits": {
+      "MKL_NUM_THREADS": "1",
+      "OMP_NUM_THREADS": "1",
+      "OPENBLAS_NUM_THREADS": "1",
+      "VECLIB_MAXIMUM_THREADS": "unset"
+    },
+    "validation_version": "trajectory-v2"
+  },
+  "all_trial_outcomes": [
+    {
+      "trial_id": "865471c5dc404027e1d2f5f8ff8da74f57a08557f8ec99d782c94a1a7de1465c",
+      "state": "completed",
+      "success": true,
+      "validation_status": "valid_solution",
+      "solver_id": "Decentralized-HeatMap",
+      "instance_hash": "inst-e5c56f59783dcba1"
+    },
+    {
+      "trial_id": "e4a655e92f7edaf101020f090732321034ff300bd89f8db4ac1ff4980208f623",
+      "state": "completed",
+      "success": true,
+      "validation_status": "valid_solution",
+      "solver_id": "Decentralized-PathAware",
+      "instance_hash": "inst-e5c56f59783dcba1"
+    },
+    {
+      "trial_id": "a13407a751fdbc094ef38f7bbd66c93d5b0fb097b5de6954a3410afa7573f7a3",
+      "state": "completed",
+      "success": true,
+      "validation_status": "valid_solution",
+      "solver_id": "Decentralized-HeatMap",
+      "instance_hash": "inst-0016f6f738eebc30"
+    },
+    {
+      "trial_id": "c07764e354f681caa044133834a9cee2d00e4931fb979803135f863cf94b8cf8",
+      "state": "completed",
+      "success": true,
+      "validation_status": "valid_solution",
+      "solver_id": "Decentralized-PathAware",
+      "instance_hash": "inst-0016f6f738eebc30"
+    }
+  ],
+  "assets": {
+    "negotiation-story.json": "e01d71216f4a056dd1ad25f2fcd2cc3880e2d280bf543ecfa93805e2b256ce67",
+    "negotiation-story.html": "eee0656333d6a285cec78ceab5f619a43473a3b8d6c46980d7cb68527776071a"
+  },
+  "software_qualification": "Recorded synthetic teaching execution; not an empirical article result.",
+  "narrator_renderer_sha256": "6e159935770f1ed3867d556f4216c667b16176c27d03660f9cd060ab2b0715e9",
+  "rendering_scope": "Public presentation of recorded events and trajectories. Operational Git metadata is omitted; source/configuration and asset checksums are retained.",
+  "replay_renderer_sha256": "e3f1739216f9f8785d5269f89b966cdd18ce00ecd70601437a94aa1604100d49",
+  "presentation_identity": "DEC-MAPF alpha"
+}

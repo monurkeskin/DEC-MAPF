@@ -1,0 +1,11 @@
+{
+  "centralized_slots": 2,
+  "decentralized_slots": 4,
+  "max_cpu_percent": 90,
+  "free_memory_mb": 1024,
+  "max_owned_memory_mb": 18432,
+  "optimal_reserve_mb": 10240,
+  "bounded_reserve_mb": 2048,
+  "decentralized_reserve_mb": 256,
+  "idle_timeout_sec": 300
+}

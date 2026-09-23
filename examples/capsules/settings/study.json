@@ -1,0 +1,41 @@
+{
+  "name": "Headless regression smoke",
+  "scenarios": [
+    {
+      "scenario_id": "crossing-2a"
+    },
+    {
+      "scenario_id": "grid-8x8-4a"
+    }
+  ],
+  "defaults": {
+    "max_steps": 40,
+    "timeout_sec": 10,
+    "recording_level": "full-trace"
+  },
+  "matrix": {
+    "solver_id": [
+      "CBS",
+      "Prioritized"
+    ],
+    "setting": [
+      "SETTING_1",
+      "SETTING_2",
+      "SETTING_3",
+      "SETTING_4"
+    ]
+  },
+  "exclude": [],
+  "budget": {
+    "workers": 1,
+    "wall_seconds": 120,
+    "max_trials": 16,
+    "disk_mb": 256,
+    "threads_per_worker": 1
+  },
+  "sampling": {
+    "population": "Two declared software regression fixtures only",
+    "independent_unit": "scenario geometry and roster",
+    "generalization": "none"
+  }
+}

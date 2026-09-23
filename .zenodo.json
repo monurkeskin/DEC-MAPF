@@ -1,0 +1,37 @@
+{
+  "title": "DEC-MAPF: A Simulation and Experimentation Framework for Decentralized Multi-Agent Path Finding",
+  "version": "0.1.0a2",
+  "license": "MIT",
+  "upload_type": "software",
+  "description": "Python simulation and experimentation framework for Decentralized Multi-Agent Path Finding: shared scenarios, decentralized and centralized solver comparisons, independent trajectory validation, reproducible studies and an optional visual workspace. Current decentralized methods use negotiation; additional methods integrate through documented solver contracts. Alpha software.",
+  "creators": [
+    {
+      "name": "Keskin, Mehmet Onur",
+      "affiliation": "Ozyegin University",
+      "orcid": "0000-0002-8025-4304"
+    },
+    {
+      "name": "Cantürk, Furkan",
+      "affiliation": "Ozyegin University"
+    },
+    {
+      "name": "Eran, Cihan",
+      "affiliation": "Ozyegin University"
+    },
+    {
+      "name": "Aydoğan, Reyhan",
+      "affiliation": "Ozyegin University & Delft University of Technology"
+    }
+  ],
+  "keywords": [
+    "Multi-Agent Path Finding",
+    "MAPF",
+    "Multi-Agent Simulation",
+    "Reproducible Experiments",
+    "Automated Negotiation",
+    "Decentralized Planning",
+    "Multi-Agent Systems",
+    "Space-Time A*",
+    "JAAMAS"
+  ]
+}

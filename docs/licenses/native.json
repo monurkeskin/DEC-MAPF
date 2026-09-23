@@ -1,0 +1,20 @@
+[
+  {
+    "name": "EECBS-stay",
+    "source": "https://raw.githubusercontent.com/erancihan/EECBS/3f5048495c74c57661b332a0c1d33829a973e601/license.md",
+    "sha256": "bb9b54455ad92ae2978bcf67e2e2da77a00c401a379541f75b1d1420b7d5b984",
+    "file": "EECBS-stay-LICENSE.txt"
+  },
+  {
+    "name": "EECBS-disappear",
+    "source": "https://raw.githubusercontent.com/erancihan/EECBS/39adefc048a46f4e2da2d361452931643a68994f/license.md",
+    "sha256": "bb9b54455ad92ae2978bcf67e2e2da77a00c401a379541f75b1d1420b7d5b984",
+    "file": "EECBS-disappear-LICENSE.txt"
+  },
+  {
+    "name": "CBSH2-RTC",
+    "source": "https://raw.githubusercontent.com/Jiaoyang-Li/CBSH2-RTC/0d53fa9c62a47d23768429c675e82f893285c49a/license.md",
+    "sha256": "bb9b54455ad92ae2978bcf67e2e2da77a00c401a379541f75b1d1420b7d5b984",
+    "file": "CBSH2-RTC-LICENSE.txt"
+  }
+]

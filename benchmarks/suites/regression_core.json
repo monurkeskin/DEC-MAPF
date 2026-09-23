@@ -1,0 +1,2063 @@
+{
+  "suite_name": "regression_core",
+  "version": "1.0.0",
+  "total_instances": 32,
+  "instances": [
+    {
+      "instance_id": "2x2_swap_s1",
+      "grid_width": 2,
+      "grid_height": 2,
+      "obstacles": [],
+      "starts": {
+        "A": [
+          0,
+          0
+        ],
+        "B": [
+          1,
+          0
+        ]
+      },
+      "goals": {
+        "A": [
+          1,
+          0
+        ],
+        "B": [
+          0,
+          0
+        ]
+      },
+      "setting": "SETTING_1",
+      "instance_hash": "inst-6a87996999331b9d",
+      "description": "Minimal 2-agent edge swap counterexample on 2x2 under Setting 1",
+      "tags": [
+        "counterexample",
+        "minimal_swap",
+        "setting_1"
+      ]
+    },
+    {
+      "instance_id": "2x2_swap_s2",
+      "grid_width": 2,
+      "grid_height": 2,
+      "obstacles": [],
+      "starts": {
+        "A": [
+          0,
+          0
+        ],
+        "B": [
+          1,
+          0
+        ]
+      },
+      "goals": {
+        "A": [
+          1,
+          0
+        ],
+        "B": [
+          0,
+          0
+        ]
+      },
+      "setting": "SETTING_2",
+      "instance_hash": "inst-e6540a95f33fc992",
+      "description": "Minimal 2-agent edge swap counterexample on 2x2 under Setting 2",
+      "tags": [
+        "counterexample",
+        "minimal_swap",
+        "setting_2"
+      ]
+    },
+    {
+      "instance_id": "2x2_swap_s3",
+      "grid_width": 2,
+      "grid_height": 2,
+      "obstacles": [],
+      "starts": {
+        "A": [
+          0,
+          0
+        ],
+        "B": [
+          1,
+          0
+        ]
+      },
+      "goals": {
+        "A": [
+          1,
+          0
+        ],
+        "B": [
+          0,
+          0
+        ]
+      },
+      "setting": "SETTING_3",
+      "instance_hash": "inst-1de1dc8e3bb2fa2a",
+      "description": "Minimal 2-agent edge swap counterexample on 2x2 under Setting 3",
+      "tags": [
+        "counterexample",
+        "minimal_swap",
+        "setting_3"
+      ]
+    },
+    {
+      "instance_id": "2x2_swap_s4",
+      "grid_width": 2,
+      "grid_height": 2,
+      "obstacles": [],
+      "starts": {
+        "A": [
+          0,
+          0
+        ],
+        "B": [
+          1,
+          0
+        ]
+      },
+      "goals": {
+        "A": [
+          1,
+          0
+        ],
+        "B": [
+          0,
+          0
+        ]
+      },
+      "setting": "SETTING_4",
+      "instance_hash": "inst-f3815d5582b58154",
+      "description": "Minimal 2-agent edge swap counterexample on 2x2 under Setting 4",
+      "tags": [
+        "counterexample",
+        "minimal_swap",
+        "setting_4"
+      ]
+    },
+    {
+      "instance_id": "5x2_corridor_crossing_s1",
+      "grid_width": 5,
+      "grid_height": 2,
+      "obstacles": [],
+      "starts": {
+        "A": [
+          0,
+          0
+        ],
+        "B": [
+          2,
+          1
+        ]
+      },
+      "goals": {
+        "A": [
+          4,
+          0
+        ],
+        "B": [
+          2,
+          0
+        ]
+      },
+      "setting": "SETTING_1",
+      "instance_hash": "inst-f5b63b80bc0a9b25",
+      "description": "Prioritized future goal occupancy crossing on 5x2 under Setting 1",
+      "tags": [
+        "counterexample",
+        "corridor",
+        "setting_1"
+      ]
+    },
+    {
+      "instance_id": "5x2_corridor_crossing_s2",
+      "grid_width": 5,
+      "grid_height": 2,
+      "obstacles": [],
+      "starts": {
+        "A": [
+          0,
+          0
+        ],
+        "B": [
+          2,
+          1
+        ]
+      },
+      "goals": {
+        "A": [
+          4,
+          0
+        ],
+        "B": [
+          2,
+          0
+        ]
+      },
+      "setting": "SETTING_2",
+      "instance_hash": "inst-99c5f9dc5c0e68d7",
+      "description": "Prioritized future goal occupancy crossing on 5x2 under Setting 2",
+      "tags": [
+        "counterexample",
+        "corridor",
+        "setting_2"
+      ]
+    },
+    {
+      "instance_id": "5x2_corridor_crossing_s3",
+      "grid_width": 5,
+      "grid_height": 2,
+      "obstacles": [],
+      "starts": {
+        "A": [
+          0,
+          0
+        ],
+        "B": [
+          2,
+          1
+        ]
+      },
+      "goals": {
+        "A": [
+          4,
+          0
+        ],
+        "B": [
+          2,
+          0
+        ]
+      },
+      "setting": "SETTING_3",
+      "instance_hash": "inst-bf3bb2c5be4fee7c",
+      "description": "Prioritized future goal occupancy crossing on 5x2 under Setting 3",
+      "tags": [
+        "counterexample",
+        "corridor",
+        "setting_3"
+      ]
+    },
+    {
+      "instance_id": "5x2_corridor_crossing_s4",
+      "grid_width": 5,
+      "grid_height": 2,
+      "obstacles": [],
+      "starts": {
+        "A": [
+          0,
+          0
+        ],
+        "B": [
+          2,
+          1
+        ]
+      },
+      "goals": {
+        "A": [
+          4,
+          0
+        ],
+        "B": [
+          2,
+          0
+        ]
+      },
+      "setting": "SETTING_4",
+      "instance_hash": "inst-5f9172fbb79c1877",
+      "description": "Prioritized future goal occupancy crossing on 5x2 under Setting 4",
+      "tags": [
+        "counterexample",
+        "corridor",
+        "setting_4"
+      ]
+    },
+    {
+      "instance_id": "6x6_chokepoint_k2_s1",
+      "grid_width": 6,
+      "grid_height": 6,
+      "obstacles": [
+        [
+          3,
+          0
+        ],
+        [
+          3,
+          1
+        ],
+        [
+          3,
+          3
+        ],
+        [
+          3,
+          4
+        ],
+        [
+          3,
+          5
+        ]
+      ],
+      "starts": {
+        "A": [
+          1,
+          2
+        ],
+        "B": [
+          5,
+          2
+        ]
+      },
+      "goals": {
+        "A": [
+          5,
+          2
+        ],
+        "B": [
+          1,
+          2
+        ]
+      },
+      "setting": "SETTING_1",
+      "instance_hash": "inst-b7cf48b40e75e2c6",
+      "description": "Two-room chokepoint bottleneck door passing k=2 under Setting 1",
+      "tags": [
+        "bottleneck",
+        "chokepoint",
+        "setting_1",
+        "k2"
+      ]
+    },
+    {
+      "instance_id": "6x6_chokepoint_k2_s2",
+      "grid_width": 6,
+      "grid_height": 6,
+      "obstacles": [
+        [
+          3,
+          0
+        ],
+        [
+          3,
+          1
+        ],
+        [
+          3,
+          3
+        ],
+        [
+          3,
+          4
+        ],
+        [
+          3,
+          5
+        ]
+      ],
+      "starts": {
+        "A": [
+          1,
+          2
+        ],
+        "B": [
+          5,
+          2
+        ]
+      },
+      "goals": {
+        "A": [
+          5,
+          2
+        ],
+        "B": [
+          1,
+          2
+        ]
+      },
+      "setting": "SETTING_2",
+      "instance_hash": "inst-25c9c019a4b1c79e",
+      "description": "Two-room chokepoint bottleneck door passing k=2 under Setting 2",
+      "tags": [
+        "bottleneck",
+        "chokepoint",
+        "setting_2",
+        "k2"
+      ]
+    },
+    {
+      "instance_id": "6x6_chokepoint_k2_s3",
+      "grid_width": 6,
+      "grid_height": 6,
+      "obstacles": [
+        [
+          3,
+          0
+        ],
+        [
+          3,
+          1
+        ],
+        [
+          3,
+          3
+        ],
+        [
+          3,
+          4
+        ],
+        [
+          3,
+          5
+        ]
+      ],
+      "starts": {
+        "A": [
+          1,
+          2
+        ],
+        "B": [
+          5,
+          2
+        ]
+      },
+      "goals": {
+        "A": [
+          5,
+          2
+        ],
+        "B": [
+          1,
+          2
+        ]
+      },
+      "setting": "SETTING_3",
+      "instance_hash": "inst-015c6d5525b00351",
+      "description": "Two-room chokepoint bottleneck door passing k=2 under Setting 3",
+      "tags": [
+        "bottleneck",
+        "chokepoint",
+        "setting_3",
+        "k2"
+      ]
+    },
+    {
+      "instance_id": "6x6_chokepoint_k2_s4",
+      "grid_width": 6,
+      "grid_height": 6,
+      "obstacles": [
+        [
+          3,
+          0
+        ],
+        [
+          3,
+          1
+        ],
+        [
+          3,
+          3
+        ],
+        [
+          3,
+          4
+        ],
+        [
+          3,
+          5
+        ]
+      ],
+      "starts": {
+        "A": [
+          1,
+          2
+        ],
+        "B": [
+          5,
+          2
+        ]
+      },
+      "goals": {
+        "A": [
+          5,
+          2
+        ],
+        "B": [
+          1,
+          2
+        ]
+      },
+      "setting": "SETTING_4",
+      "instance_hash": "inst-6f13415075afbbdd",
+      "description": "Two-room chokepoint bottleneck door passing k=2 under Setting 4",
+      "tags": [
+        "bottleneck",
+        "chokepoint",
+        "setting_4",
+        "k2"
+      ]
+    },
+    {
+      "instance_id": "6x6_chokepoint_k4_s1",
+      "grid_width": 6,
+      "grid_height": 6,
+      "obstacles": [
+        [
+          3,
+          0
+        ],
+        [
+          3,
+          1
+        ],
+        [
+          3,
+          3
+        ],
+        [
+          3,
+          4
+        ],
+        [
+          3,
+          5
+        ]
+      ],
+      "starts": {
+        "A": [
+          1,
+          2
+        ],
+        "B": [
+          5,
+          2
+        ],
+        "C": [
+          1,
+          1
+        ],
+        "D": [
+          5,
+          3
+        ]
+      },
+      "goals": {
+        "A": [
+          5,
+          2
+        ],
+        "B": [
+          1,
+          2
+        ],
+        "C": [
+          5,
+          3
+        ],
+        "D": [
+          1,
+          1
+        ]
+      },
+      "setting": "SETTING_1",
+      "instance_hash": "inst-0b7a3d2ba1664b5c",
+      "description": "Two-room chokepoint bottleneck door passing k=4 under Setting 1",
+      "tags": [
+        "bottleneck",
+        "chokepoint",
+        "setting_1",
+        "k4"
+      ]
+    },
+    {
+      "instance_id": "6x6_chokepoint_k4_s2",
+      "grid_width": 6,
+      "grid_height": 6,
+      "obstacles": [
+        [
+          3,
+          0
+        ],
+        [
+          3,
+          1
+        ],
+        [
+          3,
+          3
+        ],
+        [
+          3,
+          4
+        ],
+        [
+          3,
+          5
+        ]
+      ],
+      "starts": {
+        "A": [
+          1,
+          2
+        ],
+        "B": [
+          5,
+          2
+        ],
+        "C": [
+          1,
+          1
+        ],
+        "D": [
+          5,
+          3
+        ]
+      },
+      "goals": {
+        "A": [
+          5,
+          2
+        ],
+        "B": [
+          1,
+          2
+        ],
+        "C": [
+          5,
+          3
+        ],
+        "D": [
+          1,
+          1
+        ]
+      },
+      "setting": "SETTING_2",
+      "instance_hash": "inst-95c58badf37753f4",
+      "description": "Two-room chokepoint bottleneck door passing k=4 under Setting 2",
+      "tags": [
+        "bottleneck",
+        "chokepoint",
+        "setting_2",
+        "k4"
+      ]
+    },
+    {
+      "instance_id": "6x6_chokepoint_k4_s3",
+      "grid_width": 6,
+      "grid_height": 6,
+      "obstacles": [
+        [
+          3,
+          0
+        ],
+        [
+          3,
+          1
+        ],
+        [
+          3,
+          3
+        ],
+        [
+          3,
+          4
+        ],
+        [
+          3,
+          5
+        ]
+      ],
+      "starts": {
+        "A": [
+          1,
+          2
+        ],
+        "B": [
+          5,
+          2
+        ],
+        "C": [
+          1,
+          1
+        ],
+        "D": [
+          5,
+          3
+        ]
+      },
+      "goals": {
+        "A": [
+          5,
+          2
+        ],
+        "B": [
+          1,
+          2
+        ],
+        "C": [
+          5,
+          3
+        ],
+        "D": [
+          1,
+          1
+        ]
+      },
+      "setting": "SETTING_3",
+      "instance_hash": "inst-e5dcb936ea270842",
+      "description": "Two-room chokepoint bottleneck door passing k=4 under Setting 3",
+      "tags": [
+        "bottleneck",
+        "chokepoint",
+        "setting_3",
+        "k4"
+      ]
+    },
+    {
+      "instance_id": "6x6_chokepoint_k4_s4",
+      "grid_width": 6,
+      "grid_height": 6,
+      "obstacles": [
+        [
+          3,
+          0
+        ],
+        [
+          3,
+          1
+        ],
+        [
+          3,
+          3
+        ],
+        [
+          3,
+          4
+        ],
+        [
+          3,
+          5
+        ]
+      ],
+      "starts": {
+        "A": [
+          1,
+          2
+        ],
+        "B": [
+          5,
+          2
+        ],
+        "C": [
+          1,
+          1
+        ],
+        "D": [
+          5,
+          3
+        ]
+      },
+      "goals": {
+        "A": [
+          5,
+          2
+        ],
+        "B": [
+          1,
+          2
+        ],
+        "C": [
+          5,
+          3
+        ],
+        "D": [
+          1,
+          1
+        ]
+      },
+      "setting": "SETTING_4",
+      "instance_hash": "inst-53eb303aeff57cd4",
+      "description": "Two-room chokepoint bottleneck door passing k=4 under Setting 4",
+      "tags": [
+        "bottleneck",
+        "chokepoint",
+        "setting_4",
+        "k4"
+      ]
+    },
+    {
+      "instance_id": "8x8_empty_k4_s1",
+      "grid_width": 8,
+      "grid_height": 8,
+      "obstacles": [],
+      "starts": {
+        "A": [
+          0,
+          0
+        ],
+        "B": [
+          7,
+          7
+        ],
+        "C": [
+          0,
+          7
+        ],
+        "D": [
+          7,
+          0
+        ]
+      },
+      "goals": {
+        "A": [
+          7,
+          7
+        ],
+        "B": [
+          0,
+          0
+        ],
+        "C": [
+          7,
+          0
+        ],
+        "D": [
+          0,
+          7
+        ]
+      },
+      "setting": "SETTING_1",
+      "instance_hash": "inst-67ffb5a76467d09f",
+      "description": "Four diagonal crossing agents on 8x8 empty grid under Setting 1",
+      "tags": [
+        "empty_grid",
+        "crossing",
+        "setting_1",
+        "k4"
+      ]
+    },
+    {
+      "instance_id": "8x8_empty_k4_s2",
+      "grid_width": 8,
+      "grid_height": 8,
+      "obstacles": [],
+      "starts": {
+        "A": [
+          0,
+          0
+        ],
+        "B": [
+          7,
+          7
+        ],
+        "C": [
+          0,
+          7
+        ],
+        "D": [
+          7,
+          0
+        ]
+      },
+      "goals": {
+        "A": [
+          7,
+          7
+        ],
+        "B": [
+          0,
+          0
+        ],
+        "C": [
+          7,
+          0
+        ],
+        "D": [
+          0,
+          7
+        ]
+      },
+      "setting": "SETTING_2",
+      "instance_hash": "inst-b9cb94d5103dec47",
+      "description": "Four diagonal crossing agents on 8x8 empty grid under Setting 2",
+      "tags": [
+        "empty_grid",
+        "crossing",
+        "setting_2",
+        "k4"
+      ]
+    },
+    {
+      "instance_id": "8x8_empty_k4_s3",
+      "grid_width": 8,
+      "grid_height": 8,
+      "obstacles": [],
+      "starts": {
+        "A": [
+          0,
+          0
+        ],
+        "B": [
+          7,
+          7
+        ],
+        "C": [
+          0,
+          7
+        ],
+        "D": [
+          7,
+          0
+        ]
+      },
+      "goals": {
+        "A": [
+          7,
+          7
+        ],
+        "B": [
+          0,
+          0
+        ],
+        "C": [
+          7,
+          0
+        ],
+        "D": [
+          0,
+          7
+        ]
+      },
+      "setting": "SETTING_3",
+      "instance_hash": "inst-a4090e9c2554d5fa",
+      "description": "Four diagonal crossing agents on 8x8 empty grid under Setting 3",
+      "tags": [
+        "empty_grid",
+        "crossing",
+        "setting_3",
+        "k4"
+      ]
+    },
+    {
+      "instance_id": "8x8_empty_k4_s4",
+      "grid_width": 8,
+      "grid_height": 8,
+      "obstacles": [],
+      "starts": {
+        "A": [
+          0,
+          0
+        ],
+        "B": [
+          7,
+          7
+        ],
+        "C": [
+          0,
+          7
+        ],
+        "D": [
+          7,
+          0
+        ]
+      },
+      "goals": {
+        "A": [
+          7,
+          7
+        ],
+        "B": [
+          0,
+          0
+        ],
+        "C": [
+          7,
+          0
+        ],
+        "D": [
+          0,
+          7
+        ]
+      },
+      "setting": "SETTING_4",
+      "instance_hash": "inst-ed2add85605185be",
+      "description": "Four diagonal crossing agents on 8x8 empty grid under Setting 4",
+      "tags": [
+        "empty_grid",
+        "crossing",
+        "setting_4",
+        "k4"
+      ]
+    },
+    {
+      "instance_id": "8x8_empty_k8_s1",
+      "grid_width": 8,
+      "grid_height": 8,
+      "obstacles": [],
+      "starts": {
+        "A": [
+          0,
+          0
+        ],
+        "B": [
+          7,
+          7
+        ],
+        "C": [
+          0,
+          7
+        ],
+        "D": [
+          7,
+          0
+        ],
+        "E": [
+          3,
+          0
+        ],
+        "F": [
+          3,
+          7
+        ],
+        "G": [
+          0,
+          3
+        ],
+        "H": [
+          7,
+          3
+        ]
+      },
+      "goals": {
+        "A": [
+          7,
+          7
+        ],
+        "B": [
+          0,
+          0
+        ],
+        "C": [
+          7,
+          0
+        ],
+        "D": [
+          0,
+          7
+        ],
+        "E": [
+          3,
+          7
+        ],
+        "F": [
+          3,
+          0
+        ],
+        "G": [
+          7,
+          3
+        ],
+        "H": [
+          0,
+          3
+        ]
+      },
+      "setting": "SETTING_1",
+      "instance_hash": "inst-6103c4c4ea393ab0",
+      "description": "Eight cross-traffic agents on 8x8 empty grid under Setting 1",
+      "tags": [
+        "empty_grid",
+        "dense_crossing",
+        "setting_1",
+        "k8"
+      ]
+    },
+    {
+      "instance_id": "8x8_empty_k8_s2",
+      "grid_width": 8,
+      "grid_height": 8,
+      "obstacles": [],
+      "starts": {
+        "A": [
+          0,
+          0
+        ],
+        "B": [
+          7,
+          7
+        ],
+        "C": [
+          0,
+          7
+        ],
+        "D": [
+          7,
+          0
+        ],
+        "E": [
+          3,
+          0
+        ],
+        "F": [
+          3,
+          7
+        ],
+        "G": [
+          0,
+          3
+        ],
+        "H": [
+          7,
+          3
+        ]
+      },
+      "goals": {
+        "A": [
+          7,
+          7
+        ],
+        "B": [
+          0,
+          0
+        ],
+        "C": [
+          7,
+          0
+        ],
+        "D": [
+          0,
+          7
+        ],
+        "E": [
+          3,
+          7
+        ],
+        "F": [
+          3,
+          0
+        ],
+        "G": [
+          7,
+          3
+        ],
+        "H": [
+          0,
+          3
+        ]
+      },
+      "setting": "SETTING_2",
+      "instance_hash": "inst-d291b8aa1301af63",
+      "description": "Eight cross-traffic agents on 8x8 empty grid under Setting 2",
+      "tags": [
+        "empty_grid",
+        "dense_crossing",
+        "setting_2",
+        "k8"
+      ]
+    },
+    {
+      "instance_id": "8x8_empty_k8_s3",
+      "grid_width": 8,
+      "grid_height": 8,
+      "obstacles": [],
+      "starts": {
+        "A": [
+          0,
+          0
+        ],
+        "B": [
+          7,
+          7
+        ],
+        "C": [
+          0,
+          7
+        ],
+        "D": [
+          7,
+          0
+        ],
+        "E": [
+          3,
+          0
+        ],
+        "F": [
+          3,
+          7
+        ],
+        "G": [
+          0,
+          3
+        ],
+        "H": [
+          7,
+          3
+        ]
+      },
+      "goals": {
+        "A": [
+          7,
+          7
+        ],
+        "B": [
+          0,
+          0
+        ],
+        "C": [
+          7,
+          0
+        ],
+        "D": [
+          0,
+          7
+        ],
+        "E": [
+          3,
+          7
+        ],
+        "F": [
+          3,
+          0
+        ],
+        "G": [
+          7,
+          3
+        ],
+        "H": [
+          0,
+          3
+        ]
+      },
+      "setting": "SETTING_3",
+      "instance_hash": "inst-efb244050048af76",
+      "description": "Eight cross-traffic agents on 8x8 empty grid under Setting 3",
+      "tags": [
+        "empty_grid",
+        "dense_crossing",
+        "setting_3",
+        "k8"
+      ]
+    },
+    {
+      "instance_id": "8x8_empty_k8_s4",
+      "grid_width": 8,
+      "grid_height": 8,
+      "obstacles": [],
+      "starts": {
+        "A": [
+          0,
+          0
+        ],
+        "B": [
+          7,
+          7
+        ],
+        "C": [
+          0,
+          7
+        ],
+        "D": [
+          7,
+          0
+        ],
+        "E": [
+          3,
+          0
+        ],
+        "F": [
+          3,
+          7
+        ],
+        "G": [
+          0,
+          3
+        ],
+        "H": [
+          7,
+          3
+        ]
+      },
+      "goals": {
+        "A": [
+          7,
+          7
+        ],
+        "B": [
+          0,
+          0
+        ],
+        "C": [
+          7,
+          0
+        ],
+        "D": [
+          0,
+          7
+        ],
+        "E": [
+          3,
+          7
+        ],
+        "F": [
+          3,
+          0
+        ],
+        "G": [
+          7,
+          3
+        ],
+        "H": [
+          0,
+          3
+        ]
+      },
+      "setting": "SETTING_4",
+      "instance_hash": "inst-b2f1bbcc8254747f",
+      "description": "Eight cross-traffic agents on 8x8 empty grid under Setting 4",
+      "tags": [
+        "empty_grid",
+        "dense_crossing",
+        "setting_4",
+        "k8"
+      ]
+    },
+    {
+      "instance_id": "8x8_obs_k4_s1",
+      "grid_width": 8,
+      "grid_height": 8,
+      "obstacles": [
+        [
+          2,
+          2
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          3,
+          2
+        ],
+        [
+          5,
+          5
+        ],
+        [
+          5,
+          4
+        ],
+        [
+          4,
+          5
+        ]
+      ],
+      "starts": {
+        "A": [
+          0,
+          0
+        ],
+        "B": [
+          7,
+          7
+        ],
+        "C": [
+          0,
+          7
+        ],
+        "D": [
+          7,
+          0
+        ]
+      },
+      "goals": {
+        "A": [
+          7,
+          7
+        ],
+        "B": [
+          0,
+          0
+        ],
+        "C": [
+          7,
+          0
+        ],
+        "D": [
+          0,
+          7
+        ]
+      },
+      "setting": "SETTING_1",
+      "instance_hash": "inst-8a033f939282eaba",
+      "description": "8x8 grid with obstacles and 4 crossing agents under Setting 1",
+      "tags": [
+        "obstacles",
+        "grid8x8",
+        "setting_1",
+        "k4"
+      ]
+    },
+    {
+      "instance_id": "8x8_obs_k4_s2",
+      "grid_width": 8,
+      "grid_height": 8,
+      "obstacles": [
+        [
+          2,
+          2
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          3,
+          2
+        ],
+        [
+          5,
+          5
+        ],
+        [
+          5,
+          4
+        ],
+        [
+          4,
+          5
+        ]
+      ],
+      "starts": {
+        "A": [
+          0,
+          0
+        ],
+        "B": [
+          7,
+          7
+        ],
+        "C": [
+          0,
+          7
+        ],
+        "D": [
+          7,
+          0
+        ]
+      },
+      "goals": {
+        "A": [
+          7,
+          7
+        ],
+        "B": [
+          0,
+          0
+        ],
+        "C": [
+          7,
+          0
+        ],
+        "D": [
+          0,
+          7
+        ]
+      },
+      "setting": "SETTING_2",
+      "instance_hash": "inst-8aa8257fa2aa811e",
+      "description": "8x8 grid with obstacles and 4 crossing agents under Setting 2",
+      "tags": [
+        "obstacles",
+        "grid8x8",
+        "setting_2",
+        "k4"
+      ]
+    },
+    {
+      "instance_id": "8x8_obs_k4_s3",
+      "grid_width": 8,
+      "grid_height": 8,
+      "obstacles": [
+        [
+          2,
+          2
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          3,
+          2
+        ],
+        [
+          5,
+          5
+        ],
+        [
+          5,
+          4
+        ],
+        [
+          4,
+          5
+        ]
+      ],
+      "starts": {
+        "A": [
+          0,
+          0
+        ],
+        "B": [
+          7,
+          7
+        ],
+        "C": [
+          0,
+          7
+        ],
+        "D": [
+          7,
+          0
+        ]
+      },
+      "goals": {
+        "A": [
+          7,
+          7
+        ],
+        "B": [
+          0,
+          0
+        ],
+        "C": [
+          7,
+          0
+        ],
+        "D": [
+          0,
+          7
+        ]
+      },
+      "setting": "SETTING_3",
+      "instance_hash": "inst-0b46364444b3201d",
+      "description": "8x8 grid with obstacles and 4 crossing agents under Setting 3",
+      "tags": [
+        "obstacles",
+        "grid8x8",
+        "setting_3",
+        "k4"
+      ]
+    },
+    {
+      "instance_id": "8x8_obs_k4_s4",
+      "grid_width": 8,
+      "grid_height": 8,
+      "obstacles": [
+        [
+          2,
+          2
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          3,
+          2
+        ],
+        [
+          5,
+          5
+        ],
+        [
+          5,
+          4
+        ],
+        [
+          4,
+          5
+        ]
+      ],
+      "starts": {
+        "A": [
+          0,
+          0
+        ],
+        "B": [
+          7,
+          7
+        ],
+        "C": [
+          0,
+          7
+        ],
+        "D": [
+          7,
+          0
+        ]
+      },
+      "goals": {
+        "A": [
+          7,
+          7
+        ],
+        "B": [
+          0,
+          0
+        ],
+        "C": [
+          7,
+          0
+        ],
+        "D": [
+          0,
+          7
+        ]
+      },
+      "setting": "SETTING_4",
+      "instance_hash": "inst-f31f8af662ecbd17",
+      "description": "8x8 grid with obstacles and 4 crossing agents under Setting 4",
+      "tags": [
+        "obstacles",
+        "grid8x8",
+        "setting_4",
+        "k4"
+      ]
+    },
+    {
+      "instance_id": "8x8_obs_k8_s1",
+      "grid_width": 8,
+      "grid_height": 8,
+      "obstacles": [
+        [
+          2,
+          2
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          3,
+          2
+        ],
+        [
+          5,
+          5
+        ],
+        [
+          5,
+          4
+        ],
+        [
+          4,
+          5
+        ]
+      ],
+      "starts": {
+        "A": [
+          0,
+          0
+        ],
+        "B": [
+          7,
+          7
+        ],
+        "C": [
+          0,
+          7
+        ],
+        "D": [
+          7,
+          0
+        ],
+        "E": [
+          3,
+          0
+        ],
+        "F": [
+          3,
+          7
+        ],
+        "G": [
+          0,
+          3
+        ],
+        "H": [
+          7,
+          3
+        ]
+      },
+      "goals": {
+        "A": [
+          7,
+          7
+        ],
+        "B": [
+          0,
+          0
+        ],
+        "C": [
+          7,
+          0
+        ],
+        "D": [
+          0,
+          7
+        ],
+        "E": [
+          3,
+          7
+        ],
+        "F": [
+          3,
+          0
+        ],
+        "G": [
+          7,
+          3
+        ],
+        "H": [
+          0,
+          3
+        ]
+      },
+      "setting": "SETTING_1",
+      "instance_hash": "inst-72bf5ea3bde084da",
+      "description": "8x8 grid with obstacles and 8 crossing agents under Setting 1",
+      "tags": [
+        "obstacles",
+        "dense_obstacles",
+        "setting_1",
+        "k8"
+      ]
+    },
+    {
+      "instance_id": "8x8_obs_k8_s2",
+      "grid_width": 8,
+      "grid_height": 8,
+      "obstacles": [
+        [
+          2,
+          2
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          3,
+          2
+        ],
+        [
+          5,
+          5
+        ],
+        [
+          5,
+          4
+        ],
+        [
+          4,
+          5
+        ]
+      ],
+      "starts": {
+        "A": [
+          0,
+          0
+        ],
+        "B": [
+          7,
+          7
+        ],
+        "C": [
+          0,
+          7
+        ],
+        "D": [
+          7,
+          0
+        ],
+        "E": [
+          3,
+          0
+        ],
+        "F": [
+          3,
+          7
+        ],
+        "G": [
+          0,
+          3
+        ],
+        "H": [
+          7,
+          3
+        ]
+      },
+      "goals": {
+        "A": [
+          7,
+          7
+        ],
+        "B": [
+          0,
+          0
+        ],
+        "C": [
+          7,
+          0
+        ],
+        "D": [
+          0,
+          7
+        ],
+        "E": [
+          3,
+          7
+        ],
+        "F": [
+          3,
+          0
+        ],
+        "G": [
+          7,
+          3
+        ],
+        "H": [
+          0,
+          3
+        ]
+      },
+      "setting": "SETTING_2",
+      "instance_hash": "inst-d7c018ce8d2af9a7",
+      "description": "8x8 grid with obstacles and 8 crossing agents under Setting 2",
+      "tags": [
+        "obstacles",
+        "dense_obstacles",
+        "setting_2",
+        "k8"
+      ]
+    },
+    {
+      "instance_id": "8x8_obs_k8_s3",
+      "grid_width": 8,
+      "grid_height": 8,
+      "obstacles": [
+        [
+          2,
+          2
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          3,
+          2
+        ],
+        [
+          5,
+          5
+        ],
+        [
+          5,
+          4
+        ],
+        [
+          4,
+          5
+        ]
+      ],
+      "starts": {
+        "A": [
+          0,
+          0
+        ],
+        "B": [
+          7,
+          7
+        ],
+        "C": [
+          0,
+          7
+        ],
+        "D": [
+          7,
+          0
+        ],
+        "E": [
+          3,
+          0
+        ],
+        "F": [
+          3,
+          7
+        ],
+        "G": [
+          0,
+          3
+        ],
+        "H": [
+          7,
+          3
+        ]
+      },
+      "goals": {
+        "A": [
+          7,
+          7
+        ],
+        "B": [
+          0,
+          0
+        ],
+        "C": [
+          7,
+          0
+        ],
+        "D": [
+          0,
+          7
+        ],
+        "E": [
+          3,
+          7
+        ],
+        "F": [
+          3,
+          0
+        ],
+        "G": [
+          7,
+          3
+        ],
+        "H": [
+          0,
+          3
+        ]
+      },
+      "setting": "SETTING_3",
+      "instance_hash": "inst-410b7ad81d9247d3",
+      "description": "8x8 grid with obstacles and 8 crossing agents under Setting 3",
+      "tags": [
+        "obstacles",
+        "dense_obstacles",
+        "setting_3",
+        "k8"
+      ]
+    },
+    {
+      "instance_id": "8x8_obs_k8_s4",
+      "grid_width": 8,
+      "grid_height": 8,
+      "obstacles": [
+        [
+          2,
+          2
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          3,
+          2
+        ],
+        [
+          5,
+          5
+        ],
+        [
+          5,
+          4
+        ],
+        [
+          4,
+          5
+        ]
+      ],
+      "starts": {
+        "A": [
+          0,
+          0
+        ],
+        "B": [
+          7,
+          7
+        ],
+        "C": [
+          0,
+          7
+        ],
+        "D": [
+          7,
+          0
+        ],
+        "E": [
+          3,
+          0
+        ],
+        "F": [
+          3,
+          7
+        ],
+        "G": [
+          0,
+          3
+        ],
+        "H": [
+          7,
+          3
+        ]
+      },
+      "goals": {
+        "A": [
+          7,
+          7
+        ],
+        "B": [
+          0,
+          0
+        ],
+        "C": [
+          7,
+          0
+        ],
+        "D": [
+          0,
+          7
+        ],
+        "E": [
+          3,
+          7
+        ],
+        "F": [
+          3,
+          0
+        ],
+        "G": [
+          7,
+          3
+        ],
+        "H": [
+          0,
+          3
+        ]
+      },
+      "setting": "SETTING_4",
+      "instance_hash": "inst-95612a419008627d",
+      "description": "8x8 grid with obstacles and 8 crossing agents under Setting 4",
+      "tags": [
+        "obstacles",
+        "dense_obstacles",
+        "setting_4",
+        "k8"
+      ]
+    }
+  ]
+}

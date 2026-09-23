@@ -1,0 +1,653 @@
+{
+  "purpose": "Additional frozen synthetic engineering confirmation with simultaneous conflicts; v1 outcomes retained separately; not population evidence",
+  "cases": [
+    {
+      "name": "conflict-confirmation-S1-SC",
+      "grid_width": 7,
+      "grid_height": 7,
+      "starts": {
+        "a": [
+          0,
+          3
+        ],
+        "b": [
+          3,
+          0
+        ],
+        "c": [
+          6,
+          6
+        ]
+      },
+      "goals": {
+        "a": [
+          6,
+          3
+        ],
+        "b": [
+          3,
+          6
+        ],
+        "c": [
+          1,
+          6
+        ]
+      },
+      "obstacles": [
+        [
+          1,
+          0
+        ],
+        [
+          5,
+          0
+        ]
+      ],
+      "setting": "SETTING_1",
+      "commitment_type": "SC",
+      "solver_id": "Decentralized-PathAware",
+      "fov_size": 5,
+      "initial_tokens": 5,
+      "negotiation_protocol": "taop-v2",
+      "negotiation_deadline_sec": 60,
+      "timeout_sec": null,
+      "max_steps": 32,
+      "max_astar_expansions": 1500,
+      "recording_level": "full-trace"
+    },
+    {
+      "name": "conflict-confirmation-S1-DC",
+      "grid_width": 7,
+      "grid_height": 7,
+      "starts": {
+        "a": [
+          0,
+          3
+        ],
+        "b": [
+          3,
+          0
+        ],
+        "c": [
+          6,
+          6
+        ]
+      },
+      "goals": {
+        "a": [
+          6,
+          3
+        ],
+        "b": [
+          3,
+          6
+        ],
+        "c": [
+          1,
+          6
+        ]
+      },
+      "obstacles": [
+        [
+          1,
+          0
+        ],
+        [
+          5,
+          0
+        ]
+      ],
+      "setting": "SETTING_1",
+      "commitment_type": "DC",
+      "solver_id": "Decentralized-HeatMap",
+      "fov_size": 5,
+      "initial_tokens": 5,
+      "negotiation_protocol": "taop-v2",
+      "negotiation_deadline_sec": 60,
+      "timeout_sec": null,
+      "max_steps": 32,
+      "max_astar_expansions": 1500,
+      "recording_level": "full-trace"
+    },
+    {
+      "name": "conflict-confirmation-S1-ZC",
+      "grid_width": 7,
+      "grid_height": 7,
+      "starts": {
+        "a": [
+          0,
+          3
+        ],
+        "b": [
+          3,
+          0
+        ],
+        "c": [
+          6,
+          6
+        ]
+      },
+      "goals": {
+        "a": [
+          6,
+          3
+        ],
+        "b": [
+          3,
+          6
+        ],
+        "c": [
+          1,
+          6
+        ]
+      },
+      "obstacles": [
+        [
+          1,
+          0
+        ],
+        [
+          5,
+          0
+        ]
+      ],
+      "setting": "SETTING_1",
+      "commitment_type": "ZC",
+      "solver_id": "Decentralized-PathAware",
+      "fov_size": 5,
+      "initial_tokens": 5,
+      "negotiation_protocol": "taop-v2",
+      "negotiation_deadline_sec": 60,
+      "timeout_sec": null,
+      "max_steps": 32,
+      "max_astar_expansions": 1500,
+      "recording_level": "full-trace"
+    },
+    {
+      "name": "conflict-confirmation-S2-SC",
+      "grid_width": 7,
+      "grid_height": 7,
+      "starts": {
+        "a": [
+          0,
+          3
+        ],
+        "b": [
+          3,
+          0
+        ],
+        "c": [
+          6,
+          6
+        ]
+      },
+      "goals": {
+        "a": [
+          6,
+          3
+        ],
+        "b": [
+          3,
+          6
+        ],
+        "c": [
+          1,
+          6
+        ]
+      },
+      "obstacles": [
+        [
+          1,
+          0
+        ],
+        [
+          5,
+          0
+        ]
+      ],
+      "setting": "SETTING_2",
+      "commitment_type": "SC",
+      "solver_id": "Decentralized-HeatMap",
+      "fov_size": 5,
+      "initial_tokens": 5,
+      "negotiation_protocol": "taop-v2",
+      "negotiation_deadline_sec": 60,
+      "timeout_sec": null,
+      "max_steps": 32,
+      "max_astar_expansions": 1500,
+      "recording_level": "full-trace"
+    },
+    {
+      "name": "conflict-confirmation-S2-DC",
+      "grid_width": 7,
+      "grid_height": 7,
+      "starts": {
+        "a": [
+          0,
+          3
+        ],
+        "b": [
+          3,
+          0
+        ],
+        "c": [
+          6,
+          6
+        ]
+      },
+      "goals": {
+        "a": [
+          6,
+          3
+        ],
+        "b": [
+          3,
+          6
+        ],
+        "c": [
+          1,
+          6
+        ]
+      },
+      "obstacles": [
+        [
+          1,
+          0
+        ],
+        [
+          5,
+          0
+        ]
+      ],
+      "setting": "SETTING_2",
+      "commitment_type": "DC",
+      "solver_id": "Decentralized-PathAware",
+      "fov_size": 5,
+      "initial_tokens": 5,
+      "negotiation_protocol": "taop-v2",
+      "negotiation_deadline_sec": 60,
+      "timeout_sec": null,
+      "max_steps": 32,
+      "max_astar_expansions": 1500,
+      "recording_level": "full-trace"
+    },
+    {
+      "name": "conflict-confirmation-S2-ZC",
+      "grid_width": 7,
+      "grid_height": 7,
+      "starts": {
+        "a": [
+          0,
+          3
+        ],
+        "b": [
+          3,
+          0
+        ],
+        "c": [
+          6,
+          6
+        ]
+      },
+      "goals": {
+        "a": [
+          6,
+          3
+        ],
+        "b": [
+          3,
+          6
+        ],
+        "c": [
+          1,
+          6
+        ]
+      },
+      "obstacles": [
+        [
+          1,
+          0
+        ],
+        [
+          5,
+          0
+        ]
+      ],
+      "setting": "SETTING_2",
+      "commitment_type": "ZC",
+      "solver_id": "Decentralized-HeatMap",
+      "fov_size": 5,
+      "initial_tokens": 5,
+      "negotiation_protocol": "taop-v2",
+      "negotiation_deadline_sec": 60,
+      "timeout_sec": null,
+      "max_steps": 32,
+      "max_astar_expansions": 1500,
+      "recording_level": "full-trace"
+    },
+    {
+      "name": "conflict-confirmation-S3-SC",
+      "grid_width": 7,
+      "grid_height": 7,
+      "starts": {
+        "a": [
+          0,
+          3
+        ],
+        "b": [
+          3,
+          0
+        ],
+        "c": [
+          6,
+          6
+        ]
+      },
+      "goals": {
+        "a": [
+          6,
+          3
+        ],
+        "b": [
+          3,
+          6
+        ],
+        "c": [
+          1,
+          6
+        ]
+      },
+      "obstacles": [
+        [
+          1,
+          0
+        ],
+        [
+          5,
+          0
+        ]
+      ],
+      "setting": "SETTING_3",
+      "commitment_type": "SC",
+      "solver_id": "Decentralized-PathAware",
+      "fov_size": 5,
+      "initial_tokens": 5,
+      "negotiation_protocol": "taop-v2",
+      "negotiation_deadline_sec": 60,
+      "timeout_sec": null,
+      "max_steps": 32,
+      "max_astar_expansions": 1500,
+      "recording_level": "full-trace"
+    },
+    {
+      "name": "conflict-confirmation-S3-DC",
+      "grid_width": 7,
+      "grid_height": 7,
+      "starts": {
+        "a": [
+          0,
+          3
+        ],
+        "b": [
+          3,
+          0
+        ],
+        "c": [
+          6,
+          6
+        ]
+      },
+      "goals": {
+        "a": [
+          6,
+          3
+        ],
+        "b": [
+          3,
+          6
+        ],
+        "c": [
+          1,
+          6
+        ]
+      },
+      "obstacles": [
+        [
+          1,
+          0
+        ],
+        [
+          5,
+          0
+        ]
+      ],
+      "setting": "SETTING_3",
+      "commitment_type": "DC",
+      "solver_id": "Decentralized-HeatMap",
+      "fov_size": 5,
+      "initial_tokens": 5,
+      "negotiation_protocol": "taop-v2",
+      "negotiation_deadline_sec": 60,
+      "timeout_sec": null,
+      "max_steps": 32,
+      "max_astar_expansions": 1500,
+      "recording_level": "full-trace"
+    },
+    {
+      "name": "conflict-confirmation-S3-ZC",
+      "grid_width": 7,
+      "grid_height": 7,
+      "starts": {
+        "a": [
+          0,
+          3
+        ],
+        "b": [
+          3,
+          0
+        ],
+        "c": [
+          6,
+          6
+        ]
+      },
+      "goals": {
+        "a": [
+          6,
+          3
+        ],
+        "b": [
+          3,
+          6
+        ],
+        "c": [
+          1,
+          6
+        ]
+      },
+      "obstacles": [
+        [
+          1,
+          0
+        ],
+        [
+          5,
+          0
+        ]
+      ],
+      "setting": "SETTING_3",
+      "commitment_type": "ZC",
+      "solver_id": "Decentralized-PathAware",
+      "fov_size": 5,
+      "initial_tokens": 5,
+      "negotiation_protocol": "taop-v2",
+      "negotiation_deadline_sec": 60,
+      "timeout_sec": null,
+      "max_steps": 32,
+      "max_astar_expansions": 1500,
+      "recording_level": "full-trace"
+    },
+    {
+      "name": "conflict-confirmation-S4-SC",
+      "grid_width": 7,
+      "grid_height": 7,
+      "starts": {
+        "a": [
+          0,
+          3
+        ],
+        "b": [
+          3,
+          0
+        ],
+        "c": [
+          6,
+          6
+        ]
+      },
+      "goals": {
+        "a": [
+          6,
+          3
+        ],
+        "b": [
+          3,
+          6
+        ],
+        "c": [
+          1,
+          6
+        ]
+      },
+      "obstacles": [
+        [
+          1,
+          0
+        ],
+        [
+          5,
+          0
+        ]
+      ],
+      "setting": "SETTING_4",
+      "commitment_type": "SC",
+      "solver_id": "Decentralized-HeatMap",
+      "fov_size": 5,
+      "initial_tokens": 5,
+      "negotiation_protocol": "taop-v2",
+      "negotiation_deadline_sec": 60,
+      "timeout_sec": null,
+      "max_steps": 32,
+      "max_astar_expansions": 1500,
+      "recording_level": "full-trace"
+    },
+    {
+      "name": "conflict-confirmation-S4-DC",
+      "grid_width": 7,
+      "grid_height": 7,
+      "starts": {
+        "a": [
+          0,
+          3
+        ],
+        "b": [
+          3,
+          0
+        ],
+        "c": [
+          6,
+          6
+        ]
+      },
+      "goals": {
+        "a": [
+          6,
+          3
+        ],
+        "b": [
+          3,
+          6
+        ],
+        "c": [
+          1,
+          6
+        ]
+      },
+      "obstacles": [
+        [
+          1,
+          0
+        ],
+        [
+          5,
+          0
+        ]
+      ],
+      "setting": "SETTING_4",
+      "commitment_type": "DC",
+      "solver_id": "Decentralized-PathAware",
+      "fov_size": 5,
+      "initial_tokens": 5,
+      "negotiation_protocol": "taop-v2",
+      "negotiation_deadline_sec": 60,
+      "timeout_sec": null,
+      "max_steps": 32,
+      "max_astar_expansions": 1500,
+      "recording_level": "full-trace"
+    },
+    {
+      "name": "conflict-confirmation-S4-ZC",
+      "grid_width": 7,
+      "grid_height": 7,
+      "starts": {
+        "a": [
+          0,
+          3
+        ],
+        "b": [
+          3,
+          0
+        ],
+        "c": [
+          6,
+          6
+        ]
+      },
+      "goals": {
+        "a": [
+          6,
+          3
+        ],
+        "b": [
+          3,
+          6
+        ],
+        "c": [
+          1,
+          6
+        ]
+      },
+      "obstacles": [
+        [
+          1,
+          0
+        ],
+        [
+          5,
+          0
+        ]
+      ],
+      "setting": "SETTING_4",
+      "commitment_type": "ZC",
+      "solver_id": "Decentralized-HeatMap",
+      "fov_size": 5,
+      "initial_tokens": 5,
+      "negotiation_protocol": "taop-v2",
+      "negotiation_deadline_sec": 60,
+      "timeout_sec": null,
+      "max_steps": 32,
+      "max_astar_expansions": 1500,
+      "recording_level": "full-trace"
+    }
+  ]
+}

@@ -1,0 +1,110 @@
+{
+  "template": "Vite/React scaffold; upstream generator revision unavailable",
+  "source": "Locally maintained React and Canvas implementation; no external UI kit copied",
+  "assets": "No bitmap or template brand graphics used; code-native canvas and CSS, system fonts",
+  "frontend_runtime": "local assets only",
+  "direct_dependencies": [
+    {
+      "package": "@axe-core/playwright",
+      "version": "4.13.0",
+      "license": "MPL-2.0",
+      "purpose": "build/test or UI dependency"
+    },
+    {
+      "package": "@playwright/test",
+      "version": "1.63.0",
+      "license": "Apache-2.0",
+      "purpose": "build/test or UI dependency"
+    },
+    {
+      "package": "@types/node",
+      "version": "24.13.6",
+      "license": "MIT",
+      "purpose": "build/test or UI dependency"
+    },
+    {
+      "package": "@types/react",
+      "version": "19.3.0",
+      "license": "MIT",
+      "purpose": "build/test or UI dependency"
+    },
+    {
+      "package": "@types/react-dom",
+      "version": "19.3.0",
+      "license": "MIT",
+      "purpose": "build/test or UI dependency"
+    },
+    {
+      "package": "@vitejs/plugin-react",
+      "version": "6.1.1",
+      "license": "MIT",
+      "purpose": "build/test or UI dependency"
+    },
+    {
+      "package": "clsx",
+      "version": "2.1.1",
+      "license": "MIT",
+      "purpose": "build/test or UI dependency"
+    },
+    {
+      "package": "lucide-react",
+      "version": "1.47.0",
+      "license": "ISC",
+      "purpose": "build/test or UI dependency"
+    },
+    {
+      "package": "openapi-typescript",
+      "version": "7.13.0",
+      "license": "MIT",
+      "purpose": "build/test or UI dependency"
+    },
+    {
+      "package": "oxlint",
+      "version": "1.83.0",
+      "license": "MIT",
+      "purpose": "build/test or UI dependency"
+    },
+    {
+      "package": "pixi.js",
+      "version": "8.21.0",
+      "license": "MIT",
+      "purpose": "renderer comparison only"
+    },
+    {
+      "package": "react",
+      "version": "19.3.0",
+      "license": "MIT",
+      "purpose": "build/test or UI dependency"
+    },
+    {
+      "package": "react-dom",
+      "version": "19.3.0",
+      "license": "MIT",
+      "purpose": "build/test or UI dependency"
+    },
+    {
+      "package": "tailwind-merge",
+      "version": "3.7.0",
+      "license": "MIT",
+      "purpose": "build/test or UI dependency"
+    },
+    {
+      "package": "typescript",
+      "version": "5.9.3",
+      "license": "Apache-2.0",
+      "purpose": "build/test or UI dependency"
+    },
+    {
+      "package": "vite",
+      "version": "8.3.0",
+      "license": "MIT",
+      "purpose": "build/test or UI dependency"
+    },
+    {
+      "package": "prettier",
+      "version": "3.6.2",
+      "license": "MIT",
+      "purpose": "pinned development source formatter; not a runtime dependency"
+    }
+  ]
+}
