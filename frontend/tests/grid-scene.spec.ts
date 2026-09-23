@@ -74,6 +74,18 @@ test("missing local observation reveals no global positions", () => {
   expect(pickAgent(props, 2, 2)).toBeNull();
 });
 
+test("remembered parked cells render only from the selected recipient's record", () => {
+  const props = fixture();
+  props.currentFrame!.local_observations!.a.remembered_obstacles = [[3, 1]];
+  const local = recordedCanvas();
+  paintGrid(local.context, props, 32);
+  expect(local.operations).toContainEqual(["strokeRect", 99, 35, 26, 26]);
+  const other = recordedCanvas();
+  paintGrid(other.context, { ...props, selectedAgent: "c" }, 32);
+  expect(other.operations).not.toContainEqual(["strokeRect", 99, 35, 26, 26]);
+  expect(visiblePositions(props)).toEqual({ a: [0, 0], b: [1, 0] });
+});
+
 function recordedCanvas() {
   const operations: unknown[][] = [];
   const context = new Proxy(

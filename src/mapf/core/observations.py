@@ -42,27 +42,34 @@ class Observation:
     position: Point
     obstacles: frozenset[Point]
     messages: tuple[Message, ...]
+    remembered_obstacles: frozenset[Point] = frozenset()
 
     def to_dict(self) -> dict[str, Any]:
         return {
             "agent_id": self.agent_id, "tick": self.tick,
             "position": [self.position.x, self.position.y],
             "obstacles": [[p.x, p.y] for p in sorted(self.obstacles, key=lambda p: (p.y, p.x))],
+            "remembered_obstacles": [[p.x, p.y] for p in sorted(self.remembered_obstacles, key=lambda p: (p.y, p.x))],
             "messages": [m.to_dict() for m in self.messages],
         }
 
 
 class LocalEnvironment:
-    """Owned static configuration and one immutable observation, with no global queries."""
+    """Static map, current observation and recipient memory, with no global queries."""
 
     def __init__(self, config: SimulationConfig, observation: Observation) -> None:
         self.config = config.model_copy(update={"telemetry_hook": None, "negotiation_lifecycle_hook": None,
+                                                "native_diagnostics_hook": None,
                                                 "obstacles": set(config.obstacles)})
         self.observation = observation
         self.candidate_cache = CandidateSearchCache()
 
     def is_obstacle(self, p: Point) -> bool:
-        return p in self.config.obstacles or p in self.observation.obstacles
+        return p in self.config.obstacles or p in self.observation.obstacles or p in self.remembered_obstacles
+
+    @property
+    def remembered_obstacles(self) -> frozenset[Point]:
+        return self.observation.remembered_obstacles
 
     def is_within_bounds(self, p: Point) -> bool:
         return 0 <= p.x < self.config.grid_width and 0 <= p.y < self.config.grid_height

@@ -103,6 +103,17 @@ def test_same_idempotency_key_cannot_admit_different_inputs(client):
     assert len(client.get("/api/v1/jobs").json()) == 1
 
 
+def test_failed_job_http_response_keeps_the_last_native_snapshot(client):
+    job = client.post("/api/v1/jobs", json={"scenario_id": "crossing-2a"}).json()
+    repo, _ = client.app.state.workspace_services()
+    details = {"statistics": {"HL expanded": "427"}, "observed_at": 100.0}
+    repo.transition(job["job_id"], "failed", error="Native worker failed",
+                    solver_diagnostics=details)
+    response = client.get(f"/api/v1/jobs/{job['job_id']}")
+    assert response.status_code == 200
+    assert response.json()["solver_diagnostics"] == details
+
+
 def test_batch_cancellation_leaves_other_pending_work_in_place(client):
     unrelated = client.post("/api/v1/jobs", json={"scenario_id": "crossing-2a"}).json()
     request = {"jobs": [{"scenario_id": "grid-8x8-4a", "solver_id": "CBS"}]}

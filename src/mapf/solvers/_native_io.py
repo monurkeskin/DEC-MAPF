@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import csv
+import io
 import re
 from dataclasses import dataclass
 from pathlib import Path
@@ -45,9 +46,21 @@ class NativeFiles:
     def read_statistics(self) -> dict[str, str]:
         if not self.statistics.exists():
             return {}
-        with self.statistics.open() as handle:
-            records = list(csv.DictReader(handle))
-        return {key.strip(): value for key, value in records[-1].items()} if records else {}
+        with self.statistics.open("rb") as handle:
+            raw = handle.read(65537)
+        if len(raw) > 65536:
+            return {"_diagnostic": "statistics exceed the 64 KiB snapshot limit"}
+        # A killed writer can leave its final CSV record incomplete. Preserve the
+        # last complete row, never interpret a partial cost or counter as measured.
+        text = raw[:raw.rfind(b"\n") + 1].decode("utf-8", errors="replace")
+        result = {}
+        try:
+            for record in csv.DictReader(io.StringIO(text), strict=True):
+                if None not in record and None not in record.values():
+                    result = {key.strip(): value for key, value in record.items()}
+        except csv.Error:
+            result["_diagnostic"] = "incomplete or malformed native statistics"
+        return result
 
 
 def _point(text: str, instance: MAPFInstance, order: str) -> Point:

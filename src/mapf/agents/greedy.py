@@ -5,6 +5,7 @@ from mapf.core.models import (
     Bid,
     Conflict,
 )
+from mapf.core.obstacle_memory import planning_obstacles
 from mapf.core.protocols import EnvironmentProtocol
 
 
@@ -83,9 +84,7 @@ class ConcederAgent(BaseAgent):
     ) -> bool:
         from mapf.core.space_time_grid import ReservationTable, SpaceTimeAStar
 
-        local_obs = env.config.obstacles | env.get_fov_obstacles(
-            self._current_pos, env.config.fov_size
-        )
+        local_obs = planning_obstacles(env, self._current_pos, env.config.fov_size)
         planner = SpaceTimeAStar(
             grid_width=env.config.grid_width,
             grid_height=env.config.grid_height,

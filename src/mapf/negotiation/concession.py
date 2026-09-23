@@ -1,6 +1,7 @@
 """Legal concession construction using only the recipient's local information."""
 from mapf.agents.base import BaseAgent
 from mapf.core.models import Bid, BidDecision, Path
+from mapf.core.obstacle_memory import planning_obstacles
 from mapf.core.protocols import AgentProtocol, EnvironmentProtocol
 from mapf.core.space_time_grid import ReservationTable, SpaceTimeAStar
 from mapf.negotiation.ledger import OfferLedger
@@ -8,7 +9,7 @@ from mapf.negotiation.ledger import OfferLedger
 
 def planning_context(agent: AgentProtocol, env: EnvironmentProtocol, tick: int) -> tuple[SpaceTimeAStar, ReservationTable]:
     planner = SpaceTimeAStar(env.config.grid_width, env.config.grid_height,
-        obstacles=env.config.obstacles | env.get_fov_obstacles(agent.current_pos, env.config.fov_size),
+        obstacles=planning_obstacles(env, agent.current_pos, env.config.fov_size),
         candidate_cache=getattr(env, "candidate_cache", None))
     table = ReservationTable()
     if isinstance(agent, BaseAgent):

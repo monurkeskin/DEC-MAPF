@@ -5,3 +5,8 @@
 `movingai.py` owns strict map/scenario parsing and typed source rows. `sampling.py` owns seeded synthetic generation without relaxing sampling bounds; its generators remain importable from `movingai.py` for compatibility. See [input conventions](../../../docs/SCENARIOS.md#movingai-import) and the [code reading guide](../../../docs/CODE-GUIDE.md).
 
 See [search and physical semantics](../../../docs/ALGORITHM.md).
+
+`observations.py` defines what a recipient currently sees. `obstacle_memory.py`
+retains only parked cells already delivered to that recipient in stay-at-target
+settings and supplies the shared planning input. The world owns that memory;
+strategies receive an immutable local view rather than another agent's state.

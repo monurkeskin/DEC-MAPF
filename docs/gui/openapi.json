@@ -1602,6 +1602,18 @@
             "title": "Run Id",
             "type": "string"
           },
+          "solver_diagnostics": {
+            "anyOf": [
+              {
+                "additionalProperties": true,
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Solver Diagnostics"
+          },
           "solver_id": {
             "title": "Solver Id",
             "type": "string"
@@ -2103,6 +2115,30 @@
             ],
             "title": "Position",
             "type": "array"
+          },
+          "remembered_obstacles": {
+            "anyOf": [
+              {
+                "items": {
+                  "maxItems": 2,
+                  "minItems": 2,
+                  "prefixItems": [
+                    {
+                      "type": "integer"
+                    },
+                    {
+                      "type": "integer"
+                    }
+                  ],
+                  "type": "array"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Remembered Obstacles"
           },
           "tick": {
             "title": "Tick",

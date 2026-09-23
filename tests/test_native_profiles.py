@@ -62,12 +62,15 @@ def test_registered_native_profile_runs_headlessly_after_catalog_removed(
         == native[2]["binary_sha256"]
     )
     monkeypatch.delenv("MAPF_NATIVE_SOLVER_CATALOG")
-    result = solve_plan(plan)["result"]
+    snapshots = []
+    result = solve_plan(plan, native_diagnostics_hook=snapshots.append)["result"]
     assert result["success"] and result["sum_of_costs"] == 1
     assert (
         result["measured_metrics"]["solver_diagnostics"]["binary_sha256"]
         == native[2]["binary_sha256"]
     )
+    assert snapshots[-1]["exit_code"] == 0
+    assert snapshots[-1]["binary_sha256"] == native[2]["binary_sha256"]
 
 
 def test_modified_binary_cannot_execute_under_frozen_identity(native):

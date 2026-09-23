@@ -35,10 +35,14 @@ change as a unified patch. The patches address concrete qualification failures:
   arrival contract. Historical final-arrival MAPF paths remain separate evidence.
 - Add a compile-time no-wait path-construction mode to CBSH2-RTC for setting 1.
 - Backport the upstream `getDegree` fix for location zero.
-- Make heap comparisons strict and stable: equal keys compare false, including
+- Make heap comparisons strict and deterministic: equal keys compare false, including
   self-comparison. Remove coin flips made during individual comparisons, which
   violate the heap ordering contract. This changes historical tie behavior and is
   explicitly part of the corrected native variant.
+- Reject EECBS `--highLevelSolver=A*` with `--lowLevelSolver=true` (the default).
+  That combination reaches an unsupported path in the pinned implementation.
+  The Python adapter rejects it before launching; corrected native builds also
+  reject it at the command line. `A*` with `--lowLevelSolver=false` remains allowed.
 - Check the path/MDD depth contract before strengthened rectangle reasoning.
   EECBS may cache a relaxed shortest MDD that is shorter than its current feasible
   absorbing-goal path. Indexing that MDD by the path length caused a native
@@ -119,3 +123,18 @@ and supervisor disappearance stop its native descendants as well as its Python
 worker. Native statistics and reported costs survive export alongside independently
 recomputed trajectory costs; reported search limits remain distinct from crashes
 and from externally enforced wall timeouts.
+
+During native execution, the adapter drains stdout and stderr continuously and
+retains the last 4,000 bytes of each, their byte counts, and the last complete
+statistics CSV row (within a 64 KiB read limit). Snapshots are written about every
+half second and on normal exit. They do not reset either deadline. Under the job
+supervisor, one atomic sidecar binds the latest snapshot to the job, attempt and
+run IDs. If the worker reaches its process deadline, the supervisor attaches that
+snapshot to the failed job's `timeout_diagnostics`; a crash attaches it as
+`solver_diagnostics`. A snapshot describes activity up to its recorded timestamp;
+it cannot establish progress after that point. Incomplete CSV records are ignored.
+
+Corrected comparator ordering does not promise FIFO order among equal priorities.
+Changing tie order can change search effort even with identical map, agents and
+weight. Treat a rebuilt binary as a new executable identity and requalify it;
+never substitute its outcomes into a campaign collected with another binary.

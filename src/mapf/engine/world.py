@@ -17,6 +17,7 @@ from mapf.core.models import (
 )
 from mapf.core.observation_index import ObservationIndex
 from mapf.core.observations import LocalEnvironment, Message, Observation
+from mapf.core.obstacle_memory import ObstacleMemory
 from mapf.core.protocols import AgentProtocol, EnvironmentProtocol
 from mapf.core.reachability import StaticConnectivity
 from mapf.engine.pipeline import PipelineContext, SimulationPipeline
@@ -55,6 +56,7 @@ class WorldSimulation(EnvironmentProtocol):
         self._delivered_this_tick: set[Message] = set()
         self._observations: dict[str, Observation] = {}
         self._observation_index = ObservationIndex()
+        self._obstacle_memory = ObstacleMemory()
         self._conflict_index = ConflictIndex()
         self._heat_recorder = HeatRecorder(
             config.recording_level == RecordingLevel.FULL_TRACE,
@@ -284,8 +286,7 @@ class WorldSimulation(EnvironmentProtocol):
             )
             for message in observation.messages:
                 self._deliver(message)
-            self._observations[agent_id] = observation
-            return LocalEnvironment(self.config, observation)
+            return self._local_view(observation)
         agent = self._agents[agent_id]
         messages = tuple(
             self.deliver_message(sender, agent_id, path)
@@ -300,7 +301,11 @@ class WorldSimulation(EnvironmentProtocol):
             frozenset(self.get_fov_obstacles(agent.current_pos, self.config.fov_size)),
             messages,
         )
-        self._observations[agent_id] = observation
+        return self._local_view(observation)
+
+    def _local_view(self, observation: Observation) -> LocalEnvironment:
+        observation = self._obstacle_memory.apply(observation, self.config)
+        self._observations[observation.agent_id] = observation
         return LocalEnvironment(self.config, observation)
 
     def record_settlement(self, receipt: dict[str, Any]) -> None:

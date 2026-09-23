@@ -3,7 +3,6 @@
 from __future__ import annotations
 
 import hashlib
-import subprocess
 import tempfile
 import time
 from collections.abc import Mapping
@@ -12,6 +11,7 @@ from typing import Any, Literal
 
 from mapf.core.models import SimulationConfig
 from mapf.solvers._native_io import NativeFiles, read_paths
+from mapf.solvers._native_process import NativeProcessResult, run_native
 from mapf.solvers.base import MAPFInstance, MAPFSolution, MAPFSolverProtocol
 from mapf.solvers.validation import validated_solver
 
@@ -30,10 +30,23 @@ def _validate_settings(family: str, settings: frozenset[str], arguments: Mapping
         raise ValueError("Multiple settings require explicit setting_arguments; use one setting for a specialized binary")
 
 
-def _validate_arguments(arguments: Mapping[str, tuple[str, ...]]) -> None:
+def _validate_arguments(arguments: Mapping[str, tuple[str, ...]], family: str) -> None:
     supplied = {arg.split("=", 1)[0] for args in arguments.values() for arg in args}
     if supplied & _RESERVED_ARGUMENTS:
         raise ValueError("setting_arguments cannot override instance, output, cutoff or solver weight")
+    if family == "eecbs":
+        for args in arguments.values():
+            if _option(args, "--highLevelSolver", "EES") == "A*" and _option(args, "--lowLevelSolver", "true").lower() not in {"false", "0"}:
+                raise ValueError("EECBS highLevelSolver=A* requires lowLevelSolver=false")
+
+
+def _option(arguments: tuple[str, ...], name: str, default: str) -> str:
+    for index, argument in enumerate(arguments):
+        if argument.startswith(name + "="):
+            return argument.split("=", 1)[1]
+        if argument == name and index + 1 < len(arguments):
+            return arguments[index + 1]
+    return default
 
 
 def _failure_reason(returncode: int, cost: int | None) -> str:
@@ -41,12 +54,6 @@ def _failure_reason(returncode: int, cost: int | None) -> str:
         return "native_execution_failure"
     reasons: dict[int | None, str] = {-1: "native_reported_limit", -2: "native_reported_no_solution"}
     return reasons.get(cost, "native_execution_failure")
-
-
-def _output_tail(output: bytes | str | None) -> str:
-    if isinstance(output, bytes):
-        output = output.decode("utf-8", errors="replace")
-    return (output or "")[-4000:]
 
 
 class ExternalBinarySolver(MAPFSolverProtocol):
@@ -78,7 +85,7 @@ class ExternalBinarySolver(MAPFSolverProtocol):
         self.solver_family = solver_family or ("cbsh2-rtc" if "cbsh2" in solver_name.lower() else "eecbs")
         self.setting_arguments = dict(setting_arguments or {})
         _validate_settings(self.solver_family, supported_settings, self.setting_arguments)
-        _validate_arguments(self.setting_arguments)
+        _validate_arguments(self.setting_arguments, self.solver_family)
         if coordinate_order not in ("xy", "row-col"):
             raise ValueError("Unknown external coordinate order")
 
@@ -128,16 +135,18 @@ class _NativeRun:
         with tempfile.TemporaryDirectory() as folder:
             files = NativeFiles(Path(folder))
             files.write_instance(self.instance)
-            try:
-                proc = subprocess.run(self._command(files), capture_output=True, check=False,
-                                      timeout=self.timeout, text=True)
-                self.runtime_ms = (time.perf_counter() - self.started) * 1000.0
-                return self._result(files, proc)
-            except subprocess.TimeoutExpired as exc:
-                self.runtime_ms = (time.perf_counter() - self.started) * 1000.0
-                self.metrics["solver_diagnostics"].update(
-                    timed_out=True, stdout=_output_tail(exc.stdout), stderr=_output_tail(exc.stderr))
+            proc = run_native(self._command(files), self.timeout,
+                              lambda snapshot: self._progress(files, snapshot))
+            self.runtime_ms = (time.perf_counter() - self.started) * 1000.0
+            if proc.timed_out:
                 return self._failure("Subprocess execution timed out.", termination_reason="timeout")
+            return self._result(files, proc)
+
+    def _progress(self, files: NativeFiles, snapshot: dict[str, Any]) -> None:
+        diagnostic = self.metrics["solver_diagnostics"]
+        diagnostic.update(snapshot, statistics=files.read_statistics())
+        if self.config.native_diagnostics_hook is not None:
+            self.config.native_diagnostics_hook(dict(diagnostic))
 
     def _command(self, files: NativeFiles) -> list[str]:
         cmd = [str(self.solver.executable_path), *files.arguments(len(self.instance.starts)),
@@ -151,7 +160,7 @@ class _NativeRun:
         return MAPFSolution(solver_name=self.solver.name, is_centralized=True, success=False,
                             runtime_ms=self.runtime_ms, metrics={**self.metrics, "error": error, **details})
 
-    def _result(self, files: NativeFiles, proc: subprocess.CompletedProcess[str]) -> MAPFSolution:
+    def _result(self, files: NativeFiles, proc: NativeProcessResult) -> MAPFSolution:
         statistics = files.read_statistics()
         reported_cost = int(statistics["solution cost"]) if "solution cost" in statistics else None
         self.metrics["solver_diagnostics"].update(statistics=statistics, exit_code=proc.returncode,

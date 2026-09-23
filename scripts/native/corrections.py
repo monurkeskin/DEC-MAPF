@@ -3,6 +3,27 @@
 import re
 
 
+def validate_ecbs_options(tree, name):
+    """Reject a mode that ECBS::selectNode cannot handle, even in release builds."""
+    if not name.startswith("eecbs"):
+        return
+    path = tree / "src/driver.cpp"
+    text = path.read_text()
+    if "DEC_MAPF_ECBS_MODE" in text:
+        return
+    needle = "po::notify(vm);"
+    assert text.count(needle) == 1
+    guard = '''
+    // DEC_MAPF_ECBS_MODE: ECBS has no ASTAR branch in selectNode.
+    if (vm["highLevelSolver"].as<string>() == "A*" && vm["lowLevelSolver"].as<bool>())
+    {
+        cerr << "highLevelSolver=A* requires lowLevelSolver=false" << endl;
+        return 2;
+    }
+'''
+    path.write_text(text.replace(needle, needle + guard))
+
+
 def rectangle_mdd_contract(tree, name):
     """Use strengthened rectangle splits only at their represented path depth.
 
@@ -43,7 +64,8 @@ def rectangle_mdd_contract(tree, name):
 
 
 def apply(tree, name):
-    # Heap predicates require a strict, stable ordering. Historical predicates
+    validate_ecbs_options(tree, name)
+    # Heap predicates require a strict, deterministic ordering. Historical predicates
     # compare a node greater than itself and some toss a coin on every comparison.
     # Equal keys stay equivalent; no random comparator can change between calls.
     for relative in [

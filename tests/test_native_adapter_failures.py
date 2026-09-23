@@ -1,12 +1,12 @@
 """Native boundary fixtures validate invocation and receipts, not C++ optimality."""
 
-import subprocess
 from pathlib import Path
 
 import pytest
 
 from mapf.core.models import Point, SimulationConfig, SimulationSetting
 from mapf.solvers import binary_runner
+from mapf.solvers._native_process import NativeProcessResult
 from mapf.solvers.base import MAPFInstance
 from mapf.solvers.binary_runner import ExternalBinarySolver
 
@@ -17,15 +17,15 @@ def invocation(tmp_path, monkeypatch):
     binary.write_bytes(b"synthetic executable identity")
     output = {"paths": "Agent 0: 0->1->2", "csv": None, "returncode": 0}
 
-    def run(argv, **kwargs):
-        assert kwargs == {"capture_output": True, "check": False, "timeout": 2.5, "text": True}
+    def run(argv, timeout, progress):
+        assert timeout == 2.5
         assert argv[argv.index("--cutoffTime") + 1] == "2.5"
         for key, flag in (("paths", "--outputPaths"), ("csv", "--output")):
             if output[key] is not None:
                 Path(argv[argv.index(flag) + 1]).write_text(output[key])
-        return subprocess.CompletedProcess(argv, output["returncode"], "stdout", "stderr")
+        return NativeProcessResult(output["returncode"], "stdout", "stderr")
 
-    monkeypatch.setattr(binary_runner.subprocess, "run", run)
+    monkeypatch.setattr(binary_runner, "run_native", run)
     solver = ExternalBinarySolver(binary, supported_settings=frozenset({"SETTING_2"}), time_limit_sec=2.5)
     instance = MAPFInstance(grid_width=3, grid_height=2, starts={"a": Point(0, 0)}, goals={"a": Point(2, 0)})
     config = SimulationConfig(setting=SimulationSetting.SETTING_2)
@@ -41,16 +41,29 @@ def test_unknown_coordinate_order_is_rejected_before_execution(tmp_path, order):
 def test_timeout_retains_bounded_process_diagnostics(invocation, monkeypatch):
     solver, instance, config, _ = invocation
 
-    def timeout(argv, **kwargs):
-        raise subprocess.TimeoutExpired(argv, kwargs["timeout"], output=b"x" * 4500, stderr=b"stalled\xff")
+    def timeout(argv, timeout, progress):
+        Path(argv[argv.index("--output") + 1]).write_text("solution cost,HL expanded\n-1,427\n")
+        progress({"stdout": "x" * 4000, "stderr": "stalled\ufffd", "timed_out": True})
+        return NativeProcessResult(-9, "x" * 4000, "stalled\ufffd", True)
 
-    monkeypatch.setattr(binary_runner.subprocess, "run", timeout)
+    monkeypatch.setattr(binary_runner, "run_native", timeout)
     result = solver.solve(instance, config)
     assert not result.success and result.metrics["termination_reason"] == "timeout"
     diagnostic = result.metrics["solver_diagnostics"]
     assert diagnostic["stdout"] == "x" * 4000
     assert diagnostic["stderr"] == "stalled\ufffd"
     assert diagnostic["timed_out"] is True and diagnostic["cutoff_seconds"] == 2.5
+    assert diagnostic["statistics"]["HL expanded"] == "427"
+
+
+@pytest.mark.parametrize("arguments", [
+    ("--highLevelSolver", "A*"),
+    ("--highLevelSolver=A*", "--lowLevelSolver=true"),
+    ("--lowLevelSolver", "1", "--highLevelSolver", "A*"),
+])
+def test_unsupported_ecbs_astar_combination_is_rejected_before_spawn(tmp_path, arguments):
+    with pytest.raises(ValueError, match="lowLevelSolver"):
+        ExternalBinarySolver(tmp_path / "fixture", setting_arguments={"SETTING_4": arguments})
 
 
 @pytest.mark.parametrize(("path", "message"), [

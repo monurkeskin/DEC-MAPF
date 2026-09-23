@@ -13,6 +13,7 @@ from mapf.core.models import (
     Path,
     Point,
 )
+from mapf.core.obstacle_memory import planning_obstacles
 from mapf.core.protocols import AgentProtocol, EnvironmentProtocol
 from mapf.core.space_time_grid import ReservationTable, SpaceTimeAStar
 
@@ -145,9 +146,7 @@ class BaseAgent(ABC, AgentProtocol):
             return self._current_pos
 
         fov_size = getattr(self, "fov_size", env.config.fov_size)
-        local_obs = env.config.obstacles | env.get_fov_obstacles(
-            self._current_pos, fov_size
-        )
+        local_obs = planning_obstacles(env, self._current_pos, fov_size)
         planner = SpaceTimeAStar(
             grid_width=env.config.grid_width,
             grid_height=env.config.grid_height,

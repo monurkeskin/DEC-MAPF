@@ -39,6 +39,13 @@ Disconnection proves that this reached state has no continuation under absorbing
 
 ## Search, scheduling and observation reuse
 
+In stay-at-goal settings, `ObstacleMemory` retains only permanent cells delivered
+in that recipient's observations. Leaving the FoV does not make a known parked
+cell traversable again. `planning_obstacles` combines this memory, the static map
+and the current FoV for strategy/protocol searches. PreUpdate uses the same memory
+when checking whether a remaining route needs a detour. Finite commitments stay
+in the reservation table; they are not converted into permanent obstacles.
+
 HeatMap uses a finite Manhattan congestion kernel with center weight 1, excludes the negotiation opponent, and indexes other agents' broadcasts by relative time. Candidate generation, normalized path-plus-congestion ranking, length tie breaks, deterministic partner ordering and bounded verification passes are explicit implementation choices. They are not claims of identical Java search or stochastic scheduling.
 
 Unchanged conflict queries reuse immutable results. Rosters smaller than 16, or changes to more than half the plans, use a full scan; sparse changes in larger rosters update occupancy buckets. The full detector and public observation queries remain reference implementations. Recipient observations reuse immutable messages while checking custom-agent state changes. These cache rules preserve the declared query semantics.

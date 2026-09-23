@@ -10,6 +10,17 @@ DEC-MAPF provides shared experiment infrastructure for decentralized and central
 
 Centralized and decentralized adapters both receive `MAPFInstance` and `SimulationConfig`, and return `MAPFSolution`. Set `is_centralized` to describe the method's actual information/control model. The Python protocol unifies execution and results; an adapter supplies the algorithm.
 
+## Local planning inputs
+
+Existing negotiation strategies should use
+`mapf.core.obstacle_memory.planning_obstacles(env, position, fov_size)` for replans
+and candidate searches. It combines the static map, current FoV and previously
+observed permanent obstacles. `get_fov_obstacles` still reports current visibility.
+The world's `LocalEnvironment` exposes memory as an immutable
+`remembered_obstacles` property. Custom environments can provide that property;
+without it, the helper preserves their static-plus-FoV behavior. Do not supply
+unseen global parked cells or turn temporary reservations into obstacle memory.
+
 ## A new coordination protocol
 
 An auction-based method can use the shared experiment workflow by implementing and registering its own solver adapter. Develop and qualify it in these steps:

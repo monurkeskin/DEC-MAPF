@@ -13,6 +13,7 @@ from mapf.core.models import (
     Point,
     SimulationConfig,
 )
+from mapf.core.obstacle_memory import planning_obstacles
 from mapf.core.protocols import EnvironmentProtocol
 from mapf.core.space_time_grid import ReservationTable, SpaceTimeAStar
 
@@ -300,9 +301,7 @@ class HeatMapAgent(BaseAgent):
     def _response_candidates(
         self, res_table: ReservationTable, env: EnvironmentProtocol, current_time: int
     ) -> list[Path]:
-        local_obs = env.config.obstacles | env.get_fov_obstacles(
-            self._current_pos, self.fov_size
-        )
+        local_obs = planning_obstacles(env, self._current_pos, self.fov_size)
         planner = SpaceTimeAStar(
             grid_width=env.config.grid_width,
             grid_height=env.config.grid_height,

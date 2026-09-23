@@ -82,6 +82,13 @@ Heat is computed for applicable HeatMap negotiation decisions, not for every age
 
 Enable **Recorded local view** to restrict moving-agent evidence to a selected recipient's recorded observation. Message paths are beliefs at the observation time; a post-move global frame can be one phase later. The static map remains visible. Turn off local view before comparing global trajectories.
 
+Lavender dashed outlines mark previously observed parked cells, including cells
+outside the current FoV. These remain known obstacles in settings 1/2. The
+**Recorded local observation** data separates `obstacles` (current visibility)
+from `remembered_obstacles` (persistent knowledge). A missing/null memory field in
+an older recording means unavailable; the viewer does not reconstruct it from
+global trajectories.
+
 ![Recipient-local recorded view for agent_049](assets/gallery/article-16-local-view.png)
 
 With **Recorded reservations**, select an agent to inspect the commitments it owns. Amber labels such as `t4` refer to absolute simulation ticks. The selected agent's card exposes **Recorded current plan and commitments** as exact data. SC, DC and ZC have different retention rules; even ZC protects the agreement tick before releasing. See [Scientific interpretation](SCIENCE.md#negotiations-and-commitments).

@@ -56,6 +56,13 @@ specific contract; it does not prove that every possible defect will be detected
 Neither the test count nor a coverage percentage is a reason to add a redundant
 test or delete a useful one.
 
+For observation and planning changes, `test_obstacle_memory.py` checks recipient
+isolation, stay/disappear semantics, planner entry points and live reservations.
+For native execution, `test_native_diagnostics.py` checks real pipe drainage,
+bounded output, process cleanup and snapshot recovery after a hard deadline.
+Keep these boundary checks when changing the corresponding owners; a mocked
+solver return cannot exercise process or stream behavior.
+
 Run the relevant Python gates:
 
 ```bash

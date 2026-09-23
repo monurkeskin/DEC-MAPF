@@ -49,6 +49,13 @@ Bundles export/import checked metadata, exact scenario, paths, frames and proven
 
 The frontend uses `/api/v1`. The deprecated `/api/simulate` facade now delegates to the same process supervisor and retains its response shape. Legacy unbounded benchmark launch returns HTTP 410 with the manifest-based replacement; historical status/archive routes are read-only compatibility surfaces. New experiments use `/api/v1/experiments` or the independent `mapf batch` CLI.
 
+`LocalObservation.obstacles` contains currently observed cells.
+`remembered_obstacles` separately records the recipient's previously observed
+parked cells in settings 1/2. An empty list is a recorded empty memory; null or an
+absent field means memory was not recorded. Older bundles remain readable and do
+not gain inferred memory. Local-view rendering outlines recorded remembered cells
+without displaying hidden agent positions.
+
 ## TAOP v2 and timeout diagnostics
 
 New requests default to `taop-v2`; the protocol name participates in immutable

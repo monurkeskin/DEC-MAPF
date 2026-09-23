@@ -1463,6 +1463,10 @@ export interface components {
             result?: components["schemas"]["SolverRunResult"] | null;
             /** Run Id */
             run_id: string;
+            /** Solver Diagnostics */
+            solver_diagnostics?: {
+                [key: string]: unknown;
+            } | null;
             /** Solver Id */
             solver_id: string;
             /** Started At */
@@ -1674,6 +1678,11 @@ export interface components {
                 number,
                 number
             ];
+            /** Remembered Obstacles */
+            remembered_obstacles?: [
+                number,
+                number
+            ][] | null;
             /** Tick */
             tick: number;
         };

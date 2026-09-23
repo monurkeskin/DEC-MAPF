@@ -9,6 +9,7 @@ from mapf.core.models import (
     Path,
     Point,
 )
+from mapf.core.obstacle_memory import planning_obstacles
 from mapf.core.protocols import EnvironmentProtocol
 from mapf.core.space_time_grid import ReservationTable, SpaceTimeAStar
 
@@ -50,9 +51,7 @@ class PathAwareAgent(BaseAgent):
     def _generate_candidate_paths(
         self, env: EnvironmentProtocol, current_time: int, conflict: Conflict
     ) -> list[Path]:
-        local_obs = env.config.obstacles | env.get_fov_obstacles(
-            self._current_pos, env.config.fov_size
-        )
+        local_obs = planning_obstacles(env, self._current_pos, env.config.fov_size)
         planner = SpaceTimeAStar(
             grid_width=env.config.grid_width,
             grid_height=env.config.grid_height,
@@ -142,9 +141,7 @@ class PathAwareAgent(BaseAgent):
 
         self.reserve_commitments(res_table, current_time)
 
-        local_obs = env.config.obstacles | env.get_fov_obstacles(
-            self._current_pos, env.config.fov_size
-        )
+        local_obs = planning_obstacles(env, self._current_pos, env.config.fov_size)
         planner = SpaceTimeAStar(
             grid_width=env.config.grid_width,
             grid_height=env.config.grid_height,

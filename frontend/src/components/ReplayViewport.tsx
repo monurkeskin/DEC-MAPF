@@ -67,7 +67,9 @@ export function ReplayViewport({
         history; teal local heat uses recorded strategy weights. Amber dashed
         cells show recorded opponent reservations with absolute ticks (full
         trace, selected owner or all). Local view shows the selected recipient's
-        recorded observation and static map.
+        recorded observation and static map. Lavender outlines in local view
+        mark previously observed parked cells, including cells now outside the
+        FoV.
       </p>
       {replay.loading && <p role="status">Loading replay frames…</p>}
       {replay.error && <p role="alert">{replay.error}</p>}

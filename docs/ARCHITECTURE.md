@@ -54,6 +54,13 @@ supervision, storage, trajectory-validation and analysis services. Method-specif
 parameters, capability descriptors and telemetry need explicit integration; see
 [adding a coordination protocol](EXTENDING.md#a-new-coordination-protocol).
 
+The world also owns one `ObstacleMemory`, partitioned by recipient. Observation
+caching handles the current view; memory retains previously observed parked cells.
+`LocalEnvironment.config.obstacles` remains the static scenario map, and its
+immutable `remembered_obstacles` property supplies the learned cells to planning.
+Keeping those values separate prevents a local observation from changing the
+scenario identity or being mistaken for current visibility.
+
 ## Application and persistence
 
 `ExperimentService` compiles/exercises studies and enforces the declared budget.

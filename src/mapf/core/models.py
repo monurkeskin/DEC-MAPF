@@ -183,6 +183,7 @@ class SimulationConfig(BaseModel):
     negotiation_round_limit: int = Field(default=30, ge=1)
     negotiation_deadline_sec: float | None = Field(default=60.0, gt=0)
     negotiation_lifecycle_hook: Any = Field(default=None, exclude=True)
+    native_diagnostics_hook: Any = Field(default=None, exclude=True)
     verification_pass_limit: int = Field(default=5, ge=1)
     max_astar_expansions: int = Field(default=1500, ge=100)
     enable_telemetry: bool = False

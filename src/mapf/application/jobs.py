@@ -15,6 +15,7 @@ from typing import Any
 
 from mapf.application.contracts import JobSubmissionRequest
 from mapf.application.deadlines import NegotiationWatch
+from mapf.application.native_diagnostics import diagnostic_path, read_diagnostics
 from mapf.application.plans import preview, provenance
 from mapf.application.processes import run_owned_process, stop_owned_group
 from mapf.application.resources import ResourceAdmission, ResourcePolicy, ResourceProbe
@@ -351,8 +352,10 @@ class JobSupervisor:
         self._terminate(owned)
         del self._processes[job["job_id"]]
         self.repository.transition(job["job_id"], "timed_out", timeout_scope="process",
+            timeout_diagnostics=read_diagnostics(self._staging_path(job), job),
             error="Process wall-clock budget exhausted; no complete solution receipt")
         self._staging_path(job).unlink(missing_ok=True)
+        diagnostic_path(self._staging_path(job)).unlink(missing_ok=True)
 
     def _finish_worker(self, job: dict[str, Any], owned: OwnedWorker) -> None:
         proc, _, sender, _ = owned
@@ -371,9 +374,11 @@ class JobSupervisor:
             execution = _read_worker_result(stage, exitcode)
             self.repository.save_run(completed_payload(job, execution), job["job_id"])
         except Exception as exc:  # noqa: BLE001 - isolation boundary records rejected worker artifacts
-            self.repository.transition(job["job_id"], "failed", error=f"{type(exc).__name__}: {exc}")
+            self.repository.transition(job["job_id"], "failed", error=f"{type(exc).__name__}: {exc}",
+                                       solver_diagnostics=read_diagnostics(stage, job))
         finally:
             stage.unlink(missing_ok=True)
+            diagnostic_path(stage).unlink(missing_ok=True)
 
     def _select_jobs(self) -> list[dict[str, Any]]:
         waiting = [job for job in self.repository.active_jobs() if job["state"] == "pending"]

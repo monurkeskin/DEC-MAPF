@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-from mapf.agents.base import goal_reached
 from mapf.core.geometry import grid_index
 from mapf.core.models import Path, Point
 from mapf.core.protocols import AgentProtocol
@@ -21,23 +20,14 @@ class PreUpdateStage:
             return
         # Freeze every recipient view before any plan is revised.
         views = {aid: ctx.world.for_agent(aid) for aid in ctx.active_agents}
-        parked = self._parked_positions(ctx)
         for agent in ctx.active_agents.values():
-            observed = parked & views[agent.agent_id].get_fov_obstacles(
-                agent.current_pos, ctx.world.config.fov_size
-            )
+            observed = set(views[agent.agent_id].remembered_obstacles)
             blocked = set(agent.planned_path.points) & observed
             incomplete = agent.planned_path.points[-1] != agent.target_pos
             if blocked or incomplete:
                 self._replan(ctx, agent, observed, len(blocked))
                 if ctx.is_unsolvable:
                     return
-
-    @staticmethod
-    def _parked_positions(ctx: PipelineContext) -> set[Point]:
-        if ctx.disappear_at_target:
-            return set()
-        return {a.target_pos for a in ctx.world.agents.values() if goal_reached(a)}
 
     def _replan(
         self,

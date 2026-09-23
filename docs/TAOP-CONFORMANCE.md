@@ -38,6 +38,14 @@ Actual deliveries record sender, recipient, tick, finite payload, bytes and sess
 
 Protocol diagnostics distinguish agreement, invalid contracts, malformed bidders and the stopping conditions of the selected mode. Process timeouts are execution failures, not protocol proofs. A bounded replan failure does not prove the instance unsolvable. Safety overrides record desired/actual movement. The movement resolver checks live obligations and waiting permission before authorizing every joint move; infeasibility or repair exhaustion stops that joint step atomically. Independent trajectory validation controls physical success and catches malformed strategy output. Physical validity and protocol conformance are separate evidence boundaries.
 
+Parked obstacles learned in settings 1/2 persist in each recipient's memory.
+Java's handler retains observed permanent constraints for later planning; the
+Python engine likewise keeps those cells when they leave the FoV. All local
+replanning entry points use this memory while preserving live SC/DC/ZC
+reservations. The static scenario map, current observation and remembered cells
+remain distinct. This behavior affects source-sensitive experiment results;
+preserve the source identity when comparing archived executions.
+
 ## Explicit modern variants
 
 HeatMap excludes the negotiating opponent from congestion and indexes the other agents' broadcasts by relative time. It uses a finite Manhattan kernel with center weight 1. The archived Java code also sets the agent-center weight to 1; its CAP=999 applies to obstacles, not ordinary agent centers. The kernel construction and bounded deterministic candidate generator are explicit implementation choices; matching the center alone does not establish heat-field equivalence.

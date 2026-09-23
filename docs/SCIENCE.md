@@ -37,6 +37,16 @@ The protocol may accept a longer feasible concession. Failed bounded concession 
 
 The acceptor owns the obligation to avoid the allocated opponent route. A subsequent agreement cannot overwrite a still-live promise. Zero commitment therefore does not permit the acceptor to undo the agreement before that same tick moves. These are the current executable semantics; see the [conformance document](TAOP-CONFORMANCE.md) for paper/Java interpretation and declared modern variants.
 
+## Obstacle knowledge
+
+Static map obstacles are known from the scenario. In settings 1/2, an agent also
+remembers the parked cells it has actually observed, including after they leave
+its FoV. This memory belongs to that recipient; it excludes unseen parked agents,
+other recipients' observations and moving agents. Settings 3/4 create no
+parked-cell memory. Detours, concession searches and replanning after a forced move
+use the same known obstacles. Current visibility and remembered cells remain
+separate in saved observations and the GUI.
+
 ## Five different limits
 
 | Limit | Unit/scope | Consequence |

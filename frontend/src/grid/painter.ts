@@ -31,6 +31,7 @@ export function paintGrid(
   grid(layer);
   coordinates(layer);
   obstacles(layer);
+  rememberedObstacles(layer);
   heat(layer);
   routes(layer);
   broadcasts(layer);
@@ -69,6 +70,16 @@ function obstacles({ ctx, p, size, visible }: Layer) {
     ctx.fillStyle = "#64748b";
     ctx.fillRect(x * size + 1, y * size + 1, size - 2, size - 2);
   }
+}
+
+function rememberedObstacles({ ctx, p, size, observation }: Layer) {
+  if (!p.localView || !observation?.remembered_obstacles) return;
+  ctx.strokeStyle = "#c4b5fd";
+  ctx.lineWidth = 2;
+  ctx.setLineDash([2, 2]);
+  for (const [x, y] of observation.remembered_obstacles)
+    ctx.strokeRect(x * size + 3, y * size + 3, size - 6, size - 6);
+  ctx.setLineDash([]);
 }
 
 function heat(layer: Layer) {

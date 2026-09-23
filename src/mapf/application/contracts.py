@@ -76,6 +76,8 @@ class LocalObservation(BaseModel):
     position: Coordinate
     obstacles: list[Coordinate]
     messages: list[DeliveredMessage]
+    # None means the recording predates obstacle-memory capture, not an empty memory.
+    remembered_obstacles: list[Coordinate] | None = None
 
 
 class FrameSnapshot(BaseModel):
@@ -274,6 +276,7 @@ class JobStatusResponse(BaseModel):
     timeout_scope: Literal["process", "negotiation"] | None = None
     timeout_session_id: str | None = None
     timeout_diagnostics: dict[str, Any] | None = None
+    solver_diagnostics: dict[str, Any] | None = None
     result: SolverRunResult | None = None
     effective_config: dict[str, Any]
     worker_pid: int | None = None

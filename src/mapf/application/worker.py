@@ -9,6 +9,7 @@ from collections.abc import Callable
 from pathlib import Path
 from typing import Any
 
+from mapf.application.native_diagnostics import write_diagnostics
 from mapf.application.plans import instance_from_snapshot, provenance
 from mapf.application.replay import build_solver_run_result
 from mapf.application.runs import atomic_write, encode
@@ -50,7 +51,8 @@ class TraceCollector(NullTelemetryHook):
 
 
 def solve_plan(plan: dict[str, Any], *, identity: dict[str, Any] | None = None,
-               negotiation_lifecycle_hook: Callable[[dict[str, Any]], None] | None = None) -> dict[str, Any]:
+               negotiation_lifecycle_hook: Callable[[dict[str, Any]], None] | None = None,
+               native_diagnostics_hook: Callable[[dict[str, Any]], None] | None = None) -> dict[str, Any]:
     cfg = plan["effective_config"]
     snap = plan["scenario"]
     instance = instance_from_snapshot(snap)
@@ -66,6 +68,7 @@ def solve_plan(plan: dict[str, Any], *, identity: dict[str, Any] | None = None,
         centralized_timeout_sec=cfg["timeout_sec"] if cfg["timeout_sec"] is not None else 60,
         negotiation_deadline_sec=cfg.get("negotiation_deadline_sec"),
         negotiation_lifecycle_hook=negotiation_lifecycle_hook,
+        native_diagnostics_hook=native_diagnostics_hook,
         fov_size=cfg["fov_size"],
         broadcast_horizon=cfg.get("broadcast_horizon"),
         negotiation_horizon=cfg.get("negotiation_horizon"),
@@ -140,7 +143,8 @@ def execute_worker(job: dict[str, Any], output: str, *,
         if provenance()["source_sha256"] != expected:
             raise ValueError("Source changed after admission; create a new experiment identity")
         payload = solve_plan(job["plan"], identity={k: job[k] for k in ("job_id", "attempt_id", "run_id")},
-                             negotiation_lifecycle_hook=negotiation_lifecycle_hook)
+                             negotiation_lifecycle_hook=negotiation_lifecycle_hook,
+                             native_diagnostics_hook=lambda details: write_diagnostics(output, job, details))
         payload["ok"] = True
     except Exception as exc:  # noqa: BLE001 - isolation boundary records worker/infrastructure failure
         payload = {
